@@ -17,8 +17,272 @@
 <style>
   html { touch-action: manipulation; -webkit-text-size-adjust: 100%; }
   input, select, textarea { font-size: 16px !important; } /* prevent zoom on iOS/Android */
+
+/* STOPWATCH */
+.sw-btn{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;border:none;font-family:'Exo 2',sans-serif;transition:all .2s;letter-spacing:.4px}
+.sw-start{background:rgba(34,197,94,.18);color:#4ade80;border:1px solid rgba(34,197,94,.35)}
+.sw-stop{background:rgba(239,68,68,.18);color:#f87171;border:1px solid rgba(239,68,68,.35)}
+.sw-reset{background:rgba(100,116,139,.15);color:var(--muted2);border:1px solid var(--border)}
+.sw-display{font-family:'Space Mono',monospace;font-size:20px;font-weight:700;color:var(--gold);min-width:75px;text-align:center;letter-spacing:2px}
+.sw-save-tag{font-size:10px;color:var(--green);font-weight:600;display:none}
+.sw-wrap{background:var(--bg3);border-radius:9px;padding:9px 12px;margin-top:6px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;border:1px solid rgba(245,200,66,.1)}
+.sw-saved{font-size:10px;color:var(--green);font-style:italic}
+
+/* CHRONO */
+.chrono-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+.chrono-box{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:32px 28px;width:min(340px,90vw);text-align:center;box-shadow:0 0 60px rgba(245,200,66,.12)}
+.chrono-title{font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px}
+.chrono-exo{font-size:12px;color:var(--muted2);margin-bottom:20px;min-height:16px}
+.chrono-display{font-family:'Space Mono',monospace;font-size:62px;font-weight:700;color:var(--text);letter-spacing:2px;line-height:1;margin-bottom:6px}
+.chrono-display.running{color:var(--green)}
+.chrono-display.stopped{color:var(--gold)}
+.chrono-ms{font-family:'Space Mono',monospace;font-size:22px;color:var(--muted);margin-bottom:24px}
+.chrono-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
+.cbtn{padding:11px 22px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;border:none;font-family:'Exo 2',sans-serif;transition:all .18s;letter-spacing:.5px;min-width:90px}
+.cbtn-start{background:var(--green);color:#000}
+.cbtn-start:hover{opacity:.9}
+.cbtn-stop{background:var(--red);color:#fff}
+.cbtn-stop:hover{opacity:.9}
+.cbtn-reset{background:var(--bg3);color:var(--muted2);border:1px solid var(--border)}
+.cbtn-reset:hover{border-color:var(--muted2)}
+.cbtn-save{background:var(--gold);color:#000}
+.cbtn-save:hover{background:var(--gold2)}
+.cbtn-save:disabled{opacity:.35;cursor:not-allowed}
+.cbtn-close{background:transparent;color:var(--muted2);border:1px solid var(--border);font-size:12px;padding:8px 16px}
+.cbtn-close:hover{border-color:var(--muted2)}
+.chrono-saved{font-size:12px;color:var(--green);margin-top:8px;min-height:18px;font-weight:600}
+.chrono-laps{max-height:120px;overflow-y:auto;margin-bottom:14px;display:flex;flex-direction:column;gap:4px}
+.lap{font-family:'Space Mono',monospace;font-size:11px;color:var(--muted2);background:var(--bg3);border-radius:5px;padding:4px 10px;display:flex;justify-content:space-between}
+.lap-best{color:var(--green)}
+/* Timer launch button in exo card */
+.exo-timer-btn{display:inline-flex;align-items:center;gap:5px;margin-top:6px;padding:5px 11px;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid rgba(245,200,66,.3);background:rgba(245,200,66,.07);color:var(--gold);font-family:'Exo 2',sans-serif;transition:all .18s}
+.exo-timer-btn:hover{background:rgba(245,200,66,.15);border-color:var(--gold)}
+/* Floating chrono fab */
+.chrono-fab{position:fixed;bottom:76px;right:16px;z-index:90;background:var(--gold);color:#000;width:46px;height:46px;border-radius:50%;border:none;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(245,200,66,.4);transition:transform .2s}
+.chrono-fab:hover{transform:scale(1.1)}
+@media(min-width:701px){.chrono-fab{bottom:20px}}
 </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js">
+// ══════════════════════════════════════════
+// STOPWATCH ENGINE
+// ══════════════════════════════════════════
+const timers = {};  // key = swId → {interval, elapsed, running}
+
+function swCreate(swId) {
+  if (!timers[swId]) timers[swId] = {elapsed: 0, running: false, interval: null};
+}
+
+function swFormat(ms) {
+  const total = Math.floor(ms / 1000);
+  const m = Math.floor(total / 60);
+  const s = total % 60;
+  const cs = Math.floor((ms % 1000) / 10);
+  if (m > 0) return `${m}:${String(s).padStart(2,'0')}.${String(cs).padStart(2,'0')}`;
+  return `${s}.${String(cs).padStart(2,'0')}s`;
+}
+
+function swTick(swId) {
+  const t = timers[swId];
+  if (!t || !t.running) return;
+  t.elapsed += 100;
+  const disp = document.getElementById('sw-disp-' + swId);
+  if (disp) disp.textContent = swFormat(t.elapsed);
+}
+
+function swToggle(swId, dayIdx, field) {
+  swCreate(swId);
+  const t = timers[swId];
+  const btn = document.getElementById('sw-btn-' + swId);
+  if (!t.running) {
+    // START
+    t.running = true;
+    t.interval = setInterval(() => swTick(swId), 100);
+    if (btn) { btn.textContent = '⏹ Stop'; btn.className = 'sw-btn sw-stop'; }
+  } else {
+    // STOP → save
+    t.running = false;
+    clearInterval(t.interval);
+    if (btn) { btn.textContent = '▶ Start'; btn.className = 'sw-btn sw-start'; }
+    // Auto-save to the matching input field
+    const totalSec = Math.round(t.elapsed / 1000);
+    if (dayIdx !== undefined && field) {
+      saveDay(dayIdx, 'cali', field, String(totalSec));
+      // Also update the visible input if it exists
+      const inputs = document.querySelectorAll(`#daycard-${dayIdx} input`);
+      inputs.forEach(inp => {
+        if (inp.onchange && inp.onchange.toString().includes(field)) {
+          inp.value = totalSec;
+        }
+      });
+      const saved = document.getElementById('sw-saved-' + swId);
+      if (saved) { saved.textContent = `✓ ${totalSec}s enregistré !`; saved.style.display = 'inline'; }
+    }
+  }
+}
+
+function swReset(swId) {
+  swCreate(swId);
+  const t = timers[swId];
+  t.elapsed = 0;
+  t.running = false;
+  clearInterval(t.interval);
+  const disp = document.getElementById('sw-disp-' + swId);
+  const btn = document.getElementById('sw-btn-' + swId);
+  const saved = document.getElementById('sw-saved-' + swId);
+  if (disp) disp.textContent = '0.00s';
+  if (btn) { btn.textContent = '▶ Start'; btn.className = 'sw-btn sw-start'; }
+  if (saved) saved.style.display = 'none';
+}
+
+function buildStopwatch(swId, dayIdx, field, label) {
+  return `<div class="sw-wrap">
+    <span style="font-size:10px;color:var(--muted2);min-width:55px">${label}</span>
+    <span class="sw-display" id="sw-disp-${swId}">0.00s</span>
+    <button class="sw-btn sw-start" id="sw-btn-${swId}" onclick="swToggle('${swId}',${dayIdx},'${field}')">▶ Start</button>
+    <button class="sw-btn sw-reset" onclick="swReset('${swId}')">↺</button>
+    <span class="sw-saved" id="sw-saved-${swId}"></span>
+  </div>`;
+}
+
+
+// ══════════════════════════════════════════
+// CHRONO ENGINE
+// ══════════════════════════════════════════
+let chronoState={running:false,startTs:null,accumulated:0,raf:null,dayIdx:null,field:null,exoLabel:'',laps:[]};
+
+function openChrono(dayIdx, field, exoLabel){
+  chronoState.dayIdx=dayIdx;
+  chronoState.field=field;
+  chronoState.exoLabel=exoLabel||'';
+  document.getElementById('chronoExoLabel').textContent=exoLabel||'Prêt à chronométrer';
+  document.getElementById('chronoSavedMsg').textContent='';
+  document.getElementById('chronoOverlay').style.display='flex';
+  document.body.style.overflow='hidden';
+  // If already running, just show overlay
+  updateChronoUI();
+}
+
+function closeChrono(){
+  document.getElementById('chronoOverlay').style.display='none';
+  document.body.style.overflow='';
+}
+
+function closeChronoOnBg(e){
+  if(e.target===document.getElementById('chronoOverlay')) closeChrono();
+}
+
+function chronoStartStop(){
+  if(chronoState.running){
+    // STOP
+    chronoState.accumulated+=Date.now()-chronoState.startTs;
+    chronoState.running=false;
+    cancelAnimationFrame(chronoState.raf);
+    // Add lap
+    const t=chronoState.accumulated;
+    chronoState.laps.push(t);
+    renderChronoLaps();
+    document.getElementById('chronoStartBtn').textContent='▶ Continuer';
+    document.getElementById('chronoStartBtn').className='cbtn cbtn-start';
+    document.getElementById('chronoSaveBtn').disabled=false;
+    document.getElementById('chronoDisplay').className='chrono-display stopped';
+  } else {
+    // START
+    chronoState.startTs=Date.now();
+    chronoState.running=true;
+    document.getElementById('chronoStartBtn').textContent='⏹ Stop';
+    document.getElementById('chronoStartBtn').className='cbtn cbtn-stop';
+    document.getElementById('chronoDisplay').className='chrono-display running';
+    document.getElementById('chronoSavedMsg').textContent='';
+    tickChrono();
+  }
+}
+
+function tickChrono(){
+  if(!chronoState.running) return;
+  updateChronoUI();
+  chronoState.raf=requestAnimationFrame(tickChrono);
+}
+
+function updateChronoUI(){
+  const elapsed=chronoState.accumulated+(chronoState.running?Date.now()-chronoState.startTs:0);
+  const m=Math.floor(elapsed/60000);
+  const s=Math.floor((elapsed%60000)/1000);
+  const ms=elapsed%1000;
+  document.getElementById('chronoDisplay').textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  document.getElementById('chronoMs').textContent='.'+String(ms).padStart(3,'0');
+}
+
+function chronoReset(){
+  chronoState.running=false;
+  cancelAnimationFrame(chronoState.raf);
+  chronoState.accumulated=0;
+  chronoState.startTs=null;
+  chronoState.laps=[];
+  document.getElementById('chronoDisplay').textContent='00:00';
+  document.getElementById('chronoMs').textContent='.000';
+  document.getElementById('chronoDisplay').className='chrono-display';
+  document.getElementById('chronoStartBtn').textContent='▶ Start';
+  document.getElementById('chronoStartBtn').className='cbtn cbtn-start';
+  document.getElementById('chronoSaveBtn').disabled=true;
+  document.getElementById('chronoLaps').innerHTML='';
+  document.getElementById('chronoSavedMsg').textContent='';
+}
+
+function renderChronoLaps(){
+  const el=document.getElementById('chronoLaps');
+  if(!chronoState.laps.length){el.innerHTML='';return;}
+  const best=Math.max(...chronoState.laps);
+  el.innerHTML=chronoState.laps.map((t,i)=>{
+    const m=Math.floor(t/60000),s=Math.floor((t%60000)/1000),ms=t%1000;
+    const isBest=t===best;
+    return`<div class="lap${isBest?' lap-best':''}">
+      <span>Série ${i+1}${isBest?' 🏆':''}</span>
+      <span>${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}.${String(ms).padStart(3,'0').slice(0,2)}</span>
+    </div>`;
+  }).join('');
+}
+
+function chronoSave(){
+  const elapsed=chronoState.accumulated;
+  const totalSec=Math.round(elapsed/1000);
+  const m=Math.floor(totalSec/60),s=totalSec%60;
+  const display=m>0?`${m}min ${s}s`:`${s}s`;
+
+  // If linked to a specific field in a day
+  if(chronoState.dayIdx!==null && chronoState.field){
+    saveDay(chronoState.dayIdx,'cali',chronoState.field,totalSec);
+    // Also update the input field visually
+    const selector=`#ip-${chronoState.dayIdx}-log input[placeholder]`;
+    const inputs=document.querySelectorAll(`#ip-${chronoState.dayIdx}-log input`);
+    inputs.forEach(inp=>{
+      if(inp.getAttribute('onchange')&&inp.getAttribute('onchange').includes(`'${chronoState.field}'`)){
+        inp.value=totalSec;
+      }
+    });
+    document.getElementById('chronoSavedMsg').textContent=`✓ ${display} sauvegardé dans "${chronoState.exoLabel}" !`;
+    toast(`✓ ${display} enregistré !`,'#22c55e');
+  } else {
+    // No target — just show the result for manual copy
+    document.getElementById('chronoSavedMsg').textContent=`✓ Résultat : ${display} (${totalSec}s) — sauvegarde manuelle si besoin`;
+  }
+  document.getElementById('chronoSaveBtn').disabled=true;
+}
+
+// Expose function to launch chrono from exercise buttons
+window.openChrono=openChrono;
+
+function openChronoLinked(dayIdx, field, label){
+  chronoReset();
+  chronoState.dayIdx=dayIdx;
+  chronoState.field=field;
+  chronoState.exoLabel=label;
+  document.getElementById('chronoExoLabel').textContent=`${label} — Jour ${dayIdx+1} • Résultat auto-sauvegardé`;
+  document.getElementById('chronoSavedMsg').textContent='';
+  document.getElementById('chronoOverlay').style.display='flex';
+  document.body.style.overflow='hidden';
+}
+window.openChronoLinked=openChronoLinked;
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Space+Mono:wght@400;700&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#060b14;--bg2:#0d1627;--bg3:#111e35;--border:rgba(245,200,66,.15);--gold:#f5c842;--gold2:#e6a91a;--blue:#3b82f6;--cyan:#06b6d4;--green:#22c55e;--red:#ef4444;--orange:#f97316;--purple:#a855f7;--text:#e2e8f0;--muted:#64748b;--muted2:#94a3b8}
@@ -36,8 +300,6 @@ header{padding:20px 0 14px;border-bottom:1px solid var(--border);margin-bottom:1
 .logo h1{font-family:'Rajdhani',sans-serif;font-size:19px;font-weight:700;color:var(--gold);letter-spacing:2px;text-transform:uppercase}
 .logo p{font-size:10px;color:var(--muted2);letter-spacing:.7px}
 .week-nav{display:flex;align-items:center;gap:7px}
-.week-nav button{background:var(--bg2);border:1px solid var(--border);color:var(--muted2);padding:5px 11px;border-radius:7px;cursor:pointer;font-size:13px;font-family:'Exo 2',sans-serif;transition:all .2s}
-.week-nav button:hover{border-color:var(--gold);color:var(--gold)}
 .week-label{font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;color:var(--gold);min-width:155px;text-align:center}
 /* TABS */
 /* TOP NAV — desktop only */
@@ -231,6 +493,50 @@ tr:hover td{background:rgba(255,255,255,.015)}
 .toast{position:fixed;bottom:18px;right:18px;padding:9px 15px;border-radius:8px;font-size:12px;font-weight:600;z-index:999;animation:toastIn .28s ease;color:#0a0a0a}
 @keyframes toastIn{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:600px){.form-row{grid-template-columns:1fr 1fr}.cwrap{height:190px}.stat-grid{grid-template-columns:repeat(2,1fr)}.week-label{font-size:12px;min-width:120px}.dr-sliders{grid-template-columns:1fr}}
+
+/* STOPWATCH */
+.sw-btn{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;border:none;font-family:'Exo 2',sans-serif;transition:all .2s;letter-spacing:.4px}
+.sw-start{background:rgba(34,197,94,.18);color:#4ade80;border:1px solid rgba(34,197,94,.35)}
+.sw-stop{background:rgba(239,68,68,.18);color:#f87171;border:1px solid rgba(239,68,68,.35)}
+.sw-reset{background:rgba(100,116,139,.15);color:var(--muted2);border:1px solid var(--border)}
+.sw-display{font-family:'Space Mono',monospace;font-size:20px;font-weight:700;color:var(--gold);min-width:75px;text-align:center;letter-spacing:2px}
+.sw-save-tag{font-size:10px;color:var(--green);font-weight:600;display:none}
+.sw-wrap{background:var(--bg3);border-radius:9px;padding:9px 12px;margin-top:6px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;border:1px solid rgba(245,200,66,.1)}
+.sw-saved{font-size:10px;color:var(--green);font-style:italic}
+
+/* CHRONO */
+.chrono-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+.chrono-box{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:32px 28px;width:min(340px,90vw);text-align:center;box-shadow:0 0 60px rgba(245,200,66,.12)}
+.chrono-title{font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px}
+.chrono-exo{font-size:12px;color:var(--muted2);margin-bottom:20px;min-height:16px}
+.chrono-display{font-family:'Space Mono',monospace;font-size:62px;font-weight:700;color:var(--text);letter-spacing:2px;line-height:1;margin-bottom:6px}
+.chrono-display.running{color:var(--green)}
+.chrono-display.stopped{color:var(--gold)}
+.chrono-ms{font-family:'Space Mono',monospace;font-size:22px;color:var(--muted);margin-bottom:24px}
+.chrono-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
+.cbtn{padding:11px 22px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;border:none;font-family:'Exo 2',sans-serif;transition:all .18s;letter-spacing:.5px;min-width:90px}
+.cbtn-start{background:var(--green);color:#000}
+.cbtn-start:hover{opacity:.9}
+.cbtn-stop{background:var(--red);color:#fff}
+.cbtn-stop:hover{opacity:.9}
+.cbtn-reset{background:var(--bg3);color:var(--muted2);border:1px solid var(--border)}
+.cbtn-reset:hover{border-color:var(--muted2)}
+.cbtn-save{background:var(--gold);color:#000}
+.cbtn-save:hover{background:var(--gold2)}
+.cbtn-save:disabled{opacity:.35;cursor:not-allowed}
+.cbtn-close{background:transparent;color:var(--muted2);border:1px solid var(--border);font-size:12px;padding:8px 16px}
+.cbtn-close:hover{border-color:var(--muted2)}
+.chrono-saved{font-size:12px;color:var(--green);margin-top:8px;min-height:18px;font-weight:600}
+.chrono-laps{max-height:120px;overflow-y:auto;margin-bottom:14px;display:flex;flex-direction:column;gap:4px}
+.lap{font-family:'Space Mono',monospace;font-size:11px;color:var(--muted2);background:var(--bg3);border-radius:5px;padding:4px 10px;display:flex;justify-content:space-between}
+.lap-best{color:var(--green)}
+/* Timer launch button in exo card */
+.exo-timer-btn{display:inline-flex;align-items:center;gap:5px;margin-top:6px;padding:5px 11px;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid rgba(245,200,66,.3);background:rgba(245,200,66,.07);color:var(--gold);font-family:'Exo 2',sans-serif;transition:all .18s}
+.exo-timer-btn:hover{background:rgba(245,200,66,.15);border-color:var(--gold)}
+/* Floating chrono fab */
+.chrono-fab{position:fixed;bottom:76px;right:16px;z-index:90;background:var(--gold);color:#000;width:46px;height:46px;border-radius:50%;border:none;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(245,200,66,.4);transition:transform .2s}
+.chrono-fab:hover{transform:scale(1.1)}
+@media(min-width:701px){.chrono-fab{bottom:20px}}
 </style>
 </head>
 <body>
@@ -246,10 +552,7 @@ tr:hover td{background:rgba(255,255,255,.015)}
     </div>
   </div>
   <div class="week-nav">
-    <button onclick="changeWeek(-1)">‹</button>
     <div class="week-label" id="weekLabel">—</div>
-    <button onclick="changeWeek(1)">›</button>
-    <button class="btn btn-gold btn-sm" onclick="goNow()" style="margin-left:3px">Auj.</button>
   </div>
 </header>
 
@@ -300,7 +603,7 @@ tr:hover td{background:rgba(255,255,255,.015)}
     <div class="ccrd"><div class="ccrd-title">Planche (secondes)</div><div class="ccrd-sub">+320% depuis le départ</div><div class="cwrap"><canvas id="cPl" role="img" aria-label="Planche">Planche 25→105s.</canvas></div></div>
     <div class="ccrd"><div class="ccrd-title">VO2max</div><div class="ccrd-sub">De "Moyen" à "Très Bon"</div><div class="cwrap"><canvas id="cV2" role="img" aria-label="VO2max">VO2max 43→49.</canvas></div></div>
   </div>
-  <div class="yoda" style="margin-top:13px"><strong>Maître Yoda :</strong> "MVW fait, streak préservée. Plus jamais 6 mois ! Body Battery écouter tu dois — plus sage que ton ego elle est."</div>
+  <div class="yoda" style="margin-top:13px"><strong>Maître Yoda :</strong> "S2 commence. 91% de la planche, 94% du VO2max — la Force en toi dormait, disparue elle n\'était pas. Construire intelligent, c\'est aller plus haut demain !"</div>
 </div>
 
 <!-- SESSIONS -->
@@ -334,13 +637,13 @@ tr:hover td{background:rgba(255,255,255,.015)}
       <div class="fg"><label>Équilibre push/pull</label><select id="wEquil" onchange="saveWG()"><option value="">—</option><option value="bon">Bon</option><option value="trop_push">Trop push</option><option value="trop_pull">Trop pull</option></select></div>
     </div>
     <div class="form-divider"></div>
-    <div class="form-subtitle">📡 Données Garmin</div>
+    <div class="form-subtitle">📡 Données Garmin (sans sommeil)</div>
     <div class="form-row">
       <div class="fg"><label>HRV Status</label><select id="wHrv" onchange="saveWG()"><option value="">—</option><option value="equilibre">Équilibré</option><option value="bas">Bas</option><option value="mixte">Mixte</option></select></div>
       <div class="fg"><label>Jours HRV équil.</label><input type="number" id="wHrvDays" min="0" max="7" placeholder="ex: 5" onchange="saveWG()"></div>
       <div class="fg"><label>Training Status</label><select id="wTStatus" onchange="saveWG()"><option value="">—</option><option value="productif">Productif</option><option value="maintien">Maintien</option><option value="surcharge">Surcharge</option><option value="improductif">Improductif</option><option value="desentrainement">Désentraînement</option></select></div>
       <div class="fg"><label>VO2max actuel</label><input type="number" id="wVo2" placeholder="ex: 46" onchange="saveWG()"></div>
-      <div class="fg"><label>BB moyen réveil</label><input type="number" id="wBB" min="0" max="100" placeholder="ex: 65" onchange="saveWG()"></div>
+      <div class="fg"><label>FC repos matin (bpm)</label><input type="number" id="wBB" min="30" max="120" placeholder="ex: 55" onchange="saveWG()"></div>
     </div>
     <div class="form-divider"></div>
     <div class="form-subtitle">📝 Bilan qualitatif</div>
@@ -402,7 +705,7 @@ tr:hover td{background:rgba(255,255,255,.015)}
     <strong style="color:#f87171">Activer le MVW quand :</strong>
     <div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:7px">
       <span style="background:rgba(239,68,68,.1);color:#fca5a5;padding:3px 8px;border-radius:4px;font-size:10px">DR &lt; 20/40</span>
-      <span style="background:rgba(239,68,68,.1);color:#fca5a5;padding:3px 8px;border-radius:4px;font-size:10px">Body Battery &lt; 30</span>
+      <span style="background:rgba(239,68,68,.1);color:#fca5a5;padding:3px 8px;border-radius:4px;font-size:10px">FC repos élevée &gt; 65 bpm</span>
       <span style="background:rgba(239,68,68,.1);color:#fca5a5;padding:3px 8px;border-radius:4px;font-size:10px">Moins de 30 min dispo</span>
       <span style="background:rgba(239,68,68,.1);color:#fca5a5;padding:3px 8px;border-radius:4px;font-size:10px">Mauvaise nuit</span>
       <span style="background:rgba(239,68,68,.1);color:#fca5a5;padding:3px 8px;border-radius:4px;font-size:10px">Reprise post-maladie légère</span>
@@ -433,23 +736,23 @@ tr:hover td{background:rgba(255,255,255,.015)}
 // ══════════════════════════════════════════
 const WORKOUTS={
   running_tempo:{
-    label:'🏃 Running Tempo Léger',dur:'45 min / ~6 km',horaire:'Avant 9h ou après 19h',
+    label:'🏃 Running Tempo S2',dur:'50 min / ~7 km',horaire:'Avant 9h ou après 19h',
     warm:[
       {t:'5 min marche dynamique'},
       {t:'7 min footing très lent — Z1, ~7:30/km, conversation totale'},
       {t:'3 min éducatifs : 30s montées genoux / 30s talons-fesses / 30s pas chassés'},
     ],
     circuits:[
-      {label:'Corps de séance — 25 min',tours:'',color:'run',intervalsN:5,exos:[
-        {n:'5 × 4 min en Zone 2',g:'Courir',d:'Allure ~6:50-7:00/km • "phrases courtes possibles"',tip:'⚠️ Si FC dépasse 150 bpm → ralentir immédiatement, on est en construction',h:'Récup : 1 min marche entre chaque'},
+      {label:'Corps de séance — 28 min — 6 INTERVALS S2',tours:'',color:'run',intervalsN:6,exos:[
+        {n:'6 × 4 min en Zone 2',g:'Courir',d:'Allure ~6:30-6:45/km • FC 145-155 bpm',tip:'⚠️ Si FC dépasse 155 bpm → ralentir immédiatement. Allure S2 = première vraie vitesse retour',h:'Récup : 1 min marche entre chaque interval'},
       ]},
     ],
     cool:['3 min marche','Mollets 30s/jambe → "Étirement des jambes"','Quadriceps 30s/jambe → "Étirement du quadriceps"','Ischios 30s/jambe → "Étirement des ischio-jambiers"'],
     mvw:['3 min marche échauffement','10 min course très facile (8:00/km)','2 min marche retour calme'],
-    yoda:'Lent tu cours, fort tu deviens. Le tempo léger, fondation du retour il est. Pas la vitesse, mais la régularité que ton corps cherche.'
+    yoda:'Plus vite qu\'hier, moins vite que demain. 6:30-6:45/km ta nouvelle allure de base elle devient. Trop facile si elle semble ? Non : construire tu es, pas performer encore.'
   },
   push_pull:{
-    label:'💪 Push/Pull — Pecs 70% / Dorsaux 30%',dur:'40 min',horaire:'Matin ou soir',
+    label:'💪 Push/Pull — Pecs 70% / Dorsaux 30% + 🧪 TEST POMPES SOL',dur:'45 min',horaire:'Matin idéal — TEST avant fatigue impératif',
     warm:[
       {t:'50 tours corde à sauter',g:'Saut à la corde'},
       {t:'20 cercles d\'épaules avant/arrière',g:'Rotations des bras'},
@@ -458,36 +761,39 @@ const WORKOUTS={
       {t:'30s hollow body hold léger'},
     ],
     circuits:[
+      {label:'🧪 TEST POMPES SOL — Avant fatigue !',tours:'1 seul set • Repos 3 min après',color:'test',exos:[
+        {n:'Pompes sol MAX',g:'Pompes',d:'Amplitude complète • Poignées pompes • Film-toi',tip:'Compte uniquement les reps avec forme complète • Stop dès que la forme casse • Objectif S2 : 8-11 reps',h:'⏱️ Repos 3 min OBLIGATOIRE avant Circuit A'},
+      ]},
       {label:'Circuit A — PECS FOCUS 70%',tours:'3 tours • Repos 90s',toursN:3,color:'circuit',exos:[
         {n:'Pompes inclinées',g:'Pompes inclinées',d:'10 reps • Tempo 2-1-2',repsN:10,tip:'Banc niveau cuisses • Coudes ~45° du corps • Omoplates serrées'},
-        {n:'Pompes diamant sur genoux',g:'Pompes resserrées',d:'7 reps',repsN:7,tip:'Mains sous poitrine en diamant • Focus triceps + pec interne'},
+        {n:'Pompes diamant',g:'Pompes resserrées',d:'5 reps • ⚠️ Triceps gauche surveillé',repsN:5,tip:'Mains en diamant sous poitrine • Moindre signal douleur triceps G → STOP immédiat'},
         {n:'Chest fly élastique',g:'Écarté avec élastique',d:'12 reps • SmartWorkout LÉGER (10-15 kg)',repsN:12,tip:'Bras légèrement fléchis • Contraction 1s en bas'},
       ]},
-      {label:'Circuit B — DORSAUX/CORE ÉQUILIBRAGE 30%',tours:'2 tours • Repos 60s',toursN:2,color:'circuit',exos:[
+      {label:'Circuit B — DORSAUX/CORE ÉQUILIBRAGE 30%',tours:'3 tours • Repos 60s',toursN:3,color:'circuit',exos:[
         {n:'Rowing élastique',g:'Rowing avec élastique',d:'15 reps • SmartWorkout MOYEN (20-30 kg)',repsN:15,tip:'Penché 45° • Dos droit • Serrer omoplates 1s'},
         {n:'Face pulls',g:'Traction de face avec élastique',d:'15 reps • SmartWorkout LÉGER',repsN:15,tip:'Tirer vers le visage • Coudes hauts → anti-épaules enroulées'},
-        {n:'Planche',g:'Planche',d:'TEST MAX au 1er tour — Note ton chrono !',h:'Tour 2 : 30s contrôlée',tip:'Ventre rentré • Fessiers serrés • Respiration 4s inspir / 4s expir'},
+        {n:'Planche ⏱️',g:'Planche',d:'Tour 1 : TEST MAX · Tours 2-3 : 45s contrôlée',h:'Utilise le chrono dans Saisie résultats',tip:'Ventre rentré • Fessiers serrés • Respiration 4s inspir / 4s expir — <strong style="color:var(--gold)">Utilise le chrono dans Saisie résultats</strong>'},
       ]},
     ],
-    cool:['Chest doorway stretch → "Étirement pectoral" : 60s/côté','Étirement dorsal : 60s','Triceps stretch → "Étirement des triceps" : 30s/bras'],
+    cool:['Chest doorway stretch → "Étirement pectoral" : 60s/côté','Étirement dorsal : 60s','Triceps stretch → "Étirement des triceps" : 30s/bras (DOUX côté gauche !)'],
     mvw:['3 min (rotations + 20 jumping jacks)','2 tours / 60s repos : 8 pompes inclinées + 12 rowing + 30s planche','2 min étirements pec + dos'],
-    yoda:'Ton ego, à la maison laisser tu dois. Ces pompes inclinées que méprisé tu as déjà, ta fondation aujourd\'hui elles sont. Reconstruire intelligent, c\'est aller plus haut demain.'
+    yoda:'Test pompes sol, moment de vérité il est. 8 ou 12 reps — peu importe : ton point de départ réel c\'est. La Force du chiffre suivant, plus importante que celui d\'aujourd\'hui elle sera.'
   },
   running_frac:{
-    label:'⚡ Running Fractionné Soft',dur:'40 min / ~5 km',horaire:'Matin idéal — Si DR < 28 → 30 min Z2 sans intervals',
+    label:'⚡ Running Fractionné S2',dur:'45 min / ~5.5 km',horaire:'Matin idéal — Si DR < 28 → 30 min Z2 sans intervals',
     warm:[
       {t:'5 min marche'},
       {t:'8 min footing progressif Z1 → Z2 doux'},
       {t:'2 min éducatifs légers'},
     ],
     circuits:[
-      {label:'Corps de séance — 20 min INTRO TEMPO',tours:'',color:'run',intervalsN:6,exos:[
-        {n:'6 × 1 min allure tempo',g:'Courir',d:'~6:00-6:15/km • FC ~155-165 bpm',tip:'⚠️ Si essoufflement excessif au 4e intervalle → arrêter, footing 5 min, retour calme',h:'Récup : 1 min 30s marche/trot léger entre chaque'},
+      {label:'Corps de séance — 24 min — 8 INTERVALS S2',tours:'',color:'run',intervalsN:8,exos:[
+        {n:'8 × 1 min allure tempo',g:'Courir',d:'~5:45-6:00/km • FC ~155-165 bpm',tip:'⚠️ Si essoufflement excessif au 5e interval → stopper à 6, footing 5 min, retour calme. 8 c\'est l\'objectif, pas l\'obligation.',h:'Récup : 1 min 30s marche/trot léger entre chaque'},
       ]},
     ],
-    cool:['3 min marche','Étirements ischios : 45s/jambe','Mollets : 30s/jambe'],
+    cool:['3 min marche','Étirements ischios : 45s/jambe','Mollets : 30s/jambe','Voûte plantaire : 30s/pied'],
     mvw:['3 min marche échauffement','10 min footing très facile (7:30/km)','2 min retour au calme'],
-    yoda:'Réveiller la cadence tu vas, mais sans la brutaliser. Le fractionné aujourd\'hui, c\'est saluer la vitesse, pas l\'épouser.'
+    yoda:'6 intervals la semaine passée, 8 aujourd\'hui. La progression, pas la révolution. Chaque interval supplémentaire, une brique de plus dans ta cathédrale aérobie.'
   },
   pull_push:{
     label:'💪 Pull/Push — Dorsaux 70% / Pecs 30%',dur:'40 min',horaire:'Matin ou soir',
@@ -504,32 +810,32 @@ const WORKOUTS={
         {n:'Reverse fly élastique',g:'Écarté avec élastique inversé',d:'12 reps • SmartWorkout LÉGER',repsN:12,tip:'Bras légèrement fléchis (10-15°) • Ouvrir comme un papillon inversé'},
       ]},
       {label:'Circuit B — PECS/ÉPAULES ÉQUILIBRAGE 30%',tours:'2 tours • Repos 60s',toursN:2,color:'circuit',exos:[
-        {n:'Pompes inclinées modérées',g:'Pompes inclinées',d:'8 reps • Tempo lent 3-0-3',repsN:8,tip:'Banc niveau cuisses • Moins de volume qu\'hier intentionnellement'},
-        {n:'Pike push-ups sur genoux',g:'Pompes en V',d:'6 reps',repsN:6,tip:'Position en V inversé • Focus épaules antérieures'},
+        {n:'Pompes inclinées modérées',g:'Pompes inclinées',d:'8 reps • Tempo lent 3-0-3',repsN:8,tip:'Banc niveau cuisses • Volume réduit intentionnel vs lundi — c\'est voulu'},
+        {n:'Pike push-ups',g:'Pompes en V',d:'6 reps',repsN:6,tip:'Position en V inversé • Focus épaules antérieures'},
         {n:'Curls biceps élastique',g:'Curl avec élastique',d:'12 reps • SmartWorkout LÉGER',repsN:12,tip:'Coudes fixes contre le corps • Contraction au sommet 1s'},
       ]},
     ],
     cool:['Hang passif barres dips : 3 × 20s → décompression colonne','Étirement de l\'épaule : 45s/bras','Étirement des biceps : 30s/bras'],
     mvw:['3 min échauffement','2 tours : 12 rowing élastique + 10 face pulls + 8 pompes inclinées','2 min étirements'],
-    yoda:'Tirer plus que pousser, équilibre tu construis. Tes épaules en santé, ta posture droite, ton physique harmonieux — tout commence ici.'
+    yoda:'Tirer 70% de ton énergie aujourd\'hui. Tes dorsaux, armure de ta posture ils sont. Push sans pull, au côté obscur mène — équilibré dans la Force tu dois être.'
   },
   running_end:{
-    label:'🏃 Running Endurance',dur:'45 min / ~6 km',horaire:'Quand tu veux — idéalement matin',
+    label:'🏃 Running Endurance S2',dur:'50 min / ~7 km',horaire:'Quand tu veux — idéalement matin',
     warm:[
       {t:'5 min marche dynamique'},
       {t:'5 min footing très léger Z1'},
     ],
     circuits:[
-      {label:'Corps de séance — 30 min ENDURANCE',tours:'',color:'run',runDurN:30,exos:[
-        {n:'Course continue',g:'Courir',d:'Allure conversation ~6:50-7:10/km • FC cible 130-150 bpm',tip:'Objectif : finir SANS pause obligatoire • Si nécessaire : 1 pause de 1 min autorisée — ce n\'est pas un échec, c\'est S1 !',h:'Plaisir > performance aujourd\'hui'},
+      {label:'Corps de séance — 35 min ENDURANCE S2',tours:'',color:'run',runDurN:35,exos:[
+        {n:'Course continue 35 min',g:'Courir',d:'Allure conversation ~6:30-6:45/km • FC cible 135-150 bpm',tip:'5 min de plus qu\'en S1. Si genou ou voûte plantaire signal → réduire à 30 min sans culpabilité. 1 pause de 1 min autorisée si nécessaire.',h:'Objectif : finir les 35 min SANS pause — tu peux le faire'},
       ]},
     ],
-    cool:['3 min marche','Mollets : 30s/jambe','Voûte plantaire : 30s/pied (important !)','Quadriceps : 30s/jambe'],
-    mvw:['3 min marche','10 min course très facile','2 min étirements'],
-    yoda:'L\'endurance, fondation de toutes choses elle est. 30 minutes en continu = victoire de la semaine. La régularité avant la performance.'
+    cool:['3 min marche','Mollets : 30s/jambe','Voûte plantaire : 30s/pied (important !)','Quadriceps : 30s/jambe','Ischios : 30s/jambe'],
+    mvw:['3 min marche','10 min course très facile (8:00/km)','2 min étirements'],
+    yoda:'35 minutes. 5 de plus que la semaine dernière. C\'est tout. Et c\'est énorme. L\'endurance se construit minute par minute — chaque foulée, une brique de la Force.'
   },
   total_body:{
-    label:'🔥 Total Body + TESTS BASELINE',dur:'50 min',horaire:'⚠️ Si DR < 28 → reporter les tests ! BB idéalement > 50',
+    label:'🔥 Total Body S2 — Harmonie',dur:'50 min',horaire:'Matin idéal — DR check avant séance',
     warm:[
       {t:'100 tours corde à sauter',g:'Saut à la corde'},
       {t:'20 squats lents',g:'Squat'},
@@ -538,22 +844,23 @@ const WORKOUTS={
       {t:'Mobilité articulaire complète épaules/hanches'},
     ],
     circuits:[
-      {label:'🧪 TESTS BASELINE — MOMENT DE VÉRITÉ',tours:'Repos 3-5 min entre tests',color:'test',exos:[
-        {n:'TEST 1 — MAX Pompes au sol',g:'Pompes',d:'Amplitude complète obligatoire • Poignées pompes',tip:'Note ton record EXACT • Probablement 5-10 reps avec muscle memory • Film-toi pour la forme',h:'⏱️ Repos 5 min après'},
-        {n:'TEST 2 — Planche MAX',g:'Planche',d:'Position parfaite • Ventre rentré • Corps aligné',tip:'Note ton chrono EXACT — tu compareras dans 4 semaines',h:'⏱️ Repos 3 min après'},
-        {n:'TEST 3 — Rowing MAX en 30s',g:'Rowing avec élastique',d:'SmartWorkout MOYEN • Technique propre',tip:'Compte tes reps avec technique propre — qualité > quantité'},
+      {label:'Circuit A — PUSH 35%',tours:'3 tours • Repos 90s',toursN:3,color:'circuit',exos:[
+        {n:'Pompes inclinées',g:'Pompes inclinées',d:'10 reps • Tempo 2-1-2',repsN:10,tip:'Même qualité qu\'en début de semaine — forme avant tout'},
+        {n:'Pompes diamant',g:'Pompes resserrées',d:'5 reps • ⚠️ Triceps gauche',repsN:5,tip:'Vigilance triceps G — moindre douleur = arrêt immédiat, pas de négociation'},
       ]},
-      {label:'Circuit Total Body Léger',tours:'2 tours • Repos 90s',toursN:2,color:'circuit',exos:[
-        {n:'Squats',g:'Squat',d:'15 reps • Descente cuisses parallèles • Dos droit',repsN:15},
-        {n:'Fentes alternées',g:'Fente',d:'12 reps (6/jambe) • Genou ne dépasse pas la pointe du pied',repsN:12},
-        {n:'Mountain climbers contrôlés',g:'Position grimpeur',d:'20 reps (10/jambe) • Tempo modéré',repsN:20},
-        {n:'Calf raises',g:'Extension des mollets debout',d:'20 reps • Amplitude maximale',repsN:20},
-        {n:'Hollow body hold',g:'Roche creuse',d:'20s • Genoux pliés si dur',repsN:20},
+      {label:'Circuit B — PULL 35%',tours:'3 tours • Repos 90s',toursN:3,color:'circuit',exos:[
+        {n:'Rowing élastique',g:'Rowing avec élastique',d:'15 reps • SmartWorkout MOYEN',repsN:15,tip:'Qualité max — omoplates serrées en fin de mouvement'},
+        {n:'Lat pulls élastique',g:'Pull-down avec élastique',d:'12 reps',repsN:12,tip:'Sentir les grands dorsaux travailler'},
+      ]},
+      {label:'Circuit C — CORE + JAMBES 30%',tours:'3 tours • Repos 60s',toursN:3,color:'circuit',exos:[
+        {n:'Planche ⏱️',g:'Planche',d:'45s tenue • Respiration consciente',repsN:45,tip:'Tour 3 : tenter 50-55s si forme OK — <strong style="color:var(--gold)">Utilise le chrono dans Saisie résultats</strong>'},
+        {n:'Squats',g:'Squat',d:'15 reps • Descente 3s • Genoux dans l\'axe',repsN:15,tip:'Fessiers en bas de la descente • Tronc droit'},
+        {n:'Fentes marchées',g:'Fente',d:'10 reps/jambe',repsN:10,tip:'Genou gauche dans l\'axe • Tronc droit'},
       ]},
     ],
-    cool:['Posture de l\'enfant : 90s','Posture du pigeon : 60s/côté','Étirement pectoral : 45s/côté','Étirement quadriceps : 30s/jambe'],
+    cool:['Chest doorway stretch → "Étirement pectoral" : 90s','Pike stretch → "Inclinaison en avant" : 90s','Hip flexor → "Étirement fléchisseur de la hanche" : 60s/côté','Posture du pigeon → "Posture du pigeon" : 90s/côté'],
     mvw:['3 min échauffement','EMOM 10 min : Min 1-8 pompes incl / Min 2-12 squats / Min 3-10 rowing / Min 4-30s planche / Min 5-10 fentes (×2)','2 min étirements'],
-    yoda:'Mesurer ton point de départ, tu dois. Pas pour te juger, mais pour célébrer ta progression dans 4 semaines. Le test, photo de l\'instant il est. Demain, déjà différent tu seras.'
+    yoda:'Total Body clôture ta semaine de 6 jours. Harmonieux dans la Force tu as été. Demain, repos et récup — pas faiblesse, nécessité de Padawan intelligent.'
   },
   recup:{
     label:'🧘 Récup Active & Mobilité',dur:'30-45 min',horaire:'Quand tu veux • Pas de course',
@@ -798,6 +1105,11 @@ function buildWorkout(type,drScore){
         } else if(isBoost&&e.repsN){
           repsBadge=` <span style="background:rgba(34,197,94,.15);color:var(--green);font-size:10px;padding:1px 5px;border-radius:4px">${adaptedReps}+ si tu te sens bien</span>`;
         }
+        // Determine if this is a timed exercise
+        const isTimedExo=e.n&&(e.n.toLowerCase().includes('planche')||e.n.toLowerCase().includes('l-sit')||e.n.toLowerCase().includes('l sit')||e.n.toLowerCase().includes('hollow')||e.n.toLowerCase().includes('isometrique')||e.n.toLowerCase().includes('hang'));
+        const timedField=e.n&&e.n.toLowerCase().includes('planche')?'planche':(e.n&&(e.n.toLowerCase().includes('l-sit')||e.n.toLowerCase().includes('l sit'))?'lsit':null);
+        // dayIdx is not available in buildWorkout, so we pass null — user can still use the FAB
+        const timerBtn=isTimedExo?`<button class="exo-timer-btn" onclick="openChrono(null,null,'${e.n.replace(/'/g,"\'").replace(/"/g,'&quot;')}')">⏱️ Chrono</button>`:'';
         h+=`<div class="exo-card">
           <div class="exo-num">${idx+1}</div>
           <div class="exo-body">
@@ -806,6 +1118,7 @@ function buildWorkout(type,drScore){
             <div class="exo-details">${e.d}</div>
             ${e.h?`<div class="exo-details" style="color:var(--gold)">${e.h}</div>`:''}
             ${e.tip?`<div class="exo-tip">💡 ${e.tip}</div>`:''}
+            ${timerBtn}
           </div>
         </div>`;
       });
@@ -858,7 +1171,7 @@ function buildLogForm(day,i,date){
         <div class="dr-s"><span class="lbl">🧘 Calme mental</span><input type="range" min="1" max="10" value="${day.dr.s4}" oninput="saveDR(${i},'s4',+this.value,this)"><span class="dr-sv" id="drv-${i}-s4">${day.dr.s4}</span></div>
       </div>
       <div class="dr-total-mini">Score : <span id="drt-${i}" style="color:${drC}">${drTotal}/40</span> — <span id="drv2-${i}" style="font-size:10px;color:var(--muted2)">${drV(drTotal)}</span></div>
-      <div style="margin-top:8px;max-width:180px"><label style="font-size:10px;color:var(--muted2);display:block;margin-bottom:3px;letter-spacing:.7px;text-transform:uppercase">Body Battery (/100)</label><input type="number" value="${day.bb}" min="0" max="100" placeholder="ex: 72" onchange="saveDay(${i},null,'bb',this.value)" style="background:var(--bg2);border:1px solid rgba(255,255,255,.1);border-radius:6px;padding:5px 8px;color:var(--text);font-size:12px;font-family:'Exo 2',sans-serif;width:100%"></div>
+      <div style="margin-top:8px;max-width:180px"><label style="font-size:10px;color:var(--muted2);display:block;margin-bottom:3px;letter-spacing:.7px;text-transform:uppercase">FC repos matin (bpm)</label><input type="number" value="${day.bb}" min="30" max="120" placeholder="ex: 55" onchange="saveDay(${i},null,'bb',this.value)" style="background:var(--bg2);border:1px solid rgba(255,255,255,.1);border-radius:6px;padding:5px 8px;color:var(--text);font-size:12px;font-family:'Exo 2',sans-serif;width:100%"></div>
     </div>
     <div class="form-row">
       <div class="fg"><label>Note séance /10</label><input type="number" value="${day.note}" min="1" max="10" placeholder="1-10" onchange="saveDay(${i},null,'note',this.value)" id="note-input-${i}"></div>
@@ -884,19 +1197,27 @@ function buildLogForm(day,i,date){
           <option value="douleur"${day.running.genou==='douleur'?' selected':''}>🔴 Douleur</option>
         </select>
       </div>
-    </div>`:''}
+    </div>
+    ${IS_RUN(day.type)?`<div style="margin-bottom:10px">${buildStopwatch('sw-run-'+i, i, 'duree', '⏱️ Durée course')}</div>`:''}
+    `:''}
     ${IS_CALI(day.type)?`
     <div class="form-divider"></div>
     <div class="form-subtitle">💪 Résultats Calisthenics</div>
     <div class="form-row">
       <div class="fg"><label>Pompes inclinées</label><input type="number" value="${day.cali.pompesIncl}" onchange="saveDay(${i},'cali','pompesIncl',this.value)" placeholder="max série 1"></div>
       <div class="fg"><label>Pompes au sol</label><input type="number" value="${day.cali.pompesSol}" onchange="saveDay(${i},'cali','pompesSol',this.value)" placeholder="max série 1"></div>
-      <div class="fg"><label>Planche (sec)</label><input type="number" value="${day.cali.planche}" onchange="saveDay(${i},'cali','planche',this.value)" placeholder="série 1"></div>
+      <div class="fg"><label>Planche (sec) <button class="exo-timer-btn" style="margin-left:4px;font-size:10px;padding:2px 7px" onclick="openChronoLinked(${i},'planche','Planche')">⏱️</button></label><input type="number" value="${day.cali.planche}" onchange="saveDay(${i},'cali','planche',this.value)" placeholder="série 1"></div>
       <div class="fg"><label>Dips assistés</label><input type="number" value="${day.cali.dips}" onchange="saveDay(${i},'cali','dips',this.value)" placeholder="max"></div>
-      <div class="fg"><label>L-sit (sec)</label><input type="number" value="${day.cali.lsit}" onchange="saveDay(${i},'cali','lsit',this.value)" placeholder="sec"></div>
+      <div class="fg"><label>L-sit (sec) <button class="exo-timer-btn" style="margin-left:4px;font-size:10px;padding:2px 7px" onclick="openChronoLinked(${i},'lsit','L-sit')">⏱️</button></label><input type="number" value="${day.cali.lsit}" onchange="saveDay(${i},'cali','lsit',this.value)" placeholder="sec"></div>
       <div class="fg"><label>Rowing (reps)</label><input type="number" value="${day.cali.rowing}" onchange="saveDay(${i},'cali','rowing',this.value)" placeholder="max"></div>
       <div class="fg"><label>Séries complètes</label><input type="number" value="${day.cali.series}" onchange="saveDay(${i},'cali','series',this.value)" placeholder="ex: 3"></div>
+    </div>
+    ${IS_CALI(day.type)?`
+    <div style="margin-bottom:10px">
+      ${buildStopwatch('sw-pl-'+i, i, 'planche', '⏱️ Planche')}
+      ${buildStopwatch('sw-ls-'+i, i, 'lsit', '⏱️ L-sit')}
     </div>`:''}
+    `:''}
     <div class="fg" style="margin-top:8px"><label>Ressenti / notes libres</label><textarea onchange="saveDay(${i},null,'notes',this.value)" placeholder="Comment tu t'es senti, ce qui a été dur ou facile, observations particulières...">${day.notes}</textarea></div>
   </div>`;
 }
@@ -1072,7 +1393,7 @@ ${SEP}
 
 📡 GARMIN
 • HRV : ${store.hrv||'—'}${store.hrvDays?' ('+store.hrvDays+'j équilibré)':''}  |  Training Status : ${store.tStatus||'—'}
-• VO2max : ${store.vo2||'—'}  |  Body Battery moyen réveil : ${store.bb||'—'}/100
+• VO2max : ${store.vo2||'—'}  |  FC repos matin moyenne : ${store.bb||'—'} bpm
 • MVW activés : ${mvws}
 
 📅 DÉTAIL PAR JOUR
@@ -1086,7 +1407,7 @@ ${SEP}`;
     t+=`\n${DAY_NAMES[i].toUpperCase()} ${fmtD(date)} — ${wo?wo.label:(TYPE_LABELS[day.type]||day.type)}
 Statut : ${st[day.done]||'—'}`;
     if(day.done!=='rest'&&day.done!=='planned'){
-      t+=`\n• DR : ${drT||'—'}/40 (Sommeil:${day.dr?.s1||'?'} Énergie:${day.dr?.s2||'?'} Courbat.:${day.dr?.s3||'?'} Mental:${day.dr?.s4||'?'}) | BB : ${day.bb||'—'}`;
+      t+=`\n• DR : ${drT||'—'}/40 (Sommeil:${day.dr?.s1||'?'} Énergie:${day.dr?.s2||'?'} Courbat.:${day.dr?.s3||'?'} Mental:${day.dr?.s4||'?'}) | FC repos : ${day.bb||'—'} bpm`;
       if(IS_RUN(day.type)&&day.running?.duree){
         t+=`\n• Running : ${day.running.duree}min | ${day.running.dist||'—'}km | ${day.running.allure||'—'}min/km | FC moy:${day.running.fcMoy||'—'} max:${day.running.fcMax||'—'} | ${day.running.zone||'—'}`;
         t+=`\n• Genou gauche : ${day.running.genou==='ok'?'✓ OK':day.running.genou==='gene'?'⚠️ Gêne légère':'🔴 Douleur'}`;
@@ -1172,6 +1493,7 @@ const HIST=[
   {s:'S12',d:'13/10/25',pc:4,po:88.0,dt:-6.0,pi:null,ps:15,pl:75,cr:60,v2:49,j:84,nt:9.0,hi:1},
   {s:'PAUSE',d:'Oct→Avr',pc:5,po:null,dt:null,pi:null,ps:null,pl:null,cr:null,v2:null,j:null,nt:null},
   {s:'CB-S0',d:'07/04/26',pc:6,po:94.0,dt:6.0,pi:null,ps:null,pl:null,cr:30,v2:null,j:3,nt:null},
+  {s:'CB-S1',d:'28/04/26',pc:6,po:93.6,dt:5.6,pi:null,ps:8,pl:96,cr:43,v2:46,j:14,nt:null,hi:1},
 ];
 const PC=['','p1','p2','p3','p4','p5','p6'];
 const PL=['','Construction','Montée','Records','Deload','ARRÊT','Comeback'];
@@ -1201,12 +1523,12 @@ function renderHistory(){
 // ══════════════════════════════════════════
 // CHARTS
 // ══════════════════════════════════════════
-const WKS=['S1','S2','S3','S4','S5','S6','S7','S8','S9','S10','S11','S12','CB'];
-const DW=[null,92.9,null,91.5,null,90.2,89.4,89.1,89.1,89.1,88.4,88.0,94.0];
-const DP=[0,0,0,0,0,0,0,7,10,15,15,15,null];
-const DPL=[25,25,40,50,60,60,60,90,100,105,75,75,null];
-const DV=[43,null,null,null,null,null,null,null,null,48,48,49,null];
-const DC=[30,35,38,40,40,50,60,60,60,60,60,60,30];
+const WKS=['S1','S2','S3','S4','S5','S6','S7','S8','S9','S10','S11','S12','CB-S0','CB-S1'];
+const DW=[null,92.9,null,91.5,null,90.2,89.4,89.1,89.1,89.1,88.4,88.0,94.0,93.6];
+const DP=[0,0,0,0,0,0,0,7,10,15,15,15,null,8];
+const DPL=[25,25,40,50,60,60,60,90,100,105,75,75,null,96];
+const DV=[43,null,null,null,null,null,null,null,null,48,48,49,null,46];
+const DC=[30,35,38,40,40,50,60,60,60,60,60,60,30,43];
 const CO={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'#0d1627',borderColor:'rgba(245,200,66,.2)',borderWidth:1,titleColor:'#f5c842',bodyColor:'#94a3b8',padding:8}},scales:{x:{ticks:{color:'#64748b',font:{size:9}},grid:{color:'rgba(255,255,255,.025)'},border:{color:'rgba(255,255,255,.06)'}},y:{ticks:{color:'#64748b',font:{size:9}},grid:{color:'rgba(255,255,255,.025)'},border:{color:'rgba(255,255,255,.06)'}}}};
 function mkL(id,data,color,mn,mx,u=''){new Chart(document.getElementById(id),{type:'line',data:{labels:WKS,datasets:[{data,borderColor:color,backgroundColor:color+'15',pointBackgroundColor:color,pointRadius:3,tension:.4,spanGaps:true,borderWidth:2}]},options:{...CO,scales:{...CO.scales,y:{...CO.scales.y,min:mn,max:mx,ticks:{color:'#64748b',font:{size:9},callback:v=>v+u}}}}});}
 function initCharts(){
@@ -1223,7 +1545,7 @@ function initCharts(){
   new Chart(document.getElementById('cRd'),{type:'radar',data:{labels:['Poids','Pompes sol','Planche','Course','VO2max','Streak'],datasets:[
     {label:'Départ',data:[0,0,24,50,88,0],borderColor:'#64748b',backgroundColor:'rgba(100,116,139,.04)',pointBackgroundColor:'#64748b',borderWidth:1.5,borderDash:[4,2]},
     {label:'Pic S12',data:[100,100,100,100,100,100],borderColor:'#22c55e',backgroundColor:'rgba(34,197,94,.06)',pointBackgroundColor:'#22c55e',borderWidth:2},
-    {label:'Comeback',data:[0,0,0,50,0,3.5],borderColor:'#a855f7',backgroundColor:'rgba(168,85,247,.05)',pointBackgroundColor:'#a855f7',borderWidth:1.5,borderDash:[3,3]},
+    {label:'CB-S1',data:[7,53,91,72,94,17],borderColor:'#a855f7',backgroundColor:'rgba(168,85,247,.05)',pointBackgroundColor:'#a855f7',borderWidth:1.5,borderDash:[3,3]},
   ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,labels:{color:'#94a3b8',font:{size:10},boxWidth:9}}},scales:{r:{ticks:{color:'#64748b',font:{size:8},backdropColor:'transparent'},grid:{color:'rgba(255,255,255,.05)'},pointLabels:{color:'#94a3b8',font:{size:10}},suggestedMin:0,suggestedMax:100}}}});
 }
 
@@ -1232,24 +1554,24 @@ function initCharts(){
 // ══════════════════════════════════════════
 function renderDash(){
   document.getElementById('dashStats').innerHTML=`
-    <div class="scard g"><div class="scard-label">Poids actuel</div><div class="scard-val">94<span style="font-size:15px">kg</span></div><div class="scard-sub">Pic : 88.0 kg • -6 à reprendre</div></div>
-    <div class="scard gr"><div class="scard-label">Pompes sol (pic)</div><div class="scard-val">15<span style="font-size:15px">reps</span></div><div class="scard-sub">S10 • À retester comeback</div></div>
-    <div class="scard b"><div class="scard-label">Planche (pic)</div><div class="scard-val">105<span style="font-size:15px">s</span></div><div class="scard-sub">S10 • +320% vs départ</div></div>
-    <div class="scard o"><div class="scard-label">VO2max (pic)</div><div class="scard-val">49</div><div class="scard-sub">S12 • Très Bon pour 33 ans</div></div>
-    <div class="scard p"><div class="scard-label">Streak record</div><div class="scard-val">84<span style="font-size:15px">j</span></div><div class="scard-sub">100% présence S1→S12</div></div>
-    <div class="scard c"><div class="scard-label">Course max (pic)</div><div class="scard-val">60<span style="font-size:15px">min</span></div><div class="scard-sub">Non-stop • +100% vs départ</div></div>`;
+    <div class="scard g"><div class="scard-label">Poids actuel</div><div class="scard-val">93.6<span style="font-size:15px">kg</span></div><div class="scard-sub">Pic : 88.0 kg • -5.6 à reprendre</div></div>
+    <div class="scard gr"><div class="scard-label">Pompes sol (CB S1)</div><div class="scard-val">8<span style="font-size:15px">reps</span></div><div class="scard-sub">53% du pic (15) • +7 à reprendre</div></div>
+    <div class="scard b"><div class="scard-label">Planche (CB S1)</div><div class="scard-val">96<span style="font-size:15px">s</span></div><div class="scard-sub">91% du pic (105s) • Force core intacte !</div></div>
+    <div class="scard o"><div class="scard-label">VO2max (CB S1)</div><div class="scard-val">45-46</div><div class="scard-sub">92-94% du pic (49) • Base aérobie préservée</div></div>
+    <div class="scard p"><div class="scard-label">Streak Comeback</div><div class="scard-val">14<span style="font-size:15px">j</span></div><div class="scard-sub">S1 : 7/7 ✅ — S2 en cours 🔥</div></div>
+    <div class="scard c"><div class="scard-label">Course non-stop (CB S1)</div><div class="scard-val">43<span style="font-size:15px">min</span></div><div class="scard-sub">Seuil lactique : 5:27/km mesuré S1</div></div>`;
 }
 
 function renderRecords(){
   const achs=[['🏆','The Impossible','0 → 15 pompes sol en 70 jours'],['⚡','Weight Warrior','88 kg objectif atteint exactement'],['🫁','Cardio Beast','VO2max +14% en 12 semaines'],['🔗','Iron Consistency','84/84 jours — 100% présence'],['🧠','Mental Warrior','"FONCE !" mindset forgé'],['🌟','Student of the Decade','Meilleur élève en 15 ans']];
   document.getElementById('achGrid').innerHTML=achs.map(([i,t,s])=>`<div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:7px 11px;display:flex;align-items:center;gap:7px"><span style="font-size:17px">${i}</span><div><div style="font-size:11px;color:var(--text);font-weight:600">${t}</div><div style="font-size:9px;color:var(--muted)">${s}</div></div></div>`).join('');
   const recs=[
-    ['⚖️','Poids',['94.0 kg','88.0 kg','94.0 kg (reprise)'],100],
-    ['💪','Pompes au sol',['0 rep','15 reps (S10)','À tester'],100],
-    ['⏱️','Planche',['25 s','105 s (1min45)','À tester'],100],
-    ['🏃','Course non-stop',['30 min','60 min','30 min'],50],
-    ['❤️','VO2max',['43','49 (+14%)','À mesurer'],100],
-    ['📅','Streak',['0 j','84/84 (100%)','3 jours'],3.5],
+    ['⚖️','Poids',['94.0 kg','88.0 kg','93.6 kg (CB-S1)'],7],
+    ['💪','Pompes au sol',['0 rep','15 reps (S10)','8 reps (53% pic)'],53],
+    ['⏱️','Planche',['25 s','105 s (1min45)','96 s (91% pic)'],91],
+    ['🏃','Course non-stop',['30 min','60 min','43 min (72% pic)'],72],
+    ['❤️','VO2max',['43','49 (+14%)','45-46 (94% pic)'],94],
+    ['📅','Streak',['0 j','84/84 (100%)','14 jours (S1+S2)'],17],
   ];
   document.getElementById('recGrid').innerHTML=recs.map(([ic,m,rows,pct])=>`
     <div class="rec-card">
@@ -1290,6 +1612,249 @@ document.addEventListener('DOMContentLoaded',()=>{
   checkGrid();
   renderAll();
 });
+
+// ══════════════════════════════════════════
+// STOPWATCH ENGINE
+// ══════════════════════════════════════════
+const timers = {};  // key = swId → {interval, elapsed, running}
+
+function swCreate(swId) {
+  if (!timers[swId]) timers[swId] = {elapsed: 0, running: false, interval: null};
+}
+
+function swFormat(ms) {
+  const total = Math.floor(ms / 1000);
+  const m = Math.floor(total / 60);
+  const s = total % 60;
+  const cs = Math.floor((ms % 1000) / 10);
+  if (m > 0) return `${m}:${String(s).padStart(2,'0')}.${String(cs).padStart(2,'0')}`;
+  return `${s}.${String(cs).padStart(2,'0')}s`;
+}
+
+function swTick(swId) {
+  const t = timers[swId];
+  if (!t || !t.running) return;
+  t.elapsed += 100;
+  const disp = document.getElementById('sw-disp-' + swId);
+  if (disp) disp.textContent = swFormat(t.elapsed);
+}
+
+function swToggle(swId, dayIdx, field) {
+  swCreate(swId);
+  const t = timers[swId];
+  const btn = document.getElementById('sw-btn-' + swId);
+  if (!t.running) {
+    // START
+    t.running = true;
+    t.interval = setInterval(() => swTick(swId), 100);
+    if (btn) { btn.textContent = '⏹ Stop'; btn.className = 'sw-btn sw-stop'; }
+  } else {
+    // STOP → save
+    t.running = false;
+    clearInterval(t.interval);
+    if (btn) { btn.textContent = '▶ Start'; btn.className = 'sw-btn sw-start'; }
+    // Auto-save to the matching input field
+    const totalSec = Math.round(t.elapsed / 1000);
+    if (dayIdx !== undefined && field) {
+      saveDay(dayIdx, 'cali', field, String(totalSec));
+      // Also update the visible input if it exists
+      const inputs = document.querySelectorAll(`#daycard-${dayIdx} input`);
+      inputs.forEach(inp => {
+        if (inp.onchange && inp.onchange.toString().includes(field)) {
+          inp.value = totalSec;
+        }
+      });
+      const saved = document.getElementById('sw-saved-' + swId);
+      if (saved) { saved.textContent = `✓ ${totalSec}s enregistré !`; saved.style.display = 'inline'; }
+    }
+  }
+}
+
+function swReset(swId) {
+  swCreate(swId);
+  const t = timers[swId];
+  t.elapsed = 0;
+  t.running = false;
+  clearInterval(t.interval);
+  const disp = document.getElementById('sw-disp-' + swId);
+  const btn = document.getElementById('sw-btn-' + swId);
+  const saved = document.getElementById('sw-saved-' + swId);
+  if (disp) disp.textContent = '0.00s';
+  if (btn) { btn.textContent = '▶ Start'; btn.className = 'sw-btn sw-start'; }
+  if (saved) saved.style.display = 'none';
+}
+
+function buildStopwatch(swId, dayIdx, field, label) {
+  return `<div class="sw-wrap">
+    <span style="font-size:10px;color:var(--muted2);min-width:55px">${label}</span>
+    <span class="sw-display" id="sw-disp-${swId}">0.00s</span>
+    <button class="sw-btn sw-start" id="sw-btn-${swId}" onclick="swToggle('${swId}',${dayIdx},'${field}')">▶ Start</button>
+    <button class="sw-btn sw-reset" onclick="swReset('${swId}')">↺</button>
+    <span class="sw-saved" id="sw-saved-${swId}"></span>
+  </div>`;
+}
+
+
+// ══════════════════════════════════════════
+// CHRONO ENGINE
+// ══════════════════════════════════════════
+let chronoState={running:false,startTs:null,accumulated:0,raf:null,dayIdx:null,field:null,exoLabel:'',laps:[]};
+
+function openChrono(dayIdx, field, exoLabel){
+  chronoState.dayIdx=dayIdx;
+  chronoState.field=field;
+  chronoState.exoLabel=exoLabel||'';
+  document.getElementById('chronoExoLabel').textContent=exoLabel||'Prêt à chronométrer';
+  document.getElementById('chronoSavedMsg').textContent='';
+  document.getElementById('chronoOverlay').style.display='flex';
+  document.body.style.overflow='hidden';
+  // If already running, just show overlay
+  updateChronoUI();
+}
+
+function closeChrono(){
+  document.getElementById('chronoOverlay').style.display='none';
+  document.body.style.overflow='';
+}
+
+function closeChronoOnBg(e){
+  if(e.target===document.getElementById('chronoOverlay')) closeChrono();
+}
+
+function chronoStartStop(){
+  if(chronoState.running){
+    // STOP
+    chronoState.accumulated+=Date.now()-chronoState.startTs;
+    chronoState.running=false;
+    cancelAnimationFrame(chronoState.raf);
+    // Add lap
+    const t=chronoState.accumulated;
+    chronoState.laps.push(t);
+    renderChronoLaps();
+    document.getElementById('chronoStartBtn').textContent='▶ Continuer';
+    document.getElementById('chronoStartBtn').className='cbtn cbtn-start';
+    document.getElementById('chronoSaveBtn').disabled=false;
+    document.getElementById('chronoDisplay').className='chrono-display stopped';
+  } else {
+    // START
+    chronoState.startTs=Date.now();
+    chronoState.running=true;
+    document.getElementById('chronoStartBtn').textContent='⏹ Stop';
+    document.getElementById('chronoStartBtn').className='cbtn cbtn-stop';
+    document.getElementById('chronoDisplay').className='chrono-display running';
+    document.getElementById('chronoSavedMsg').textContent='';
+    tickChrono();
+  }
+}
+
+function tickChrono(){
+  if(!chronoState.running) return;
+  updateChronoUI();
+  chronoState.raf=requestAnimationFrame(tickChrono);
+}
+
+function updateChronoUI(){
+  const elapsed=chronoState.accumulated+(chronoState.running?Date.now()-chronoState.startTs:0);
+  const m=Math.floor(elapsed/60000);
+  const s=Math.floor((elapsed%60000)/1000);
+  const ms=elapsed%1000;
+  document.getElementById('chronoDisplay').textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  document.getElementById('chronoMs').textContent='.'+String(ms).padStart(3,'0');
+}
+
+function chronoReset(){
+  chronoState.running=false;
+  cancelAnimationFrame(chronoState.raf);
+  chronoState.accumulated=0;
+  chronoState.startTs=null;
+  chronoState.laps=[];
+  document.getElementById('chronoDisplay').textContent='00:00';
+  document.getElementById('chronoMs').textContent='.000';
+  document.getElementById('chronoDisplay').className='chrono-display';
+  document.getElementById('chronoStartBtn').textContent='▶ Start';
+  document.getElementById('chronoStartBtn').className='cbtn cbtn-start';
+  document.getElementById('chronoSaveBtn').disabled=true;
+  document.getElementById('chronoLaps').innerHTML='';
+  document.getElementById('chronoSavedMsg').textContent='';
+}
+
+function renderChronoLaps(){
+  const el=document.getElementById('chronoLaps');
+  if(!chronoState.laps.length){el.innerHTML='';return;}
+  const best=Math.max(...chronoState.laps);
+  el.innerHTML=chronoState.laps.map((t,i)=>{
+    const m=Math.floor(t/60000),s=Math.floor((t%60000)/1000),ms=t%1000;
+    const isBest=t===best;
+    return`<div class="lap${isBest?' lap-best':''}">
+      <span>Série ${i+1}${isBest?' 🏆':''}</span>
+      <span>${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}.${String(ms).padStart(3,'0').slice(0,2)}</span>
+    </div>`;
+  }).join('');
+}
+
+function chronoSave(){
+  const elapsed=chronoState.accumulated;
+  const totalSec=Math.round(elapsed/1000);
+  const m=Math.floor(totalSec/60),s=totalSec%60;
+  const display=m>0?`${m}min ${s}s`:`${s}s`;
+
+  // If linked to a specific field in a day
+  if(chronoState.dayIdx!==null && chronoState.field){
+    saveDay(chronoState.dayIdx,'cali',chronoState.field,totalSec);
+    // Also update the input field visually
+    const selector=`#ip-${chronoState.dayIdx}-log input[placeholder]`;
+    const inputs=document.querySelectorAll(`#ip-${chronoState.dayIdx}-log input`);
+    inputs.forEach(inp=>{
+      if(inp.getAttribute('onchange')&&inp.getAttribute('onchange').includes(`'${chronoState.field}'`)){
+        inp.value=totalSec;
+      }
+    });
+    document.getElementById('chronoSavedMsg').textContent=`✓ ${display} sauvegardé dans "${chronoState.exoLabel}" !`;
+    toast(`✓ ${display} enregistré !`,'#22c55e');
+  } else {
+    // No target — just show the result for manual copy
+    document.getElementById('chronoSavedMsg').textContent=`✓ Résultat : ${display} (${totalSec}s) — sauvegarde manuelle si besoin`;
+  }
+  document.getElementById('chronoSaveBtn').disabled=true;
+}
+
+// Expose function to launch chrono from exercise buttons
+window.openChrono=openChrono;
+
+function openChronoLinked(dayIdx, field, label){
+  chronoReset();
+  chronoState.dayIdx=dayIdx;
+  chronoState.field=field;
+  chronoState.exoLabel=label;
+  document.getElementById('chronoExoLabel').textContent=`${label} — Jour ${dayIdx+1} • Résultat auto-sauvegardé`;
+  document.getElementById('chronoSavedMsg').textContent='';
+  document.getElementById('chronoOverlay').style.display='flex';
+  document.body.style.overflow='hidden';
+}
+window.openChronoLinked=openChronoLinked;
 </script>
+
+<!-- CHRONO FAB -->
+
+
+<!-- CHRONO OVERLAY -->
+<div class="chrono-overlay" id="chronoOverlay" style="display:none" onclick="closeChronoOnBg(event)">
+  <div class="chrono-box">
+    <div class="chrono-title">⏱️ Chronomètre</div>
+    <div class="chrono-exo" id="chronoExoLabel">Prêt</div>
+    <div class="chrono-display" id="chronoDisplay">00:00</div>
+    <div class="chrono-ms" id="chronoMs">.000</div>
+    <div class="chrono-laps" id="chronoLaps"></div>
+    <div class="chrono-btns">
+      <button class="cbtn cbtn-start" id="chronoStartBtn" onclick="chronoStartStop()">▶ Start</button>
+      <button class="cbtn cbtn-reset" onclick="chronoReset()">↺ Reset</button>
+      <button class="cbtn cbtn-save" id="chronoSaveBtn" onclick="chronoSave()" disabled>💾 Sauvegarder</button>
+    </div>
+    <div class="chrono-btns">
+      <button class="cbtn cbtn-close" onclick="closeChrono()">✕ Fermer</button>
+    </div>
+    <div class="chrono-saved" id="chronoSavedMsg"></div>
+  </div>
+</div>
 </body>
 </html>
