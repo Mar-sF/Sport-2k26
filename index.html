@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sport 2K26</title>
+<title>Sport 2K26 — S3</title>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -736,131 +736,127 @@ tr:hover td{background:rgba(255,255,255,.015)}
 // ══════════════════════════════════════════
 const WORKOUTS={
   running_tempo:{
-    label:'🏃 Running Tempo S2',dur:'50 min / ~7 km',horaire:'Avant 9h ou après 19h',
+    label:'🏃 Running Tempo S3',dur:'57 min / ~7.5 km',horaire:'Avant 9h ou après 19h',
     warm:[
       {t:'5 min marche dynamique'},
-      {t:'7 min footing très lent — Z1, ~7:30/km, conversation totale'},
-      {t:'3 min éducatifs : 30s montées genoux / 30s talons-fesses / 30s pas chassés'},
+      {t:'8 min footing progressif Z1 → Z2 doux'},
+      {t:'2 min éducatifs : 30s montées genoux / 30s talons-fesses / 30s pas chassés'},
     ],
     circuits:[
-      {label:'Corps de séance — 28 min — 6 INTERVALS S2',tours:'',color:'run',intervalsN:6,exos:[
-        {n:'6 × 4 min en Zone 2',g:'Courir',d:'Allure ~6:30-6:45/km • FC 145-155 bpm',tip:'⚠️ Si FC dépasse 155 bpm → ralentir immédiatement. Allure S2 = première vraie vitesse retour',h:'Récup : 1 min marche entre chaque interval'},
+      {label:'Corps de séance — 5 × 5 min INTERVALS S3',tours:'',color:'run',intervalsN:5,exos:[
+        {n:'5 × 5 min Zone 2 — Allure S3',g:'Courir',d:'Allure ~6:20-6:35/km • FC 145-155 bpm',tip:'⚠️ Si FC dépasse 158 bpm au 3e interval → ralentir sur les suivants. 5 min = 1 min de plus que S2, gère l\'allure dès le début.',h:'Récup : 90s marche entre chaque interval — respecter cette récup'},
       ]},
     ],
-    cool:['3 min marche','Mollets 30s/jambe → "Étirement des jambes"','Quadriceps 30s/jambe → "Étirement du quadriceps"','Ischios 30s/jambe → "Étirement des ischio-jambiers"'],
+    cool:['5 min marche','Mollets 30s/jambe → "Étirement des jambes"','Quadriceps 30s/jambe → "Étirement du quadriceps"','Ischios 30s/jambe → "Étirement des ischio-jambiers"'],
     mvw:['3 min marche échauffement','10 min course très facile (8:00/km)','2 min marche retour calme'],
-    yoda:'Plus vite qu\'hier, moins vite que demain. 6:30-6:45/km ta nouvelle allure de base elle devient. Trop facile si elle semble ? Non : construire tu es, pas performer encore.'
+    yoda:'5 minutes. Pas 4. Pas 3. Cinq. Ton moteur S3 tourne plus longtemps maintenant — chaque interval, une braise de plus dans la forge de la Force.'
   },
   push_pull:{
-    label:'💪 Push/Pull — Pecs 70% / Dorsaux 30% + 🧪 TEST POMPES SOL',dur:'45 min',horaire:'Matin idéal — TEST avant fatigue impératif',
+    label:'💪 Push/Pull — Pecs 70% / Dorsaux 30%',dur:'45 min',horaire:'Matin idéal — PAS de test max pompes ce lundi',
     warm:[
-      {t:'50 tours corde à sauter',g:'Saut à la corde'},
+      {t:'100 tours corde à sauter',g:'Saut à la corde'},
       {t:'20 cercles d\'épaules avant/arrière',g:'Rotations des bras'},
       {t:'20 band pull-apart élastique léger',g:'Pull-Apart avec élastique'},
-      {t:'10 pompes murales TRÈS lentes — tempo 3-1-3'},
-      {t:'30s hollow body hold léger'},
+      {t:'10 pompes murales tempo 3-1-3 — tête neutre, pas de flexion cervicale !'},
     ],
     circuits:[
-      {label:'🧪 TEST POMPES SOL — Avant fatigue !',tours:'1 seul set • Repos 3 min après',color:'test',exos:[
-        {n:'Pompes sol MAX',g:'Pompes',d:'Amplitude complète • Poignées pompes • Film-toi',tip:'Compte uniquement les reps avec forme complète • Stop dès que la forme casse • Objectif S2 : 8-11 reps',h:'⏱️ Repos 3 min OBLIGATOIRE avant Circuit A'},
-      ]},
       {label:'Circuit A — PECS FOCUS 70%',tours:'3 tours • Repos 90s',toursN:3,color:'circuit',exos:[
-        {n:'Pompes inclinées',g:'Pompes inclinées',d:'10 reps • Tempo 2-1-2',repsN:10,tip:'Banc niveau cuisses • Coudes ~45° du corps • Omoplates serrées'},
-        {n:'Pompes diamant',g:'Pompes resserrées',d:'5 reps • ⚠️ Triceps gauche surveillé',repsN:5,tip:'Mains en diamant sous poitrine • Moindre signal douleur triceps G → STOP immédiat'},
-        {n:'Chest fly élastique',g:'Écarté avec élastique',d:'12 reps • SmartWorkout LÉGER (10-15 kg)',repsN:12,tip:'Bras légèrement fléchis • Contraction 1s en bas'},
+        {n:'Pompes inclinées',g:'Pompes inclinées',d:'12 reps • Tempo 2-1-2',repsN:12,tip:'+2 reps vs S2 • Banc niveau cuisses • Coudes 45° • Tête neutre — pas de flexion cervicale en bas'},
+        {n:'Pompes déclinées [NOUVEAU]',g:'Pompes déclinées',d:'6 reps • Pieds sur chaise 30-40cm',repsN:6,tip:'Focus pecs hauts. Prise standard, pieds sur chaise basse. ⚠️ Si nuque tendue → remplacer par chest fly'},
+        {n:'Chest fly élastique',g:'Écarté avec élastique',d:'12 reps • SmartWorkout LÉGER (10-15 kg)',repsN:12,tip:'Bras légèrement fléchis • Contraction 1s en bas • Ouverture contrôlée'},
       ]},
       {label:'Circuit B — DORSAUX/CORE ÉQUILIBRAGE 30%',tours:'3 tours • Repos 60s',toursN:3,color:'circuit',exos:[
-        {n:'Rowing élastique',g:'Rowing avec élastique',d:'15 reps • SmartWorkout MOYEN (20-30 kg)',repsN:15,tip:'Penché 45° • Dos droit • Serrer omoplates 1s'},
-        {n:'Face pulls',g:'Traction de face avec élastique',d:'15 reps • SmartWorkout LÉGER',repsN:15,tip:'Tirer vers le visage • Coudes hauts → anti-épaules enroulées'},
-        {n:'Planche ⏱️',g:'Planche',d:'Tour 1 : TEST MAX · Tours 2-3 : 45s contrôlée',h:'Utilise le chrono dans Saisie résultats',tip:'Ventre rentré • Fessiers serrés • Respiration 4s inspir / 4s expir — <strong style="color:var(--gold)">Utilise le chrono dans Saisie résultats</strong>'},
+        {n:'Rowing élastique',g:'Rowing avec élastique',d:'18 reps • SmartWorkout MOYEN (20-25 kg)',repsN:18,tip:'+3 reps vs S2 • Penché 45° • Dos droit • Omoplate serrée 1s en fin de mouvement'},
+        {n:'Face pulls',g:'Traction de face avec élastique',d:'15 reps • SmartWorkout LÉGER',repsN:15,tip:'Coudes hauts → anti-épaules enroulées. Essentiel pour ta posture.'},
+        {n:'Dead bugs [NOUVEAU]',g:'Dead bug',d:'10 reps/côté • Lent et contrôlé',repsN:10,tip:'Dos plaqué au sol. Bras opposé + jambe opposée s\'allongent simultanément. Core gaîné en permanence — la colonne ne bouge pas.'},
       ]},
     ],
-    cool:['Chest doorway stretch → "Étirement pectoral" : 60s/côté','Étirement dorsal : 60s','Triceps stretch → "Étirement des triceps" : 30s/bras (DOUX côté gauche !)'],
+    cool:['Chest doorway stretch → "Étirement pectoral" : 60s/côté','Étirement dorsal : 60s','Triceps stretch → "Étirement des triceps" : 30s/bras (vigilance gauche !)'],
     mvw:['3 min (rotations + 20 jumping jacks)','2 tours / 60s repos : 8 pompes inclinées + 12 rowing + 30s planche','2 min étirements pec + dos'],
-    yoda:'Test pompes sol, moment de vérité il est. 8 ou 12 reps — peu importe : ton point de départ réel c\'est. La Force du chiffre suivant, plus importante que celui d\'aujourd\'hui elle sera.'
+    yoda:'Nouveaux exercices dans la Force intégrer tu dois. Pompes déclinées : le haut des pecs réveiller. Dead bugs : le core, armure invisible de tout mouvement.'
   },
   running_frac:{
-    label:'⚡ Running Fractionné S2',dur:'45 min / ~5.5 km',horaire:'Matin idéal — Si DR < 28 → 30 min Z2 sans intervals',
+    label:'⚡ Running Fractionné S3',dur:'50 min / ~6 km',horaire:'Matin idéal — Si DR < 28 → 30 min Z2 sans intervals',
     warm:[
       {t:'5 min marche'},
       {t:'8 min footing progressif Z1 → Z2 doux'},
-      {t:'2 min éducatifs légers'},
+      {t:'2 min éducatifs : montées genoux + talons-fesses'},
     ],
     circuits:[
-      {label:'Corps de séance — 24 min — 8 INTERVALS S2',tours:'',color:'run',intervalsN:8,exos:[
-        {n:'8 × 1 min allure tempo',g:'Courir',d:'~5:45-6:00/km • FC ~155-165 bpm',tip:'⚠️ Si essoufflement excessif au 5e interval → stopper à 6, footing 5 min, retour calme. 8 c\'est l\'objectif, pas l\'obligation.',h:'Récup : 1 min 30s marche/trot léger entre chaque'},
+      {label:'Corps de séance — 8 × 1min30 S3',tours:'',color:'run',intervalsN:8,exos:[
+        {n:'8 × 1 min 30s allure seuil',g:'Courir',d:'~5:30-5:45/km • FC ~158-168 bpm',tip:'Tu as couru à 4:50 en S2 : RESTE à 5:30-5:45 ici. 30s de plus par interval est la vraie progression. Si FC > 170 au 5e → réduire les derniers à 1min.',h:'Récup : 90s marche/trot léger entre chaque — respecter cette récup'},
       ]},
     ],
-    cool:['3 min marche','Étirements ischios : 45s/jambe','Mollets : 30s/jambe','Voûte plantaire : 30s/pied'],
-    mvw:['3 min marche échauffement','10 min footing très facile (7:30/km)','2 min retour au calme'],
-    yoda:'6 intervals la semaine passée, 8 aujourd\'hui. La progression, pas la révolution. Chaque interval supplémentaire, une brique de plus dans ta cathédrale aérobie.'
+    cool:['5 min marche','Mollets 30s/jambe','Quadriceps 30s/jambe','Ischios 30s/jambe'],
+    mvw:['3 min marche','10 min course très facile (8:00/km)','2 min étirements'],
+    yoda:'8 fois 90 secondes. Au seuil de la Force tu frappes — mais sage sur l\'allure reste. Ton fractionné S2 à 4:50 était trop rapide. Nourrir l\'endurance, pas l\'ego.'
   },
   pull_push:{
-    label:'💪 Pull/Push — Dorsaux 70% / Pecs 30%',dur:'40 min',horaire:'Matin ou soir',
+    label:'💪 Pull/Push — Dorsaux 70% / Pecs 30%',dur:'45 min',horaire:'Matin idéal — DR check avant séance',
     warm:[
-      {t:'30 band pull-apart',g:'Pull-Apart avec élastique'},
-      {t:'20 rotations externes épaules avec élastique',g:'Rotation externe avec élastique'},
-      {t:'15 dislocations épaules avec corde à sauter'},
-      {t:'10 scapular push-ups (omoplates uniquement)'},
+      {t:'50 tours corde à sauter',g:'Saut à la corde'},
+      {t:'20 band pull-apart élastique',g:'Pull-Apart avec élastique'},
+      {t:'15 rotations épaules + 10 pompes murales tempo'},
     ],
     circuits:[
       {label:'Circuit A — DORSAUX FOCUS 70%',tours:'3 tours • Repos 90s',toursN:3,color:'circuit',exos:[
-        {n:'Rowing élastique lourd',g:'Rowing avec élastique',d:'15 reps • SmartWorkout MOYEN (20-30 kg)',repsN:15,tip:'Tempo 2-1-2-1 • Penché 45° • Dos absolument droit'},
-        {n:'Lat pulls élastique',g:'Pull-down avec élastique',d:'12 reps • Élastique attaché en hauteur',repsN:12,tip:'Tirer coudes le long du corps • Sentir les grands dorsaux'},
-        {n:'Reverse fly élastique',g:'Écarté avec élastique inversé',d:'12 reps • SmartWorkout LÉGER',repsN:12,tip:'Bras légèrement fléchis (10-15°) • Ouvrir comme un papillon inversé'},
+        {n:'Rowing élastique',g:'Rowing avec élastique',d:'18 reps • SmartWorkout 25 kg',repsN:18,tip:'Qualité maximale. Omoplate serrée 1s. +3 reps et charge légèrement montée vs S2 — dose si besoin.'},
+        {n:'Lat pulls élastique',g:'Pull-down avec élastique',d:'15 reps • SmartWorkout',repsN:15,tip:'Sentir les grands dorsaux. Coudes tirent vers le bas-arrière. Buste légèrement incliné.'},
+        {n:'Superman [NOUVEAU]',g:'Superman',d:'12 reps • 2s de maintien en haut',repsN:12,tip:'Face sol, bras et jambes simultanément. Lombaires + fessiers + dorsaux en chaîne. Tenir 2s puis descendre lentement.'},
       ]},
-      {label:'Circuit B — PECS/ÉPAULES ÉQUILIBRAGE 30%',tours:'2 tours • Repos 60s',toursN:2,color:'circuit',exos:[
-        {n:'Pompes inclinées modérées',g:'Pompes inclinées',d:'8 reps • Tempo lent 3-0-3',repsN:8,tip:'Banc niveau cuisses • Volume réduit intentionnel vs lundi — c\'est voulu'},
-        {n:'Pike push-ups',g:'Pompes en V',d:'6 reps',repsN:6,tip:'Position en V inversé • Focus épaules antérieures'},
-        {n:'Curls biceps élastique',g:'Curl avec élastique',d:'12 reps • SmartWorkout LÉGER',repsN:12,tip:'Coudes fixes contre le corps • Contraction au sommet 1s'},
+      {label:'Circuit B — PECS/ÉPAULES ÉQUILIBRAGE 30%',tours:'3 tours • Repos 60s',toursN:3,color:'circuit',exos:[
+        {n:'Pompes déclinées',g:'Pompes déclinées',d:'6 reps • Pieds sur chaise',repsN:6,tip:'Tête neutre obligatoire — leçon de lundi. Si gêne cervicale → pompes inclinées standard à la place.'},
+        {n:'Pike push-ups',g:'Pompes en V',d:'8 reps • Focus épaules antérieures',repsN:8,tip:'Position en V inversé • Flexion des coudes • Tête entre les bras'},
+        {n:'Dips assistés [NOUVEAU]',g:'Dips assistés',d:'6 reps • Barres Corength + élastique sous genoux',repsN:6,tip:'Élastique CoreStrength 25kg accroché à la barre, pose les genoux dessus. Descente contrôlée 3s. Pecs bas + triceps. ⚠️ Signal triceps G → STOP immédiat.'},
       ]},
     ],
     cool:['Hang passif barres dips : 3 × 20s → décompression colonne','Étirement de l\'épaule : 45s/bras','Étirement des biceps : 30s/bras'],
     mvw:['3 min échauffement','2 tours : 12 rowing élastique + 10 face pulls + 8 pompes inclinées','2 min étirements'],
-    yoda:'Tirer 70% de ton énergie aujourd\'hui. Tes dorsaux, armure de ta posture ils sont. Push sans pull, au côté obscur mène — équilibré dans la Force tu dois être.'
+    yoda:'Dorsaux 70%, armure de la Force. Superman réveille ta chaîne postérieure. Dips assistés : les barres Corength existent pour ça — utilise-les !'
   },
   running_end:{
-    label:'🏃 Running Endurance S2',dur:'50 min / ~7 km',horaire:'Quand tu veux — idéalement matin',
+    label:'🏃 Running Endurance S3',dur:'55 min / ~7.5 km',horaire:'Quand tu veux — idéalement matin',
     warm:[
       {t:'5 min marche dynamique'},
       {t:'5 min footing très léger Z1'},
     ],
     circuits:[
-      {label:'Corps de séance — 35 min ENDURANCE S2',tours:'',color:'run',runDurN:35,exos:[
-        {n:'Course continue 35 min',g:'Courir',d:'Allure conversation ~6:30-6:45/km • FC cible 135-150 bpm',tip:'5 min de plus qu\'en S1. Si genou ou voûte plantaire signal → réduire à 30 min sans culpabilité. 1 pause de 1 min autorisée si nécessaire.',h:'Objectif : finir les 35 min SANS pause — tu peux le faire'},
+      {label:'Corps de séance — 40 min ENDURANCE S3',tours:'',color:'run',runDurN:40,exos:[
+        {n:'Course continue 40 min',g:'Courir',d:'Allure conversation ~6:20-6:40/km • FC cible 135-150 bpm',tip:'5 min de plus qu\'en S2. Tu as couru 43 min sans pause en S1 — 40 min c\'est dans tes cordes. Genou / voûte plantaire : premier signal → ralentir 30s puis reprendre.',h:'Objectif : finir les 40 min SANS pause — c\'est acquis'},
       ]},
     ],
     cool:['3 min marche','Mollets : 30s/jambe','Voûte plantaire : 30s/pied (important !)','Quadriceps : 30s/jambe','Ischios : 30s/jambe'],
     mvw:['3 min marche','10 min course très facile (8:00/km)','2 min étirements'],
-    yoda:'35 minutes. 5 de plus que la semaine dernière. C\'est tout. Et c\'est énorme. L\'endurance se construit minute par minute — chaque foulée, une brique de la Force.'
+    yoda:'40 minutes. Pas 35. Pas 30. Quarante. Chaque minute au-delà de ta limite d\'hier, une étoile supplémentaire dans ta galaxie de force.'
   },
   total_body:{
-    label:'🔥 Total Body S2 — Harmonie',dur:'50 min',horaire:'Matin idéal — DR check avant séance',
+    label:'🔥 Total Body S3 — Harmonie + TEST PLANCHE',dur:'55 min',horaire:'Matin idéal — DR check avant séance',
     warm:[
       {t:'100 tours corde à sauter',g:'Saut à la corde'},
       {t:'20 squats lents',g:'Squat'},
       {t:'20 band pull-apart',g:'Pull-Apart avec élastique'},
       {t:'15 pompes inclinées légères'},
-      {t:'Mobilité articulaire complète épaules/hanches'},
+      {t:'Mobilité complète épaules / hanches / chevilles'},
     ],
     circuits:[
-      {label:'Circuit A — PUSH 35%',tours:'3 tours • Repos 90s',toursN:3,color:'circuit',exos:[
-        {n:'Pompes inclinées',g:'Pompes inclinées',d:'10 reps • Tempo 2-1-2',repsN:10,tip:'Même qualité qu\'en début de semaine — forme avant tout'},
-        {n:'Pompes diamant',g:'Pompes resserrées',d:'5 reps • ⚠️ Triceps gauche',repsN:5,tip:'Vigilance triceps G — moindre douleur = arrêt immédiat, pas de négociation'},
+      {label:'Circuit A — PUSH 30%',tours:'3 tours • Repos 90s',toursN:3,color:'circuit',exos:[
+        {n:'Pompes inclinées',g:'Pompes inclinées',d:'12 reps • Tempo 2-1-2',repsN:12,tip:'3e séance push de la semaine — attentif à la forme. Qualité avant volume.'},
+        {n:'Dips assistés élastique',g:'Dips assistés',d:'8 reps • Barres Corength',repsN:8,tip:'+2 reps vs mercredi. Descente lente 3s. ⚠️ Arrêt immédiat si signal triceps gauche.'},
       ]},
       {label:'Circuit B — PULL 35%',tours:'3 tours • Repos 90s',toursN:3,color:'circuit',exos:[
-        {n:'Rowing élastique',g:'Rowing avec élastique',d:'15 reps • SmartWorkout MOYEN',repsN:15,tip:'Qualité max — omoplates serrées en fin de mouvement'},
-        {n:'Lat pulls élastique',g:'Pull-down avec élastique',d:'12 reps',repsN:12,tip:'Sentir les grands dorsaux travailler'},
+        {n:'Rowing élastique',g:'Rowing avec élastique',d:'18 reps • SmartWorkout MOYEN',repsN:18,tip:'3e séance rowing — vérifier que les omoplates ne fatiguent pas. Si oui → 15 reps.'},
+        {n:'Lat pulls élastique',g:'Pull-down avec élastique',d:'15 reps',repsN:15,tip:'Sentir les grands dorsaux travailler. Coudes tirent vers le bas.'},
       ]},
-      {label:'Circuit C — CORE + JAMBES 30%',tours:'3 tours • Repos 60s',toursN:3,color:'circuit',exos:[
-        {n:'Planche ⏱️',g:'Planche',d:'45s tenue • Respiration consciente',repsN:45,tip:'Tour 3 : tenter 50-55s si forme OK — <strong style="color:var(--gold)">Utilise le chrono dans Saisie résultats</strong>'},
-        {n:'Squats',g:'Squat',d:'15 reps • Descente 3s • Genoux dans l\'axe',repsN:15,tip:'Fessiers en bas de la descente • Tronc droit'},
-        {n:'Fentes marchées',g:'Fente',d:'10 reps/jambe',repsN:10,tip:'Genou gauche dans l\'axe • Tronc droit'},
+      {label:'Circuit C — CORE + JAMBES 35%',tours:'3 tours • Repos 60s',toursN:3,color:'circuit',exos:[
+        {n:'Planche ⏱️ [TEST MAX S3]',g:'Planche',d:'Tour 1 : TEST MAX • Tours 2-3 : 60s contrôlée',repsN:60,tip:'Test en conditions fraîches (pas lundi). Objectif S3 : 80-100s. <strong style="color:var(--gold)">Utilise le chrono dans Saisie résultats</strong>'},
+        {n:'Crunchs inversés [NOUVEAU]',g:'Crunch inversé',d:'15 reps • Lombaires plaquées au sol',repsN:15,tip:'Mains sous les fesses. Jambes à 90°. Bassin monte, lombaires restent plaquées. Contrôle total — pas d\'élan.'},
+        {n:'Squats',g:'Squat',d:'18 reps • Descente 3s • Genoux dans l\'axe',repsN:18,tip:'Fessiers en bas de la descente • Tronc droit • +3 reps vs S2'},
+        {n:'Fentes marchées',g:'Fente',d:'12 reps/jambe',repsN:12,tip:'Genou gauche dans l\'axe • Tronc droit • +2 reps/jambe vs S2'},
       ]},
     ],
     cool:['Chest doorway stretch → "Étirement pectoral" : 90s','Pike stretch → "Inclinaison en avant" : 90s','Hip flexor → "Étirement fléchisseur de la hanche" : 60s/côté','Posture du pigeon → "Posture du pigeon" : 90s/côté'],
     mvw:['3 min échauffement','EMOM 10 min : Min 1-8 pompes incl / Min 2-12 squats / Min 3-10 rowing / Min 4-30s planche / Min 5-10 fentes (×2)','2 min étirements'],
-    yoda:'Total Body clôture ta semaine de 6 jours. Harmonieux dans la Force tu as été. Demain, repos et récup — pas faiblesse, nécessité de Padawan intelligent.'
+    yoda:'Total Body S3 : ton test planche en conditions fraîches aujourd\'hui. 80 secondes minimum, tu en es capable. La Force se mesure dans le silence de la planche.'
   },
   recup:{
     label:'🧘 Récup Active & Mobilité',dur:'30-45 min',horaire:'Quand tu veux • Pas de course',
@@ -1494,6 +1490,7 @@ const HIST=[
   {s:'PAUSE',d:'Oct→Avr',pc:5,po:null,dt:null,pi:null,ps:null,pl:null,cr:null,v2:null,j:null,nt:null},
   {s:'CB-S0',d:'07/04/26',pc:6,po:94.0,dt:6.0,pi:null,ps:null,pl:null,cr:30,v2:null,j:3,nt:null},
   {s:'CB-S1',d:'28/04/26',pc:6,po:93.6,dt:5.6,pi:null,ps:8,pl:96,cr:43,v2:46,j:14,nt:null,hi:1},
+  {s:'CB-S2',d:'04/05/26',pc:6,po:93.0,dt:5.0,pi:null,ps:8,pl:68,cr:45,v2:45,j:21,nt:8.0,hi:1},
 ];
 const PC=['','p1','p2','p3','p4','p5','p6'];
 const PL=['','Construction','Montée','Records','Deload','ARRÊT','Comeback'];
@@ -1523,12 +1520,12 @@ function renderHistory(){
 // ══════════════════════════════════════════
 // CHARTS
 // ══════════════════════════════════════════
-const WKS=['S1','S2','S3','S4','S5','S6','S7','S8','S9','S10','S11','S12','CB-S0','CB-S1'];
-const DW=[null,92.9,null,91.5,null,90.2,89.4,89.1,89.1,89.1,88.4,88.0,94.0,93.6];
-const DP=[0,0,0,0,0,0,0,7,10,15,15,15,null,8];
-const DPL=[25,25,40,50,60,60,60,90,100,105,75,75,null,96];
-const DV=[43,null,null,null,null,null,null,null,null,48,48,49,null,46];
-const DC=[30,35,38,40,40,50,60,60,60,60,60,60,30,43];
+const WKS=['S1','S2','S3','S4','S5','S6','S7','S8','S9','S10','S11','S12','CB-S0','CB-S1','CB-S2'];
+const DW=[null,92.9,null,91.5,null,90.2,89.4,89.1,89.1,89.1,88.4,88.0,94.0,93.6,93.0];
+const DP=[0,0,0,0,0,0,0,7,10,15,15,15,null,8,8];
+const DPL=[25,25,40,50,60,60,60,90,100,105,75,75,null,96,68];
+const DV=[43,null,null,null,null,null,null,null,null,48,48,49,null,46,45];
+const DC=[30,35,38,40,40,50,60,60,60,60,60,60,30,43,45];
 const CO={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'#0d1627',borderColor:'rgba(245,200,66,.2)',borderWidth:1,titleColor:'#f5c842',bodyColor:'#94a3b8',padding:8}},scales:{x:{ticks:{color:'#64748b',font:{size:9}},grid:{color:'rgba(255,255,255,.025)'},border:{color:'rgba(255,255,255,.06)'}},y:{ticks:{color:'#64748b',font:{size:9}},grid:{color:'rgba(255,255,255,.025)'},border:{color:'rgba(255,255,255,.06)'}}}};
 function mkL(id,data,color,mn,mx,u=''){new Chart(document.getElementById(id),{type:'line',data:{labels:WKS,datasets:[{data,borderColor:color,backgroundColor:color+'15',pointBackgroundColor:color,pointRadius:3,tension:.4,spanGaps:true,borderWidth:2}]},options:{...CO,scales:{...CO.scales,y:{...CO.scales.y,min:mn,max:mx,ticks:{color:'#64748b',font:{size:9},callback:v=>v+u}}}}});}
 function initCharts(){
@@ -1545,7 +1542,7 @@ function initCharts(){
   new Chart(document.getElementById('cRd'),{type:'radar',data:{labels:['Poids','Pompes sol','Planche','Course','VO2max','Streak'],datasets:[
     {label:'Départ',data:[0,0,24,50,88,0],borderColor:'#64748b',backgroundColor:'rgba(100,116,139,.04)',pointBackgroundColor:'#64748b',borderWidth:1.5,borderDash:[4,2]},
     {label:'Pic S12',data:[100,100,100,100,100,100],borderColor:'#22c55e',backgroundColor:'rgba(34,197,94,.06)',pointBackgroundColor:'#22c55e',borderWidth:2},
-    {label:'CB-S1',data:[7,53,91,72,94,17],borderColor:'#a855f7',backgroundColor:'rgba(168,85,247,.05)',pointBackgroundColor:'#a855f7',borderWidth:1.5,borderDash:[3,3]},
+    {label:'CB-S2',data:[17,53,65,75,92,25],borderColor:'#a855f7',backgroundColor:'rgba(168,85,247,.05)',pointBackgroundColor:'#a855f7',borderWidth:1.5,borderDash:[3,3]},
   ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,labels:{color:'#94a3b8',font:{size:10},boxWidth:9}}},scales:{r:{ticks:{color:'#64748b',font:{size:8},backdropColor:'transparent'},grid:{color:'rgba(255,255,255,.05)'},pointLabels:{color:'#94a3b8',font:{size:10}},suggestedMin:0,suggestedMax:100}}}});
 }
 
@@ -1554,24 +1551,24 @@ function initCharts(){
 // ══════════════════════════════════════════
 function renderDash(){
   document.getElementById('dashStats').innerHTML=`
-    <div class="scard g"><div class="scard-label">Poids actuel</div><div class="scard-val">93.6<span style="font-size:15px">kg</span></div><div class="scard-sub">Pic : 88.0 kg • -5.6 à reprendre</div></div>
-    <div class="scard gr"><div class="scard-label">Pompes sol (CB S1)</div><div class="scard-val">8<span style="font-size:15px">reps</span></div><div class="scard-sub">53% du pic (15) • +7 à reprendre</div></div>
-    <div class="scard b"><div class="scard-label">Planche (CB S1)</div><div class="scard-val">96<span style="font-size:15px">s</span></div><div class="scard-sub">91% du pic (105s) • Force core intacte !</div></div>
-    <div class="scard o"><div class="scard-label">VO2max (CB S1)</div><div class="scard-val">45-46</div><div class="scard-sub">92-94% du pic (49) • Base aérobie préservée</div></div>
-    <div class="scard p"><div class="scard-label">Streak Comeback</div><div class="scard-val">14<span style="font-size:15px">j</span></div><div class="scard-sub">S1 : 7/7 ✅ — S2 en cours 🔥</div></div>
-    <div class="scard c"><div class="scard-label">Course non-stop (CB S1)</div><div class="scard-val">43<span style="font-size:15px">min</span></div><div class="scard-sub">Seuil lactique : 5:27/km mesuré S1</div></div>`;
+    <div class="scard g"><div class="scard-label">Poids actuel</div><div class="scard-val">93.0<span style="font-size:15px">kg</span></div><div class="scard-sub">Pic : 88.0 kg • −5.0 à reprendre · −0.6 vs S2</div></div>
+    <div class="scard gr"><div class="scard-label">Pompes sol (CB S2)</div><div class="scard-val">8<span style="font-size:15px">reps</span></div><div class="scard-sub">53% du pic (15) • Consolidation S3 → test S4</div></div>
+    <div class="scard b"><div class="scard-label">Planche (CB S2)</div><div class="scard-val">68<span style="font-size:15px">s</span></div><div class="scard-sub">Contexte atypique (S2) • Retest S3 samedi fraîche</div></div>
+    <div class="scard o"><div class="scard-label">VO2max (CB S2)</div><div class="scard-val">45</div><div class="scard-sub">92% du pic (49) • Base aérobie très bien préservée</div></div>
+    <div class="scard p"><div class="scard-label">Streak Comeback</div><div class="scard-val">21<span style="font-size:15px">j</span></div><div class="scard-sub">S1 ✅ · S2 ✅ (5 séances + 1 MVW) 🔥</div></div>
+    <div class="scard c"><div class="scard-label">Course non-stop (CB S2)</div><div class="scard-val">45<span style="font-size:15px">min</span></div><div class="scard-sub">Fractionné : 8 splits à 4:50-5:00/km 🚀</div></div>`;
 }
 
 function renderRecords(){
   const achs=[['🏆','The Impossible','0 → 15 pompes sol en 70 jours'],['⚡','Weight Warrior','88 kg objectif atteint exactement'],['🫁','Cardio Beast','VO2max +14% en 12 semaines'],['🔗','Iron Consistency','84/84 jours — 100% présence'],['🧠','Mental Warrior','"FONCE !" mindset forgé'],['🌟','Student of the Decade','Meilleur élève en 15 ans']];
   document.getElementById('achGrid').innerHTML=achs.map(([i,t,s])=>`<div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:7px 11px;display:flex;align-items:center;gap:7px"><span style="font-size:17px">${i}</span><div><div style="font-size:11px;color:var(--text);font-weight:600">${t}</div><div style="font-size:9px;color:var(--muted)">${s}</div></div></div>`).join('');
   const recs=[
-    ['⚖️','Poids',['94.0 kg','88.0 kg','93.6 kg (CB-S1)'],7],
+    ['⚖️','Poids',['94.0 kg','88.0 kg','93.0 kg (CB-S2)'],17],
     ['💪','Pompes au sol',['0 rep','15 reps (S10)','8 reps (53% pic)'],53],
-    ['⏱️','Planche',['25 s','105 s (1min45)','96 s (91% pic)'],91],
-    ['🏃','Course non-stop',['30 min','60 min','43 min (72% pic)'],72],
-    ['❤️','VO2max',['43','49 (+14%)','45-46 (94% pic)'],94],
-    ['📅','Streak',['0 j','84/84 (100%)','14 jours (S1+S2)'],17],
+    ['⏱️','Planche',['25 s','105 s (1min45)','68 s (CB-S2 — retest S3)'],65],
+    ['🏃','Course non-stop',['30 min','60 min','45 min (75% pic)'],75],
+    ['❤️','VO2max',['43','49 (+14%)','45 (92% pic)'],92],
+    ['📅','Streak',['0 j','84/84 (100%)','21 jours (S1+S2)'],25],
   ];
   document.getElementById('recGrid').innerHTML=recs.map(([ic,m,rows,pct])=>`
     <div class="rec-card">
