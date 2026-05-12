@@ -3,6 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<link rel="manifest" href="./manifest.json">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Sport 2K26">
+<meta name="theme-color" content="#060b14">
+<meta name="application-name" content="Sport 2K26">
 <title>Sport 2K26</title>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -2896,9 +2903,9 @@ window.openChronoLinked=openChronoLinked;
 </div>
 <script>
 if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('./sw.js',{scope:'./'})
-    .then(function(r){console.log('SW:',r.scope);})
-    .catch(function(e){console.log('SW err:',e);});
+  navigator.serviceWorker.register('./sw.js')
+    .then(function(r){console.log('SW ok:',r.scope);})
+    .catch(function(e){console.warn('SW non supporté:',e.message);});
 }
 </script>
 </body>
