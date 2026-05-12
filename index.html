@@ -986,7 +986,16 @@ function changeWeek(d){weekOff+=d;renderAll();}
 function getStore(){
   const key='pw_'+getKey(weekOff);
   const raw=localStorage.getItem(key);
-  if(raw)return JSON.parse(raw);
+  if(raw){
+    const s=JSON.parse(raw);
+    // Toujours forcer le type depuis DEFAULT_TYPES — évite les bugs après changement d'ordre
+    if(s.days&&s.days.length===DEFAULT_TYPES.length){
+      s.days.forEach(function(d,i){ d.type=DEFAULT_TYPES[i]; });
+    }
+    // Rétrocompat : ajouter skills si absent
+    if(!s.skills) s.skills={};
+    return s;
+  }
   return{weekKey:getKey(weekOff),days:DEFAULT_TYPES.map(t=>({type:t,done:'planned',dr:{s1:7,s2:7,s3:7,s4:7,total:28},bb:'',note:'',courbatures:{intensite:'',zones:[]},notes:'',running:{duree:'',dist:'',allure:'',fcMoy:'',fcMax:'',zone:'Z2',genou:'ok'},cali:{pompesIncl:'',pompesSol:'',planche:'',dips:'',lsit:'',rowing:'',series:'',sets:{}}})),poids:'',note:'',motiv:'',sommeil:'',hydrat:'',ecarts:'',epaules:'',equil:'',hrv:'',hrvDays:'',tStatus:'',vo2:'',bb:'',p1:'',p2:'',p3:'',diff:'',quest:'',skills:{}};
 }
 function saveStore(s){localStorage.setItem('pw_'+s.weekKey,JSON.stringify(s));}
