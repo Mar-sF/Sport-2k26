@@ -1,5 +1,5 @@
-// Sport 2K26 — Service Worker v4
-var CACHE = 'sport2k26-v4';
+// Sport 2K26 — Service Worker v5
+var CACHE = 'sport2k26-v5';
 
 self.addEventListener('install', function(e) {
   self.skipWaiting();
