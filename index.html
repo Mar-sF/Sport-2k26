@@ -404,7 +404,7 @@ tr:hover td{background:rgba(255,255,255,.015)}
 
 
 /* ── TROPHÉES PLAYSTATION ── */
-.trophy-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:4px}
+.trophy-grid{margin-top:4px}
 .trophy-card{border-radius:12px;padding:12px 13px;display:flex;align-items:center;gap:12px;border:1px solid;position:relative;overflow:hidden;transition:.2s}
 .trophy-card.locked{background:var(--bg3);border-color:rgba(255,255,255,.07);opacity:.55;filter:grayscale(.8)}
 .trophy-card.unlocked{background:var(--bg2);box-shadow:0 2px 14px rgba(0,0,0,.3)}
@@ -412,6 +412,8 @@ tr:hover td{background:rgba(255,255,255,.015)}
 .trophy-card.t-silver.unlocked{border-color:rgba(192,192,192,.5);background:rgba(192,192,192,.06)}
 .trophy-card.t-gold.unlocked{border-color:rgba(245,200,66,.6);background:rgba(245,200,66,.08)}
 .trophy-card.t-plat.unlocked{border-color:rgba(100,180,255,.6);background:rgba(100,180,255,.07)}
+.trophy-card.t-legend.unlocked{border-color:rgba(255,215,0,.7);background:rgba(255,215,0,.06);box-shadow:0 0 18px rgba(255,215,0,.15)}
+.trophy-card.t-legend.locked{opacity:.45}
 .trophy-icon{font-size:30px;flex-shrink:0;position:relative}
 .trophy-badge{position:absolute;bottom:-2px;right:-4px;font-size:13px}
 .trophy-info{flex:1;min-width:0}
@@ -422,6 +424,7 @@ tr:hover td{background:rgba(255,255,255,.015)}
 .trophy-rank.t-silver{color:#c0c0c0}
 .trophy-rank.t-gold{color:var(--gold)}
 .trophy-rank.t-plat{color:#64b4ff}
+.trophy-rank.t-legend{color:#ffd700;text-shadow:0 0 8px rgba(255,215,0,.5)}
 .trophy-unlocked-date{font-size:9px;color:var(--muted2);margin-top:2px}
 .trophy-section-title{font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:700;color:var(--muted2);letter-spacing:1.2px;text-transform:uppercase;margin:14px 0 8px;display:flex;align-items:center;gap:6px}
 .trophy-section-title::after{content:'';flex:1;height:1px;background:var(--border)}
@@ -431,9 +434,63 @@ tr:hover td{background:rgba(255,255,255,.015)}
 .trophy-mini.t-silver{border-color:rgba(192,192,192,.35)}
 .trophy-mini.t-gold{border-color:rgba(245,200,66,.45)}
 .trophy-mini.t-plat{border-color:rgba(100,180,255,.45)}
+.trophy-mini.t-legend{border-color:rgba(255,215,0,.6);background:rgba(255,215,0,.05)}
 .trophy-mini-icon{font-size:18px}
 .trophy-mini-name{font-size:10px;font-weight:600;color:var(--text)}
 @media(max-width:500px){.trophy-grid{grid-template-columns:1fr}}
+
+
+.cali-elastic-row{display:flex;align-items:center;gap:8px;margin-top:7px;padding-top:7px;border-top:1px solid rgba(255,255,255,.05);flex-wrap:wrap}
+.cali-elastic-label{font-size:9px;color:var(--muted2);flex-shrink:0;letter-spacing:.3px;text-transform:uppercase;font-weight:700}
+.elastic-chips{display:flex;gap:5px;flex-wrap:wrap}
+.elastic-chip{display:flex;align-items:center;gap:4px;padding:3px 8px;border-radius:20px;border:1.5px solid rgba(255,255,255,.12);background:var(--bg3);cursor:pointer;transition:.15s;user-select:none;touch-action:manipulation}
+.elastic-chip:active{transform:scale(.95)}
+.elastic-chip.selected{border-color:currentColor;background:rgba(255,255,255,.07);box-shadow:0 0 6px currentColor}
+.elastic-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.elastic-name{font-size:9.5px;font-weight:700;color:var(--text)}
+.elastic-kg{font-size:8px;color:var(--muted);margin-left:1px}
+
+
+.elastic-brand-label{font-size:8px;font-weight:800;color:var(--muted2);letter-spacing:.8px;align-self:center;flex-shrink:0}
+.elastic-brand-sep{color:var(--border);align-self:center;font-size:12px;margin:0 2px}
+
+
+.trophy-rank-header{display:flex;align-items:center;justify-content:space-between;margin:14px 0 8px}
+.trophy-rank-count{font-size:10px;color:var(--muted);font-family:'Space Mono',monospace}
+.trophy-rank-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:4px}
+@media(max-width:500px){.trophy-rank-grid{grid-template-columns:1fr}}
+
+
+/* ── SKILLS CALISTHENICS ── */
+.skill-group{margin-bottom:18px}
+.skill-group-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.skill-group-name{font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;color:var(--gold);letter-spacing:1px;text-transform:uppercase}
+.skill-group-count{font-size:10px;color:var(--muted);font-family:'Space Mono',monospace}
+.skill-item{display:flex;align-items:center;justify-content:space-between;padding:9px 11px;background:var(--bg3);border-radius:9px;margin-bottom:6px;border:1px solid rgba(255,255,255,.06);cursor:pointer;transition:.15s;gap:8px}
+.skill-item:active{transform:scale(.98)}
+.skill-item.unlocked{background:rgba(34,197,94,.06);border-color:rgba(34,197,94,.3)}
+.skill-item-left{display:flex;align-items:center;gap:10px;flex:1;min-width:0}
+.skill-level-dot{font-size:16px;flex-shrink:0}
+.skill-item-name{font-size:11px;font-weight:700;color:var(--text)}
+.skill-item-desc{font-size:9.5px;color:var(--muted);margin-top:1px;line-height:1.3}
+.skill-item-right{display:flex;flex-direction:column;align-items:center;gap:2px;flex-shrink:0}
+.skill-check{width:24px;height:24px;border-radius:50%;background:var(--green);color:#000;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.skill-lock{width:24px;height:24px;border-radius:50%;border:2px solid rgba(255,255,255,.15);color:var(--muted);font-size:14px;display:flex;align-items:center;justify-content:center}
+.skill-date{font-size:8px;color:var(--green);font-family:'Space Mono',monospace;white-space:nowrap}
+.skill-hint{font-size:9px;color:var(--muted2);text-align:center;margin-bottom:12px;font-style:italic}
+
+
+.skill-roadmap-header{font-size:10px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--muted2);margin:14px 0 7px;padding-bottom:5px;border-bottom:1px solid var(--border)}
+.skill-road-item{display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--bg3);border-radius:9px;margin-bottom:5px;border:1px solid rgba(255,255,255,.05)}
+.skill-road-icon{width:32px;height:32px;border-radius:8px;border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;background:var(--bg2)}
+.skill-road-body{flex:1;min-width:0}
+.skill-road-name{font-size:11px;font-weight:700;color:var(--text)}
+.skill-road-desc{font-size:9.5px;color:var(--muted);margin-top:1px}
+.skill-road-right{text-align:right;flex-shrink:0}
+.skill-road-group{font-size:9px;font-weight:700;letter-spacing:.4px;text-transform:uppercase}
+.skill-road-eta{font-size:9px;color:var(--muted);margin-top:2px;font-family:'Space Mono',monospace}
+/* supprimer le cursor pointer sur skill-item */
+.skill-item{cursor:default}
 
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Space+Mono:wght@400;700&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -665,6 +722,13 @@ tr:hover td{background:rgba(255,255,255,.015)}
   <div class="muscle-section">
     <div class="muscle-section-title">📍 Progression vers les objectifs</div>
     <div class="obj-timeline" id="objTimeline"></div>
+  </div>
+
+  <!-- SKILLS CALISTHENICS -->
+  <div class="muscle-section">
+    <div class="muscle-section-title">🥋 Skills Calisthenics</div>
+    <div class="skill-hint">Progression du plus facile au plus difficile — estimations basées sur 4-6 séances/semaine</div>
+    <div id="skillsObjectives"></div>
   </div>
 
   <!-- TROPHÉES -->
@@ -907,7 +971,7 @@ function getStore(){
   const key='pw_'+getKey(weekOff);
   const raw=localStorage.getItem(key);
   if(raw)return JSON.parse(raw);
-  return{weekKey:getKey(weekOff),days:DEFAULT_TYPES.map(t=>({type:t,done:'planned',dr:{s1:7,s2:7,s3:7,s4:7,total:28},bb:'',note:'',courbatures:{intensite:'',zones:[]},notes:'',running:{duree:'',dist:'',allure:'',fcMoy:'',fcMax:'',zone:'Z2',genou:'ok'},cali:{pompesIncl:'',pompesSol:'',planche:'',dips:'',lsit:'',rowing:'',series:'',sets:{}}})),poids:'',note:'',motiv:'',sommeil:'',hydrat:'',ecarts:'',epaules:'',equil:'',hrv:'',hrvDays:'',tStatus:'',vo2:'',bb:'',p1:'',p2:'',p3:'',diff:'',quest:''};
+  return{weekKey:getKey(weekOff),days:DEFAULT_TYPES.map(t=>({type:t,done:'planned',dr:{s1:7,s2:7,s3:7,s4:7,total:28},bb:'',note:'',courbatures:{intensite:'',zones:[]},notes:'',running:{duree:'',dist:'',allure:'',fcMoy:'',fcMax:'',zone:'Z2',genou:'ok'},cali:{pompesIncl:'',pompesSol:'',planche:'',dips:'',lsit:'',rowing:'',series:'',sets:{}}})),poids:'',note:'',motiv:'',sommeil:'',hydrat:'',ecarts:'',epaules:'',equil:'',hrv:'',hrvDays:'',tStatus:'',vo2:'',bb:'',p1:'',p2:'',p3:'',diff:'',quest:'',skills:{}};
 }
 function saveStore(s){localStorage.setItem('pw_'+s.weekKey,JSON.stringify(s));}
 
@@ -931,7 +995,7 @@ function showTab(id){
     setTimeout(function(){ renderMuscleBalance(); renderMusclesWeek(); renderTrophiesMini(); }, 30);
   }
   if(id==='records'){
-    setTimeout(function(){ renderObjTimeline(); initChartsRecords(); renderTrophies(); }, 30);
+    setTimeout(function(){ renderObjTimeline(); initChartsRecords(); renderTrophies(); renderSkillsObjectives(); }, 30);
   }
 }
 
@@ -1184,9 +1248,54 @@ function saveCaliSet(dayIdx, exoKeyRaw, setIdx, val){
 
 
 
+
+
+const ELASTIC_BANDS = [
+  {id:'sw_5',   name:'Gris',       kg:'5 kg',  color:'#cbd5e1', brand:'SW'},
+  {id:'sw_10',  name:'Vert',       kg:'10 kg', color:'#22c55e', brand:'SW'},
+  {id:'sw_15',  name:'Bleu foncé', kg:'15 kg', color:'#1e40af', brand:'SW'},
+  {id:'sw_20',  name:'Noir',       kg:'20 kg', color:'#475569', brand:'SW'},
+  {id:'sw_25',  name:'Bleu clair', kg:'25 kg', color:'#60a5fa', brand:'SW'},
+  {id:'co_25',  name:'Jaune',      kg:'25 kg', color:'#f5c842', brand:'COR'},
+];
+function buildElasticChips(dayIdx, exoKey, selected){
+  var enc = encodeURIComponent(exoKey);
+  var safKey = exoKey.replace(/\W/g,'');
+  // Grouper par marque
+  var swBands = ELASTIC_BANDS.filter(function(b){return b.brand==='SW';});
+  var corBands = ELASTIC_BANDS.filter(function(b){return b.brand==='COR';});
+  function chipHtml(b){
+    var sel = selected === b.id;
+    return '<div class="elastic-chip'+(sel?' selected':'')+'" data-band="'+b.id+'" style="color:'+b.color+'">'
+      + '<div class="elastic-dot" style="background:'+b.color+';border:1px solid rgba(255,255,255,.2)"></div>'
+      + '<span class="elastic-name">'+b.name+'</span>'
+      + '<span class="elastic-kg">'+b.kg+'</span>'
+      + '</div>';
+  }
+  return '<div class="elastic-chips" data-day="'+dayIdx+'" data-exo="'+enc+'" data-saf="'+safKey+'">'
+    + '<span class="elastic-brand-label">SW</span>'
+    + swBands.map(chipHtml).join('')
+    + '<span class="elastic-brand-sep">|</span>'
+    + '<span class="elastic-brand-label">COR</span>'
+    + corBands.map(chipHtml).join('')
+    + '</div>';
+}
+
+const ELASTIC_KEYWORDS = ['élastique','elastique','SmartWorkout','bande','CoreStrength'];
+function isElasticExo(exoName){
+  return ELASTIC_KEYWORDS.some(function(k){ return exoName.toLowerCase().indexOf(k.toLowerCase()) >= 0; });
+}
+function saveCaliElastic(dayIdx, exoKey, val){
+  var s = getStore();
+  if(!s.days[dayIdx].cali.elastic) s.days[dayIdx].cali.elastic = {};
+  s.days[dayIdx].cali.elastic[exoKey] = val;
+  saveStore(s);
+}
+
 // ── CALI RESULTS EVENTS (délégation, évite les quotes inline) ──
 document.addEventListener('change', function(e){
   const inp = e.target;
+  // Élastique : géré par click, pas change
   // Saisie d'une série
   if(inp.classList.contains('cali-set-input')){
     const dayIdx = +inp.dataset.day;
@@ -1204,6 +1313,24 @@ document.addEventListener('click', function(e){
   if(timerBtn){
     const wrap = document.getElementById('timer-wrap-'+timerBtn.dataset.sw);
     if(wrap) wrap.style.display = wrap.style.display==='none' ? 'block' : 'none';
+  }
+  // Chip élastique
+  const chip = e.target.closest('.elastic-chip');
+  if(chip){
+    const row = chip.closest('.elastic-chips');
+    if(!row) return;
+    const dayIdx = +row.dataset.day;
+    const exoKey = decodeURIComponent(row.dataset.exo);
+    const band = chip.dataset.band;
+    // Toggle : si déjà sélectionné, désélectionner
+    const alreadySel = chip.classList.contains('selected');
+    row.querySelectorAll('.elastic-chip').forEach(function(c){ c.classList.remove('selected'); });
+    if(!alreadySel){
+      chip.classList.add('selected');
+      saveCaliElastic(dayIdx, exoKey, band);
+    } else {
+      saveCaliElastic(dayIdx, exoKey, '');
+    }
   }
   // Bouton MAX → remplit toutes les séries avec la cible
   const maxBtn = e.target.closest('.cali-max-btn');
@@ -1265,6 +1392,15 @@ function buildCaliResults(day, i){
         + ' data-day="'+i+'" data-exo="'+exoEnc+'" data-sets="'+nbSets+'" data-saf="'+safKey+'" data-cible="'+(cible||0)+'">'
         + '✓ MAX ('+cible+' '+unit+')'
         + '</button>';
+      // Champ élastique si exercice concerné
+      var elastic = (day.cali.elastic && day.cali.elastic[exoKey]) || '';
+      var elasticHtml = '';
+      if(isElasticExo(exoKey)){
+        elasticHtml = '<div class="cali-elastic-row">'
+          + '<span class="cali-elastic-label">Élastique</span>'
+          + buildElasticChips(i, exoKey, elastic)
+          + '</div>';
+      }
 
       // Moyenne
       var done = vals.filter(function(x){ return x !== '' && x != null; });
@@ -1285,6 +1421,7 @@ function buildCaliResults(day, i){
         + '<div class="cali-sets-row">' + setsHtml + maxHtml
         + (avg!=null ? '<div class="cali-exo-avg">moy.&nbsp;'+avg+'&nbsp;'+unit+'</div>' : '')
         + '</div>'
+        + elasticHtml
         + timerHtml
         + '</div>';
     });
@@ -1535,15 +1672,35 @@ Statut : ${st[day.done]||'—'}`;
         t+=`\n• Genou gauche : ${day.running.genou==='ok'?'✓ OK':day.running.genou==='gene'?'⚠️ Gêne légère':'🔴 Douleur'}`;
       }
       if(IS_CALI(day.type)){
-        const c=day.cali;const parts=[];
-        if(c.pompesIncl)parts.push(`Pompes incl:${c.pompesIncl}`);
-        if(c.pompesSol)parts.push(`Pompes sol:${c.pompesSol}`);
-        if(c.planche)parts.push(`Planche:${c.planche}s`);
-        if(c.dips)parts.push(`Dips:${c.dips}`);
-        if(c.lsit)parts.push(`L-sit:${c.lsit}s`);
-        if(c.rowing)parts.push(`Rowing:${c.rowing}`);
-        if(c.series)parts.push(`${c.series} séries`);
-        if(parts.length)t+=`\n• ${parts.join(' | ')}`;
+        const c=day.cali;
+        const elastic=c.elastic||{};
+        const sets=c.sets||{};
+        const wo2=WORKOUTS[day.type];
+        if(wo2){
+          wo2.circuits.forEach(function(circ){
+            if(circ.color==='cool'||circ.color==='run') return;
+            t+='\n  ['+circ.label+']';
+            circ.exos.forEach(function(exo){
+              const setsArr=sets[exo.n]||[];
+              const done2=setsArr.filter(function(x){return x!==''&&x!=null;});
+              if(!done2.length) return;
+              const isTimer=TIMER_EXO_NAMES.some(function(tk){return exo.n.indexOf(tk)>=0;});
+              const unit2=isTimer?'s':'reps';
+              const setsStr=setsArr.map(function(v,si){return 'S'+(si+1)+':'+(v!=null&&v!==''?v:'—');}).join(' ');
+              var elId=elastic[exo.n]||'';
+              var elBand=elId?ELASTIC_BANDS.find(function(b){return b.id===elId;}):null;
+              var el=elBand?(' 🔴 Bande '+elBand.name+' ('+elBand.kg+')'):'';
+              t+='\n    '+exo.n+' → '+setsStr+el;
+            });
+          });
+        } else {
+          const parts=[];
+          if(c.pompesIncl)parts.push('Pompes incl:'+c.pompesIncl);
+          if(c.pompesSol)parts.push('Pompes sol:'+c.pompesSol);
+          if(c.planche)parts.push('Planche:'+c.planche+'s');
+          if(c.rowing)parts.push('Rowing:'+c.rowing);
+          if(parts.length)t+='\n• '+parts.join(' | ');
+        }
       }
       t+=`\n• Note séance : ${day.note||'—'}/10 | Courbatures : ${day.courbatures.intensite||'—'}/10`;
       if(day.courbatures.zones.length)t+=` (${day.courbatures.zones.join(', ')})`;
@@ -1552,13 +1709,31 @@ Statut : ${st[day.done]||'—'}`;
     t+='\n';
   });
 
+  // Calcul des max par exercice depuis les sets
+  var allExoMaxes={};
+  store.days.forEach(function(day){
+    if(!IS_CALI(day.type)||!day.cali.sets) return;
+    Object.keys(day.cali.sets).forEach(function(exo){
+      var vals=day.cali.sets[exo].filter(function(x){return x!==''&&x!=null;});
+      if(!vals.length) return;
+      var m=Math.max.apply(null,vals);
+      if(!allExoMaxes[exo]||m>allExoMaxes[exo]) allExoMaxes[exo]=m;
+    });
+  });
+  var exoMaxLines=Object.keys(allExoMaxes).map(function(k){
+    var isTimer=TIMER_EXO_NAMES.some(function(t2){return k.indexOf(t2)>=0;});
+    return '• '+k+' max : '+allExoMaxes[k]+(isTimer?'s':' reps');
+  }).join('\n');
+
   t+=`\n${SEP}
 💪 PERFORMANCES CLÉS
 • Pompes sol max : ${maxSol||'—'} reps
 • Pompes inclinées max : ${maxIncl||'—'} reps
 • Planche max : ${maxPl||'—'} secondes
 • Course max : ${maxC||'—'} minutes
+• Distance max : ${Math.max(0,...store.days.map(d=>+d.running?.dist||0))||'—'} km
 ${store.vo2?'• VO2max : '+store.vo2:''}
+${exoMaxLines?'\nDÉTAIL PAR EXERCICE :\n'+exoMaxLines:''}
 
 ✅ POINTS POSITIFS
 1. ${store.p1||'—'}
@@ -1947,6 +2122,126 @@ function renderMusclesWeek() {
   grid.innerHTML = html;
 }
 // ── OBJECTIFS TIMELINE (onglet Objectifs) ──
+
+// ══════════════════════════════════════════
+// SKILLS CALISTHENICS — DÉVERROUILLAGE MANUEL
+// ══════════════════════════════════════════
+const CALI_SKILLS = [
+  // ── Progressions Muscle Up ──
+  {id:'neg_mu',    group:'Muscle Up',     name:'Negative Muscle Up',    icon:'⬇️', desc:'Descente contrôlée depuis le haut des barres', level:1},
+  {id:'mu_1',      group:'Muscle Up',     name:'1er Muscle Up',         icon:'🔥', desc:'Premier muscle up complet — le Saint Graal', level:2},
+  {id:'mu_5',      group:'Muscle Up',     name:'Muscle Up × 5',         icon:'💪', desc:'5 muscle ups consécutifs', level:3},
+  {id:'mu_10',     group:'Muscle Up',     name:'Muscle Up × 10',        icon:'👑', desc:'10 muscle ups — maîtrise absolue', level:4},
+  // ── Front Lever ──
+  {id:'tuck_fl',   group:'Front Lever',   name:'Tuck Front Lever 5s',   icon:'🔵', desc:'Position groupée, corps horizontal 5s', level:1},
+  {id:'adv_fl',    group:'Front Lever',   name:'Adv. Tuck Front Lever', icon:'🟣', desc:'Jambes mi-tendues, horizontal 10s', level:2},
+  {id:'str_fl',    group:'Front Lever',   name:'Straddle Front Lever',  icon:'🟡', desc:'Jambes écartées, horizontal 10s', level:3},
+  {id:'full_fl',   group:'Front Lever',   name:'Full Front Lever 5s',   icon:'🏅', desc:'Corps tendu parfaitement horizontal 5s', level:4},
+  {id:'full_fl10', group:'Front Lever',   name:'Full Front Lever 10s',  icon:'👑', desc:'Corps tendu horizontal 10 secondes', level:5},
+  // ── Back Lever ──
+  {id:'tuck_bl',   group:'Back Lever',    name:'Tuck Back Lever 5s',    icon:'🔵', desc:'Position groupée dos vers bas 5s', level:1},
+  {id:'str_bl',    group:'Back Lever',    name:'Straddle Back Lever',   icon:'🟡', desc:'Jambes écartées, horizontal 10s', level:2},
+  {id:'full_bl',   group:'Back Lever',    name:'Full Back Lever 10s',   icon:'👑', desc:'Corps tendu inversé horizontal 10s', level:3},
+  // ── Handstand ──
+  {id:'hs_wall',   group:'Handstand',     name:'Handstand Mur 30s',     icon:'🔵', desc:'Équilibre contre un mur 30 secondes', level:1},
+  {id:'hs_free5',  group:'Handstand',     name:'Handstand Libre 5s',    icon:'🟣', desc:'Équilibre libre sans support 5s', level:2},
+  {id:'hs_free30', group:'Handstand',     name:'Handstand Libre 30s',   icon:'🏅', desc:'Équilibre libre stable 30 secondes', level:3},
+  {id:'hspu',      group:'Handstand',     name:'Handstand Push-up',     icon:'👑', desc:'Pompe complète en équilibre renversé', level:4},
+  // ── L-sit / V-sit ──
+  {id:'lsit_10',   group:'L-sit / V-sit', name:'L-sit 10s',             icon:'🔵', desc:'Compression jambes tendues 10 secondes', level:1},
+  {id:'lsit_30',   group:'L-sit / V-sit', name:'L-sit 30s',             icon:'🟣', desc:'L-sit tenu 30 secondes', level:2},
+  {id:'lsit_60',   group:'L-sit / V-sit', name:'L-sit 60s',             icon:'🏅', desc:'L-sit 1 minute — force de compression absolue', level:3},
+  {id:'vsit',      group:'L-sit / V-sit', name:'V-sit',                 icon:'👑', desc:'Compression maximale, jambes au-dessus des hanches', level:4},
+  // ── Skills Elite ──
+  {id:'oap',       group:'Elite',         name:'One Arm Push-up',       icon:'🔱', desc:'Pompe sur un seul bras', level:1},
+  {id:'oapu',      group:'Elite',         name:'One Arm Pull-up',       icon:'🔱', desc:'Traction sur un seul bras', level:2},
+  {id:'hf',        group:'Elite',         name:'Human Flag',            icon:'👑', desc:'Corps horizontal tenu latéralement — élite absolu', level:3},
+];
+
+function unlockSkill(skillId){
+  var s = getStore();
+  if(!s.skills) s.skills = {};
+  if(s.skills[skillId]){
+    delete s.skills[skillId];
+  } else {
+    s.skills[skillId] = new Date().toLocaleDateString('fr-FR');
+  }
+  saveStore(s);
+  renderTrophies();
+  renderTrophiesMini();
+  renderSkillsObjectives();
+}
+
+function renderSkillsObjectives(){
+  var el = document.getElementById('skillsObjectives');
+  if(!el) return;
+  var s = getStore();
+  // Skills triés du plus facile au plus dur avec ETA
+  var SKILLS_ROADMAP = [
+    // ── NIVEAU 1 : À portée (1-3 mois) ──
+    {id:'lsit_10',    name:'L-sit 10s',              group:'L-sit',      eta:'4-8 sem',  diff:1, icon:'✊', desc:'Base de compression abdominale'},
+    {id:'hs_wall',    name:'Handstand mur 30s',       group:'Handstand',  eta:'6-10 sem', diff:1, icon:'🤸', desc:'Force épaules + proprioception'},
+    {id:'tuck_bl',    name:'Tuck Back Lever 5s',      group:'Back Lever', eta:'2-3 mois', diff:2, icon:'🔵', desc:'Isométrique dorsal groupé'},
+    {id:'neg_mu',     name:'Negative Muscle Up',      group:'Muscle Up',  eta:'2-3 mois', diff:2, icon:'⬇️', desc:'Descente contrôlée — prérequis MU'},
+    {id:'tuck_fl',    name:'Tuck Front Lever 5s',     group:'Front Lever',eta:'2-4 mois', diff:2, icon:'🔵', desc:'Isométrique horizontal groupé'},
+    // ── NIVEAU 2 : Intermédiaire (3-8 mois) ──
+    {id:'lsit_30',    name:'L-sit 30s',               group:'L-sit',      eta:'3-5 mois', diff:3, icon:'✊', desc:'Compression soutenue'},
+    {id:'adv_fl',     name:'Adv. Tuck Front Lever',   group:'Front Lever',eta:'4-6 mois', diff:3, icon:'🟣', desc:'Jambes mi-tendues, horizontal'},
+    {id:'str_bl',     name:'Straddle Back Lever',     group:'Back Lever', eta:'4-7 mois', diff:3, icon:'🟡', desc:'Jambes écartées, inversé'},
+    {id:'mu_1',       name:'1er Muscle Up',           group:'Muscle Up',  eta:'4-8 mois', diff:3, icon:'🔥', desc:'Le Saint Graal du calisthenics'},
+    {id:'hs_free5',   name:'Handstand libre 5s',      group:'Handstand',  eta:'4-8 mois', diff:3, icon:'🟣', desc:'Équilibre sans support'},
+    // ── NIVEAU 3 : Avancé (6-14 mois) ──
+    {id:'lsit_60',    name:'L-sit 60s',               group:'L-sit',      eta:'6-10 mois',diff:4, icon:'🏅', desc:'1 minute de compression pure'},
+    {id:'str_fl',     name:'Straddle Front Lever',    group:'Front Lever',eta:'8-12 mois',diff:4, icon:'🟡', desc:'Jambes écartées, horizontal'},
+    {id:'full_bl',    name:'Full Back Lever 10s',     group:'Back Lever', eta:'8-12 mois',diff:4, icon:'👑', desc:'Corps tendu inversé 10s'},
+    {id:'mu_5',       name:'Muscle Up × 5',           group:'Muscle Up',  eta:'8-12 mois',diff:4, icon:'💪', desc:'5 reps consécutifs'},
+    {id:'hs_free30',  name:'Handstand libre 30s',     group:'Handstand',  eta:'8-14 mois',diff:4, icon:'🏅', desc:'Équilibre stable 30 secondes'},
+    // ── NIVEAU 4 : Expert (12-24 mois) ──
+    {id:'full_fl',    name:'Full Front Lever 5s',     group:'Front Lever',eta:'12-18 mois',diff:5, icon:'🏅', desc:'Corps tendu parfaitement horizontal'},
+    {id:'vsit',       name:'V-sit',                   group:'L-sit',      eta:'12-18 mois',diff:5, icon:'✨', desc:'Compression maximale, jambes hautes'},
+    {id:'mu_10',      name:'Muscle Up × 10',          group:'Muscle Up',  eta:'12-18 mois',diff:5, icon:'👑', desc:'10 reps — domination absolue'},
+    {id:'hspu',       name:'Handstand Push-up',       group:'Handstand',  eta:'14-20 mois',diff:5, icon:'🎯', desc:'Pompe en équilibre renversé'},
+    {id:'oap',        name:'One Arm Push-up',         group:'Elite',      eta:'14-20 mois',diff:5, icon:'🔱', desc:'Pompe sur un seul bras'},
+    // ── NIVEAU 5 : Légendaire (2-4 ans) ──
+    {id:'full_fl10',  name:'Full Front Lever 10s',    group:'Front Lever',eta:'18-30 mois',diff:6, icon:'👑', desc:'10 secondes de Front Lever parfait'},
+    {id:'oapu',       name:'One Arm Pull-up',         group:'Elite',      eta:'2-3 ans',   diff:6, icon:'🔱', desc:'Traction sur un seul bras'},
+    {id:'hf',         name:'Human Flag',              group:'Elite',      eta:'2-4 ans',   diff:6, icon:'🚩', desc:'Corps horizontal tenu latéralement'},
+  ];
+
+  var DIFF_COLORS = ['','var(--green)','#22d3ee','var(--gold)','#f97316','#ef4444','#a855f7'];
+  var DIFF_LABELS = ['','Débutant','Accessible','Intermédiaire','Avancé','Expert','Légendaire'];
+
+  // Groupes de difficulté
+  var groups = [
+    {label:'🟢 Niveau 1 — À portée (1-3 mois)',   diffs:[1,2]},
+    {label:'🟡 Niveau 2 — Intermédiaire (3-8 mois)',diffs:[3]},
+    {label:'🟠 Niveau 3 — Avancé (6-14 mois)',     diffs:[4]},
+    {label:'🔴 Niveau 4 — Expert (1-2 ans)',        diffs:[5]},
+    {label:'🟣 Niveau 5 — Légendaire (2+ ans)',     diffs:[6]},
+  ];
+
+  var html = '';
+  groups.forEach(function(g){
+    var skills = SKILLS_ROADMAP.filter(function(sk){return g.diffs.includes(sk.diff);});
+    html += '<div class="skill-roadmap-header">' + g.label + '</div>';
+    skills.forEach(function(sk){
+      var col = DIFF_COLORS[sk.diff];
+      html += '<div class="skill-road-item">'
+        + '<div class="skill-road-icon" style="border-color:'+col+'40">' + sk.icon + '</div>'
+        + '<div class="skill-road-body">'
+        + '<div class="skill-road-name">' + sk.name + '</div>'
+        + '<div class="skill-road-desc">' + sk.desc + '</div>'
+        + '</div>'
+        + '<div class="skill-road-right">'
+        + '<div class="skill-road-group" style="color:'+col+'">' + sk.group + '</div>'
+        + '<div class="skill-road-eta">⏳ ' + sk.eta + '</div>'
+        + '</div>'
+        + '</div>';
+    });
+  });
+  el.innerHTML = html;
+}
+
 function renderObjTimeline() {
   const el = document.getElementById('objTimeline');
   if (!el) return;
@@ -1991,36 +2286,119 @@ function renderObjTimeline() {
 // TROPHÉES PLAYSTATION
 // ══════════════════════════════════════════
 const TROPHIES = [
-  // ── BRONZE ──
-  {id:'first_sweat',   rank:'t-bronze', icon:'🏋️', badge:'🥉', name:'Premier Effort',        desc:'Réaliser 1 séance calisthenics',         check: function(s,h){ return s.days.some(function(d){return d.done==='yes'&&IS_CALI(d.type);}); }},
-  {id:'first_run',     rank:'t-bronze', icon:'🏃', badge:'🥉', name:'Premiers Kilomètres',    desc:'Réaliser 1 séance running',              check: function(s,h){ return s.days.some(function(d){return d.done==='yes'&&IS_RUN(d.type);}); }},
-  {id:'planche_60',    rank:'t-bronze', icon:'⏱️', badge:'🥉', name:'Planche 60s',            desc:'Tenir la planche 60 secondes',           check: function(s,h){ return h.some(function(r){return r.pl>=60;})||s.days.some(function(d){return +d.cali.planche>=60;}); }},
-  {id:'pompes_5',      rank:'t-bronze', icon:'💪', badge:'🥉', name:'Cinq Pompes',            desc:'5 pompes au sol en une série',           check: function(s,h){ return h.some(function(r){return r.ps>=5;})||s.days.some(function(d){return +d.cali.pompesSol>=5;}); }},
-  {id:'course_30',     rank:'t-bronze', icon:'🎽', badge:'🥉', name:'30 Minutes',             desc:'Courir 30 min non-stop',           check: function(s,h){ return h.some(function(r){return r.cr>=30;})||s.days.some(function(d){return +d.running.dist>=4;}); }},
-  {id:'streak_7',      rank:'t-bronze', icon:'🔥', badge:'🥉', name:'Semaine Complète',       desc:'7 jours consécutifs sans arrêt',         check: function(s,h){ return h.some(function(r){return r.j>=7;}); }},
-  // ── SILVER ──
-  {id:'planche_90',    rank:'t-silver', icon:'🧱', badge:'🥈', name:'Planche 90s',            desc:'Tenir la planche 90 secondes',           check: function(s,h){ return h.some(function(r){return r.pl>=90;})||s.days.some(function(d){return +d.cali.planche>=90;}); }},
-  {id:'pompes_10',     rank:'t-silver', icon:'💪', badge:'🥈', name:'10 Pompes',              desc:'10 pompes au sol en une série',          check: function(s,h){ return h.some(function(r){return r.ps>=10;})||s.days.some(function(d){return +d.cali.pompesSol>=10;}); }},
-  {id:'course_45',     rank:'t-silver', icon:'🏃', badge:'🥈', name:'45 Minutes',             desc:'Courir 45 min non-stop',           check: function(s,h){ return h.some(function(r){return r.cr>=45;})||s.days.some(function(d){return +d.running.dist>=6;}); }},
-  {id:'comeback',      rank:'t-silver', icon:'🔄', badge:'🥈', name:'Comeback',               desc:'Terminer le Module 1 Comeback (4 sem.)', check: function(s,h){ return h.some(function(r){return r.pc>=6&&r.j>=28;}); }},
-  {id:'poids_90',      rank:'t-silver', icon:'⚖️', badge:'🥈', name:'Sous les 90 kg',         desc:'Atteindre 90 kg ou moins',               check: function(s,h){ return h.some(function(r){return r.po&&r.po<=90;})||+s.poids<=90; }},
-  {id:'vo2_47',        rank:'t-silver', icon:'❤️', badge:'🥈', name:'VO2max 47',              desc:'VO2max Garmin ≥ 47',                     check: function(s,h){ return h.some(function(r){return r.v2&&r.v2>=47;})||+s.vo2>=47; }},
-  // ── GOLD ──
-  {id:'planche_120',   rank:'t-gold',   icon:'⚡', badge:'🏅', name:'Planche 2 min',          desc:'Tenir la planche 120 secondes',          check: function(s,h){ return h.some(function(r){return r.pl>=120;})||s.days.some(function(d){return +d.cali.planche>=120;}); }},
-  {id:'pompes_15',     rank:'t-gold',   icon:'🦾', badge:'🏅', name:'15 Pompes',              desc:'15 pompes au sol en une série',          check: function(s,h){ return h.some(function(r){return r.ps>=15;})||s.days.some(function(d){return +d.cali.pompesSol>=15;}); }},
-  {id:'course_60',     rank:'t-gold',   icon:'🏆', badge:'🏅', name:'60 Minutes',             desc:'Courir 1 heure non-stop',          check: function(s,h){ return h.some(function(r){return r.cr>=60;})||s.days.some(function(d){return +d.running.dist>=8;}); }},
-  {id:'poids_88',      rank:'t-gold',   icon:'🎯', badge:'🏅', name:'Pic de Forme',           desc:'Retrouver les 88 kg (pic Oct 2025)',      check: function(s,h){ return h.some(function(r){return r.po&&r.po<=88;})||+s.poids<=88; }},
-  {id:'vo2_49',        rank:'t-gold',   icon:'💨', badge:'🏅', name:'VO2max 49',              desc:'VO2max Garmin ≥ 49 (pic Oct 2025)',      check: function(s,h){ return h.some(function(r){return r.v2&&r.v2>=49;})||+s.vo2>=49; }},
-  {id:'streak_28',     rank:'t-gold',   icon:'🌟', badge:'🏅', name:'Mois Sans Relâche',      desc:'28 jours consécutifs de pratique',       check: function(s,h){ return h.some(function(r){return r.j>=28;}); }},
-  // ── PLATINE ──
-  {id:'plat_all',      rank:'t-plat',   icon:'💎', badge:'💎', name:'Padawan Accompli',       desc:'Tous les objectifs finaux atteints',     check: function(s,h){
-    var poids = h.some(function(r){return r.po&&r.po<=82;})||+s.poids<=82;
-    var pompes = h.some(function(r){return r.ps>=20;})||s.days.some(function(d){return +d.cali.pompesSol>=20;});
-    var planche = h.some(function(r){return r.pl>=300;})||s.days.some(function(d){return +d.cali.planche>=300;});
-    var course = h.some(function(r){return r.cr>=120;});
-    var vo2 = h.some(function(r){return r.v2&&r.v2>=60;})||+s.vo2>=60;
-    return poids&&pompes&&planche&&course&&vo2;
-  }},
+
+  // ══ 🥉 BRONZE — FONDATIONS ══
+  {id:'first_sweat',  rank:'t-bronze', icon:'🏋️', badge:'🥉', name:'Premier Effort',      desc:'Réaliser ta 1re séance calisthenics',
+    check:function(s,h){return s.days.some(function(d){return d.done==='yes'&&IS_CALI(d.type);});}},
+  {id:'planche_30',   rank:'t-bronze', icon:'⏱️', badge:'🥉', name:'Planche 30s',          desc:'Tenir la planche isométrique 30 secondes',
+    check:function(s,h){return h.some(function(r){return r.pl>=30;})||s.days.some(function(d){return +d.cali.planche>=30;});}},
+  {id:'pompes_5',     rank:'t-bronze', icon:'💪', badge:'🥉', name:'5 Pompes',              desc:'5 pompes au sol consécutives',
+    check:function(s,h){return h.some(function(r){return r.ps>=5;})||s.days.some(function(d){return +d.cali.pompesSol>=5;});}},
+  {id:'dips_5',       rank:'t-bronze', icon:'🔽', badge:'🥉', name:'5 Dips',               desc:'5 dips aux barres consécutifs',
+    check:function(s,h){return s.days.some(function(d){return +d.cali.dips>=5;});}},
+  {id:'squat_20',     rank:'t-bronze', icon:'🦵', badge:'🥉', name:'20 Squats',             desc:'20 squats correctement exécutés',
+    check:function(s,h){var sets=[];s.days.forEach(function(d){if(d.cali.sets&&d.cali.sets['Squats'])sets=sets.concat(d.cali.sets['Squats']);}); return sets.some(function(v){return v>=20;});}},
+  {id:'streak_7',     rank:'t-bronze', icon:'🔥', badge:'🥉', name:'Semaine Complète',      desc:'7 jours consécutifs de pratique',
+    check:function(s,h){return h.some(function(r){return r.j>=7;});}},
+  {id:'first_run',    rank:'t-bronze', icon:'🏃', badge:'🥉', name:'Premiers Km',           desc:'Réaliser une séance running',
+    check:function(s,h){return s.days.some(function(d){return d.done==='yes'&&IS_RUN(d.type);});}},
+  {id:'rowing_15',    rank:'t-bronze', icon:'🤸', badge:'🥉', name:'Rowing 15 reps',        desc:'15 reps de rowing élastique en une série',
+    check:function(s,h){return s.days.some(function(d){return +d.cali.rowing>=15;});}},
+
+  // ══ 🥈 SILVER — CONSTRUCTION ══
+  {id:'planche_60',   rank:'t-silver', icon:'🧱', badge:'🥈', name:'Planche 60s',           desc:'Planche isométrique 1 minute',
+    check:function(s,h){return h.some(function(r){return r.pl>=60;})||s.days.some(function(d){return +d.cali.planche>=60;});}},
+  {id:'pompes_10',    rank:'t-silver', icon:'💪', badge:'🥈', name:'10 Pompes',              desc:'10 pompes au sol consécutives',
+    check:function(s,h){return h.some(function(r){return r.ps>=10;})||s.days.some(function(d){return +d.cali.pompesSol>=10;});}},
+  {id:'dips_10',      rank:'t-silver', icon:'🔽', badge:'🥈', name:'10 Dips',               desc:'10 dips aux barres consécutifs',
+    check:function(s,h){return s.days.some(function(d){return +d.cali.dips>=10;});}},
+  {id:'lsit_10',      rank:'t-silver', icon:'✊', badge:'🥈', name:'L-sit 10s',              desc:'Tenir le L-sit 10 secondes (compression abdos)',
+    check:function(s,h){return s.days.some(function(d){return +d.cali.lsit>=10;});}},
+  {id:'pompe_diam_8', rank:'t-silver', icon:'💎', badge:'🥈', name:'Diamant x8',            desc:'8 pompes diamant en une série',
+    check:function(s,h){var sets=[];s.days.forEach(function(d){if(d.cali.sets&&d.cali.sets['Pompes diamant'])sets=sets.concat(d.cali.sets['Pompes diamant']);}); return sets.some(function(v){return v>=8;});}},
+  {id:'course_45',    rank:'t-silver', icon:'🎽', badge:'🥈', name:'45 min non-stop',        desc:'Courir 45 minutes sans interruption',
+    check:function(s,h){return h.some(function(r){return r.cr>=45;})||s.days.some(function(d){return +d.running.dist>=6;});}},
+  {id:'poids_90',     rank:'t-silver', icon:'⚖️', badge:'🥈', name:'Sous 90 kg',             desc:'Atteindre 90 kg ou moins',
+    check:function(s,h){return h.some(function(r){return r.po&&r.po<=90;})||+s.poids<=90;}},
+  {id:'streak_28',    rank:'t-silver', icon:'📅', badge:'🥈', name:'Mois de Fer',            desc:'28 jours consécutifs sans arrêt',
+    check:function(s,h){return h.some(function(r){return r.j>=28;});}},
+
+  // ══ 🏅 OR — PERFORMANCE ══
+  {id:'planche_90',   rank:'t-gold',   icon:'⚡', badge:'🏅', name:'Planche 90s',           desc:'Planche isométrique 1 min 30s',
+    check:function(s,h){return h.some(function(r){return r.pl>=90;})||s.days.some(function(d){return +d.cali.planche>=90;});}},
+  {id:'pompes_20',    rank:'t-gold',   icon:'🦾', badge:'🏅', name:'20 Pompes',              desc:'20 pompes au sol en une série — objectif principal',
+    check:function(s,h){return h.some(function(r){return r.ps>=20;})||s.days.some(function(d){return +d.cali.pompesSol>=20;});}},
+  {id:'dips_20',      rank:'t-gold',   icon:'🏋️', badge:'🏅', name:'20 Dips',               desc:'20 dips aux barres — objectif principal',
+    check:function(s,h){return s.days.some(function(d){return +d.cali.dips>=20;});}},
+  {id:'lsit_20',      rank:'t-gold',   icon:'✊', badge:'🏅', name:'L-sit 20s',              desc:'L-sit 20 secondes — force compression avancée',
+    check:function(s,h){return s.days.some(function(d){return +d.cali.lsit>=20;});}},
+  {id:'pike_push_10', rank:'t-gold',   icon:'🔺', badge:'🏅', name:'Pike Push-up x10',       desc:'10 pike push-ups — préparation au handstand push-up',
+    check:function(s,h){var sets=[];s.days.forEach(function(d){if(d.cali.sets&&d.cali.sets['Pike push-ups'])sets=sets.concat(d.cali.sets['Pike push-ups']);}); return sets.some(function(v){return v>=10;});}},
+  {id:'poids_88',     rank:'t-gold',   icon:'🎯', badge:'🏅', name:'Pic Retrouvé',           desc:'Retrouver les 88 kg (pic octobre 2025)',
+    check:function(s,h){return h.some(function(r){return r.po&&r.po<=88;})||+s.poids<=88;}},
+  {id:'vo2_49',       rank:'t-gold',   icon:'❤️', badge:'🏅', name:'VO2max 49',              desc:'VO2max Garmin ≥ 49 — niveau pic 2025',
+    check:function(s,h){return h.some(function(r){return r.v2&&r.v2>=49;})||+s.vo2>=49;}},
+  {id:'course_60',    rank:'t-gold',   icon:'🏆', badge:'🏅', name:'1 Heure',                desc:'1 heure de course non-stop',
+    check:function(s,h){return h.some(function(r){return r.cr>=60;})||s.days.some(function(d){return +d.running.dist>=8;});}},
+
+  // ══ 💎 PLATINE — MAÎTRISE ══
+  {id:'planche_120',  rank:'t-plat',   icon:'🧱', badge:'💎', name:'Planche 2 min',         desc:'Planche isométrique 2 minutes — niveau avancé',
+    check:function(s,h){return h.some(function(r){return r.pl>=120;})||s.days.some(function(d){return +d.cali.planche>=120;});}},
+  {id:'pompes_30',    rank:'t-plat',   icon:'💪', badge:'💎', name:'30 Pompes',              desc:'30 pompes au sol en une série — niveau avancé',
+    check:function(s,h){return s.days.some(function(d){return +d.cali.pompesSol>=30;});}},
+  {id:'dips_30',      rank:'t-plat',   icon:'🔽', badge:'💎', name:'30 Dips',               desc:'30 dips aux barres — niveau avancé',
+    check:function(s,h){return s.days.some(function(d){return +d.cali.dips>=30;});}},
+  {id:'lsit_30',      rank:'t-plat',   icon:'✊', badge:'💎', name:'L-sit 30s',              desc:'L-sit 30 secondes — préparation au front lever',
+    check:function(s,h){return s.days.some(function(d){return +d.cali.lsit>=30;});}},
+  {id:'pompes_50',    rank:'t-plat',   icon:'🦾', badge:'💎', name:'50 Pompes',              desc:'50 pompes au sol consécutives',
+    check:function(s,h){return s.days.some(function(d){return +d.cali.pompesSol>=50;});}},
+  {id:'poids_85',     rank:'t-plat',   icon:'⚖️', badge:'💎', name:'Transformation',        desc:'Atteindre 85 kg — corps de compétition',
+    check:function(s,h){return h.some(function(r){return r.po&&r.po<=85;})||+s.poids<=85;}},
+  {id:'vo2_55',       rank:'t-plat',   icon:'💨', badge:'💎', name:'VO2max 55',              desc:'VO2max Garmin ≥ 55 — très bon niveau',
+    check:function(s,h){return h.some(function(r){return r.v2&&r.v2>=55;})||+s.vo2>=55;}},
+
+  // ══ 👑 LÉGENDAIRE — ELITE CALISTHENICS ══
+  {id:'planche_300',  rank:'t-legend', icon:'👑', badge:'👑', name:'Planche 5 min',         desc:'Objectif final — planche 5 minutes',
+    check:function(s,h){return h.some(function(r){return r.pl>=300;})||s.days.some(function(d){return +d.cali.planche>=300;});}},
+  {id:'pompes_100',   rank:'t-legend', icon:'🔱', badge:'👑', name:'100 Pompes',             desc:'Centurion — 100 pompes consécutives',
+    check:function(s,h){return s.days.some(function(d){return +d.cali.pompesSol>=100;});}},
+  {id:'dips_50',      rank:'t-legend', icon:'⚔️', badge:'👑', name:'50 Dips',               desc:'50 dips aux barres — force triceps exceptionnelle',
+    check:function(s,h){return s.days.some(function(d){return +d.cali.dips>=50;});}},
+  {id:'lsit_60',      rank:'t-legend', icon:'🌀', badge:'👑', name:'L-sit 60s',              desc:'L-sit 1 minute — contrôle de compression absolu',
+    check:function(s,h){return s.days.some(function(d){return +d.cali.lsit>=60;});}},
+  {id:'poids_82',     rank:'t-legend', icon:'🎯', badge:'👑', name:'Objectif Corps',         desc:'Atteindre 82 kg — objectif final',
+    check:function(s,h){return h.some(function(r){return r.po&&r.po<=82;})||+s.poids<=82;}},
+  {id:'vo2_60',       rank:'t-legend', icon:'🫀', badge:'👑', name:'VO2max 60',              desc:'VO2max Garmin ≥ 60 — objectif final',
+    check:function(s,h){return h.some(function(r){return r.v2&&r.v2>=60;})||+s.vo2>=60;}},
+  {id:'padawan_plat', rank:'t-legend', icon:'⚡', badge:'👑', name:'Padawan Accompli',       desc:'Tous les objectifs finaux atteints — le vrai Maître',
+    check:function(s,h){
+      var po=h.some(function(r){return r.po&&r.po<=82;})||+s.poids<=82;
+      var ps=s.days.some(function(d){return +d.cali.pompesSol>=20;});
+      var pl=h.some(function(r){return r.pl>=300;})||s.days.some(function(d){return +d.cali.planche>=300;});
+      var v2=h.some(function(r){return r.v2&&r.v2>=60;})||+s.vo2>=60;
+      var di=s.days.some(function(d){return +d.cali.dips>=20;});
+      return po&&ps&&pl&&v2&&di;
+    }},
+
+  // ══ 👑 SKILLS SPÉCIAUX (débloqués manuellement dans Skills) ══
+  {id:'sk_mu1',    rank:'t-legend', icon:'🔥', badge:'👑', name:'1er Muscle Up',          desc:'Débloquer le skill Muscle Up dans Skills Calisthenics',
+    check:function(s,h){return !!(s.skills&&s.skills['mu_1']);}},
+  {id:'sk_fl_full',rank:'t-legend', icon:'🏅', badge:'👑', name:'Full Front Lever',       desc:'Corps tendu horizontal — débloquer dans Skills',
+    check:function(s,h){return !!(s.skills&&s.skills['full_fl']);}},
+  {id:'sk_hs_free',rank:'t-legend', icon:'🤸', badge:'👑', name:'Handstand Libre',        desc:'Équilibre renversé libre — débloquer dans Skills',
+    check:function(s,h){return !!(s.skills&&s.skills['hs_free5']);}},
+  {id:'sk_bl_full',rank:'t-legend', icon:'🌀', badge:'👑', name:'Full Back Lever',        desc:'Corps inversé horizontal — débloquer dans Skills',
+    check:function(s,h){return !!(s.skills&&s.skills['full_bl']);}},
+  {id:'sk_oap',    rank:'t-legend', icon:'🔱', badge:'👑', name:'One Arm Push-up',        desc:'Pompe sur un seul bras — débloquer dans Skills',
+    check:function(s,h){return !!(s.skills&&s.skills['oap']);}},
+  {id:'sk_hf',     rank:'t-legend', icon:'🚩', badge:'👑', name:'Human Flag',             desc:'Le skill le plus rare — débloquer dans Skills',
+    check:function(s,h){return !!(s.skills&&s.skills['hf']);}},
+  {id:'sk_mu10',   rank:'t-legend', icon:'💎', badge:'👑', name:'Muscle Up × 10',         desc:'10 muscle ups consécutifs — débloquer dans Skills',
+    check:function(s,h){return !!(s.skills&&s.skills['mu_10']);}},
+  {id:'sk_vsit',   rank:'t-legend', icon:'✨', badge:'👑', name:'V-sit',                  desc:'Compression extrême — débloquer dans Skills',
+    check:function(s,h){return !!(s.skills&&s.skills['vsit']);}},
+  {id:'sk_hspu',   rank:'t-legend', icon:'🎯', badge:'👑', name:'HSPU',                   desc:'Handstand Push-up — débloquer dans Skills',
+    check:function(s,h){return !!(s.skills&&s.skills['hspu']);}},
 ];
 
 function checkTrophies(){
@@ -2034,23 +2412,35 @@ function checkTrophies(){
 }
 
 function renderTrophies(){
-  const results = checkTrophies();
-  const el = document.getElementById('trophyGrid');
+  var results = checkTrophies();
+  var el = document.getElementById('trophyGrid');
   if(!el) return;
-  const rankLabel = {bronze:'Bronze','t-bronze':'Bronze','t-silver':'Argent','t-gold':'Or','t-plat':'Platine'};
-  el.innerHTML = results.map(function(t){
-    var cls = 'trophy-card ' + t.rank + ' ' + (t.unlocked ? 'unlocked' : 'locked');
-    return '<div class="' + cls + '">'
-      + '<div class="trophy-icon">' + t.icon + '<span class="trophy-badge">' + t.badge + '</span></div>'
-      + '<div class="trophy-info">'
-      + '<div class="trophy-name">' + t.name + '</div>'
-      + '<div class="trophy-desc">' + t.desc + '</div>'
-      + '<div class="trophy-rank ' + t.rank + '">' + (t.rank==='t-bronze'?'Bronze':t.rank==='t-silver'?'Argent':t.rank==='t-gold'?'Or':'Platine') + '</div>'
-      + (t.unlocked ? '<div class="trophy-unlocked-date">✓ Débloqué</div>' : '')
-      + '</div></div>';
-  }).join('');
+  var RANK_LABELS = {'t-bronze':'🥉 Bronze','t-silver':'🥈 Argent','t-gold':'🏅 Or','t-plat':'💎 Platine','t-legend':'👑 Légendaire'};
+  var ranks = ['t-bronze','t-silver','t-gold','t-plat','t-legend'];
+  var html = '';
+  ranks.forEach(function(rank){
+    var group = results.filter(function(t){return t.rank===rank;});
+    if(!group.length) return;
+    var unlockedCount = group.filter(function(t){return t.unlocked;}).length;
+    html += '<div class="trophy-rank-header">'
+      + '<span class="trophy-rank '+rank+'">' + (RANK_LABELS[rank]||rank) + '</span>'
+      + '<span class="trophy-rank-count">' + unlockedCount + '/' + group.length + '</span>'
+      + '</div>'
+      + '<div class="trophy-rank-grid">'
+      + group.map(function(t){
+          var cls = 'trophy-card ' + t.rank + ' ' + (t.unlocked ? 'unlocked' : 'locked');
+          return '<div class="' + cls + '">'
+            + '<div class="trophy-icon">' + t.icon + '<span class="trophy-badge">' + t.badge + '</span></div>'
+            + '<div class="trophy-info">'
+            + '<div class="trophy-name">' + t.name + '</div>'
+            + '<div class="trophy-desc">' + t.desc + '</div>'
+            + (t.unlocked ? '<div class="trophy-unlocked-date">✓ Débloqué</div>' : '')
+            + '</div></div>';
+        }).join('')
+      + '</div>';
+  });
+  el.innerHTML = html;
 }
-
 function renderTrophiesMini(){
   const results = checkTrophies().filter(function(t){ return t.unlocked; });
   const el = document.getElementById('trophyMiniGrid');
