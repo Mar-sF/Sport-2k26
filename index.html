@@ -1313,7 +1313,7 @@ function buildElasticChips(dayIdx, exoKey, selected){
     + '</div>';
 }
 
-const ELASTIC_KEYWORDS = ['élastique','elastique','SmartWorkout','bande','CoreStrength'];
+const ELASTIC_KEYWORDS = ['élastique','elastique','SmartWorkout','bande','CoreStrength','Face pulls','Lat pulls','Reverse fly','Curl','band pull'];
 function isElasticExo(exoName){
   return ELASTIC_KEYWORDS.some(function(k){ return exoName.toLowerCase().indexOf(k.toLowerCase()) >= 0; });
 }
