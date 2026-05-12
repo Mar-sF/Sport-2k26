@@ -2195,10 +2195,39 @@ function renderMuscleBars(bars){
   }
 }
 
+function loadCycleDays(nWeeks){
+  var allDays=[];
+  for(var off=0;off>-(nWeeks);off--){
+    var key='pw_'+getKey(off);
+    var raw=localStorage.getItem(key);
+    if(raw){try{var s=JSON.parse(raw);if(s.days)allDays=allDays.concat(s.days);}catch(e){}}
+  }
+  return allDays;
+}
+
+var CYCLE_SIZE=4;
+
+function getCycleInfo(){
+  var nWeeks=0;
+  for(var off=0;off>-20;off--){
+    if(localStorage.getItem('pw_'+getKey(off)))nWeeks++;
+    else if(nWeeks>0)break;
+  }
+  var cycleN=Math.floor(nWeeks/CYCLE_SIZE)+1;
+  var isComeback=nWeeks<=CYCLE_SIZE;
+  return{nWeeks:Math.min(nWeeks,CYCLE_SIZE),cycleN:cycleN,isComeback:isComeback};
+}
+
 function switchMuscleView(mode) {
   muscleViewMode = mode;
-  document.getElementById('btnSemaine').classList.toggle('active', mode==='semaine');
-  document.getElementById('btnCycle').classList.toggle('active', mode==='cycle');
+  var btnS=document.getElementById('btnSemaine');
+  var btnC=document.getElementById('btnCycle');
+  if(btnS)btnS.classList.toggle('active', mode==='semaine');
+  if(btnC)btnC.classList.toggle('active', mode==='cycle');
+  if(btnC){
+    var ci=getCycleInfo();
+    btnC.textContent=ci.isComeback?'Comeback ('+ci.nWeeks+'/'+CYCLE_SIZE+'sem)':'Cycle '+ci.cycleN+' ('+ci.nWeeks+'sem)';
+  }
   renderMuscleBalance();
 }
 
@@ -2210,31 +2239,26 @@ const SESSION_MUSCLE_WEIGHTS = {
 };
 
 function calcMuscleScores(mode) {
-  const s = getStore();
-  // 1. Base structurelle : toutes les séances cali prévues cette semaine
-  const base = new Array(7).fill(0);
-  s.days.forEach(day => {
-    if (!IS_CALI(day.type)) return;
-    const weights = SESSION_MUSCLE_WEIGHTS[day.type] || [];
-    const factor = day.done === 'yes' ? 1.0 : day.done === 'mvw' ? 0.5 : day.done === 'no' ? 0 : 0.7; // planned = 70%
-    weights.forEach((w, i) => { base[i] += w * factor; });
+  var days = (mode==='cycle') ? loadCycleDays(Math.max(1,getCycleInfo().nWeeks)) : getStore().days;
+  var base=new Array(7).fill(0);
+  days.forEach(function(day){
+    if(!IS_CALI(day.type))return;
+    var weights=SESSION_MUSCLE_WEIGHTS[day.type]||[];
+    var factor=day.done==='yes'?1.0:day.done==='mvw'?0.5:day.done==='no'?0:0.7;
+    weights.forEach(function(w,i){base[i]+=w*factor;});
   });
-
-  // 2. Bonus si reps saisies (amplifie le signal)
-  s.days.forEach(day => {
-    if (!IS_CALI(day.type) || !['yes','mvw'].includes(day.done)) return;
-    const cali = day.cali;
-    const boost = 0.3;
-    if (+cali.pompesIncl > 0) { EXO_MUSCLE_MAP.pompesIncl.forEach(i => base[i] += +cali.pompesIncl * boost); }
-    if (+cali.pompesSol > 0)  { EXO_MUSCLE_MAP.pompesSol.forEach(i => base[i] += +cali.pompesSol * boost * 1.5); }
-    if (+cali.dips > 0)       { EXO_MUSCLE_MAP.dips.forEach(i => base[i] += +cali.dips * boost); }
-    if (+cali.rowing > 0)     { EXO_MUSCLE_MAP.rowing.forEach(i => base[i] += +cali.rowing * boost); }
-    if (+cali.planche > 0)    { EXO_MUSCLE_MAP.planche.forEach(i => base[i] += (+cali.planche/3) * boost); }
+  days.forEach(function(day){
+    if(!IS_CALI(day.type)||!['yes','mvw'].includes(day.done))return;
+    var cali=day.cali||{};
+    var boost=0.3;
+    if(+cali.pompesIncl>0)EXO_MUSCLE_MAP.pompesIncl.forEach(function(i){base[i]+=+cali.pompesIncl*boost;});
+    if(+cali.pompesSol>0)EXO_MUSCLE_MAP.pompesSol.forEach(function(i){base[i]+=+cali.pompesSol*boost*1.5;});
+    if(+cali.dips>0)EXO_MUSCLE_MAP.dips.forEach(function(i){base[i]+=+cali.dips*boost;});
+    if(+cali.rowing>0)EXO_MUSCLE_MAP.rowing.forEach(function(i){base[i]+=+cali.rowing*boost;});
+    if(+cali.planche>0)EXO_MUSCLE_MAP.planche.forEach(function(i){base[i]+=+cali.planche/3*boost;});
   });
-
-  // 3. Normaliser sur 100
-  const max = Math.max(...base, 1);
-  return base.map(v => Math.min(100, Math.round(v / max * 100)));
+  var max=Math.max.apply(null,base.concat([1]));
+  return base.map(function(v){return Math.min(100,Math.round(v/max*100));});
 }
 
 function renderMuscleBalance() {
