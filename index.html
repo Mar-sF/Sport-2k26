@@ -47,7 +47,7 @@ header{padding:14px 0 12px;border-bottom:1px solid var(--border);margin-bottom:1
 .bnav-btn.active{color:var(--gold)}
 .bnav-btn.active .bnav-icon{background:rgba(245,200,66,.14);border-radius:10px;transform:translateY(-2px)}
 .bnav-icon{width:38px;height:26px;display:flex;align-items:center;justify-content:center;font-size:17px;transition:all .22s;border-radius:8px}
-.bnav-label{font-size:8.5px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;line-height:1}
+.bnav-label{font-size:8px;font-weight:700;letter-spacing:.2px;text-transform:uppercase;line-height:1}
 
 /* ── PANELS ── */
 .panel{display:none}
@@ -175,11 +175,11 @@ header{padding:14px 0 12px;border-bottom:1px solid var(--border);margin-bottom:1
 /* ── DAILY READINESS ── */
 .dr-mini{background:var(--bg3);border-radius:var(--r-sm);padding:11px 12px;margin-bottom:11px}
 .dr-mini-title{font-size:10px;color:var(--muted2);letter-spacing:.8px;text-transform:uppercase;margin-bottom:8px}
-.dr-row{display:flex;align-items:center;gap:7px;font-size:11px;margin-bottom:6px}
-.dr-row span.lbl{color:var(--muted);width:90px;flex-shrink:0;font-size:10px}
-.dr-checks{display:flex;gap:3px;flex:1;flex-wrap:wrap}
-.dr-chk{width:23px;height:23px;border-radius:5px;border:1px solid rgba(255,255,255,.1);background:var(--bg2);color:var(--muted);font-size:10px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s;user-select:none;flex-shrink:0}
-.dr-chk.active{background:var(--gold);color:#000;border-color:var(--gold);box-shadow:0 0 6px rgba(245,200,66,.4)}
+.dr-row{display:flex;align-items:center;gap:5px;font-size:11px;margin-bottom:5px}
+.dr-row span.lbl{color:var(--muted);width:74px;flex-shrink:0;font-size:9.5px}
+.dr-checks{display:flex;gap:2px;flex:1;flex-wrap:nowrap;overflow:visible}
+.dr-chk{width:20px;height:20px;border-radius:4px;border:1px solid rgba(255,255,255,.1);background:var(--bg2);color:var(--muted);font-size:9px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s;user-select:none;flex-shrink:0}
+.dr-chk.active{background:var(--gold);color:#000;border-color:var(--gold);box-shadow:0 0 5px rgba(245,200,66,.4)}
 .dr-total-mini{font-family:'Rajdhani',sans-serif;font-size:17px;font-weight:700;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.06)}
 
 /* ── ZONES ── */
@@ -469,7 +469,7 @@ tr:hover td{background:rgba(255,255,255,.015)}
 <nav class="bottom-nav" id="bottomNav">
   <div class="bottom-nav-inner">
     <button class="bnav-btn active" id="bn-dashboard" onclick="showTab('dashboard')">
-      <div class="bnav-icon">📊</div>
+      <div class="bnav-icon">🏠</div>
       <span class="bnav-label">Stats</span>
     </button>
     <button class="bnav-btn" id="bn-sessions" onclick="showTab('sessions')">
@@ -481,9 +481,8 @@ tr:hover td{background:rgba(255,255,255,.015)}
       <span class="bnav-label">Bilan</span>
     </button>
     <button class="bnav-btn" id="bn-progress" onclick="showTab('progress')">
-      <div class="bnav-icon">📊</div>
+      <div class="bnav-icon">📈</div>
       <span class="bnav-label">Perf.</span>
-      <span class="bnav-label">Prog.</span>
     </button>
     <button class="bnav-btn" id="bn-records" onclick="showTab('records')">
       <div class="bnav-icon">🎯</div>
