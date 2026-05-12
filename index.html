@@ -32,8 +32,6 @@ header{padding:14px 0 12px;border-bottom:1px solid var(--border);margin-bottom:1
 .logo p{font-size:9px;color:var(--muted2);letter-spacing:.6px}
 .week-nav{display:flex;align-items:center;gap:6px}
 .week-label{font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;color:var(--gold);min-width:130px;text-align:center}
-.wnav-btn{width:32px;height:32px;border-radius:50%;background:var(--bg2);border:1px solid var(--border);color:var(--gold);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .18s;flex-shrink:0}
-.wnav-btn:hover,.wnav-btn:active{background:rgba(245,200,66,.12);border-color:var(--gold)}
 
 /* ── TOP NAV (desktop) ── */
 .nav{display:flex;gap:3px;background:var(--bg2);padding:5px;border-radius:12px;border:1px solid var(--border);margin-bottom:18px;overflow-x:auto;scrollbar-width:none}
@@ -307,6 +305,136 @@ tr:hover td{background:rgba(255,255,255,.015)}
   .stat-grid{grid-template-columns:repeat(3,1fr);gap:4px}
   .scard-val{font-size:18px}
 }
+
+/* ── MUSCLE BALANCE ── */
+.muscle-section{margin-bottom:18px}
+.muscle-section-title{font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:700;color:var(--muted2);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.muscle-section-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.muscle-radar-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:14px}
+.muscle-radar-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:6px}
+.muscle-radar-title{font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;color:var(--gold);letter-spacing:1px;text-transform:uppercase}
+.muscle-toggle{display:flex;gap:4px}
+.muscle-toggle button{padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:var(--bg3);color:var(--muted2);font-size:10px;font-weight:600;cursor:pointer;font-family:'Exo 2',sans-serif;transition:.15s}
+.muscle-toggle button.active{background:var(--gold);color:#000;border-color:var(--gold)}
+.muscle-legend{display:flex;gap:12px;font-size:9.5px;color:var(--muted2);margin-bottom:8px;flex-wrap:wrap}
+.muscle-legend-item{display:flex;align-items:center;gap:4px}
+.muscle-legend-line{width:14px;height:2px;border-radius:1px}
+.muscle-radar-wrap{height:280px;position:relative}
+.muscle-bars{display:flex;flex-direction:column;gap:9px;margin-top:14px}
+.muscle-bar-row{display:flex;align-items:center;gap:10px}
+.muscle-bar-label{font-size:10px;color:var(--muted2);width:110px;flex-shrink:0}
+.muscle-bar-track{flex:1;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;position:relative}
+.muscle-bar-fill{height:100%;border-radius:3px;transition:width .8s cubic-bezier(.22,1,.36,1)}
+.muscle-bar-pct{font-size:10px;font-weight:700;color:var(--muted2);min-width:32px;text-align:right;font-family:'Space Mono',monospace}
+.muscle-bar-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.muscles-week-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin-bottom:14px}
+.muscle-chip{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:9px 11px;display:flex;align-items:center;gap:8px}
+.muscle-chip-icon{font-size:17px;flex-shrink:0}
+.muscle-chip-name{font-size:10px;font-weight:600;color:var(--text)}
+.muscle-chip-count{font-size:9px;color:var(--muted);margin-top:1px}
+.muscle-chip.active{border-color:rgba(245,200,66,.3);background:rgba(245,200,66,.05)}
+.perf-stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.perf-stat{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:10px 12px;text-align:center}
+.perf-stat-val{font-family:'Space Mono',monospace;font-size:18px;font-weight:700;color:var(--gold)}
+.perf-stat-label{font-size:9px;color:var(--muted2);margin-top:2px;letter-spacing:.5px}
+.perf-stat-delta{font-size:9px;margin-top:2px;font-weight:600}
+/* ── OBJECTIFS TAB ── */
+.obj-timeline{display:flex;flex-direction:column;gap:0}
+.obj-tl-item{display:flex;gap:12px;padding:10px 0}
+.obj-tl-item:not(:last-child){border-bottom:1px solid rgba(255,255,255,.04)}
+.obj-tl-left{display:flex;flex-direction:column;align-items:center;gap:4px;width:32px;flex-shrink:0}
+.obj-tl-icon{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.obj-tl-line{width:1px;flex:1;background:var(--border);min-height:12px}
+.obj-tl-content{flex:1;min-width:0}
+.obj-tl-name{font-size:12px;font-weight:600;color:var(--text);margin-bottom:4px}
+.obj-tl-track{height:7px;background:var(--bg3);border-radius:4px;overflow:hidden;margin-bottom:4px}
+.obj-tl-fill{height:100%;border-radius:4px;transition:width 1s}
+.obj-tl-meta{display:flex;justify-content:space-between;font-size:10px;color:var(--muted)}
+.obj-tl-pct{font-size:11px;font-weight:700;font-family:'Space Mono',monospace}
+/* ── MOBILE FIXES ── */
+@media(max-width:700px){
+  .muscles-week-grid{grid-template-columns:repeat(2,1fr)}
+  .muscle-bar-label{width:90px;font-size:9.5px}
+  .muscle-radar-wrap{height:220px}
+  .perf-stats-row{grid-template-columns:repeat(3,1fr);gap:6px}
+  .perf-stat-val{font-size:15px}
+  .tbl-wrap{font-size:9px}
+  .tbl-wrap th,.tbl-wrap td{padding:5px 4px}
+  .ccrd-title{font-size:12px}
+  .form-row{grid-template-columns:1fr 1fr}
+  .obj-grid{gap:7px}
+}
+@media(max-width:420px){
+  .muscles-week-grid{grid-template-columns:1fr 1fr}
+  .muscle-bars .muscle-bar-label{width:75px;font-size:8.5px}
+}
+
+
+/* ── CALI EXERCISE RESULTS ── */
+.cali-exo-block{margin-bottom:14px;background:var(--bg3);border-radius:10px;padding:11px 12px}
+.cali-exo-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.cali-exo-name{font-size:12px;font-weight:700;color:var(--text)}
+.cali-exo-cible{font-size:10px;color:var(--gold);font-family:'Space Mono',monospace}
+.cali-sets-row{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+.cali-set-group{display:flex;flex-direction:column;align-items:center;gap:3px}
+.cali-set-label{font-size:9px;color:var(--muted2);letter-spacing:.5px}
+.cali-set-input{width:52px;height:36px;background:var(--bg2);border:1px solid rgba(255,255,255,.1);border-radius:7px;color:var(--text);font-size:14px;font-weight:700;text-align:center;font-family:'Space Mono',monospace;-moz-appearance:textfield}
+.cali-set-input::-webkit-inner-spin-button,.cali-set-input::-webkit-outer-spin-button{-webkit-appearance:none}
+.cali-set-input:focus{border-color:var(--gold);outline:none;background:rgba(245,200,66,.08)}
+.cali-set-input.has-val{border-color:rgba(34,197,94,.4);background:rgba(34,197,94,.05)}
+.cali-set-timer{width:52px;height:36px;background:var(--bg2);border:1px solid rgba(245,200,66,.3);border-radius:7px;color:var(--gold);font-size:11px;font-weight:700;text-align:center;font-family:'Space Mono',monospace;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.cali-exo-avg{font-size:10px;color:var(--muted);margin-left:auto;align-self:center}
+.cali-section-label{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted2);margin-bottom:8px;margin-top:14px;display:flex;align-items:center;gap:6px}
+.cali-section-label::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.06)}
+
+
+.cali-max-btn{padding:0 12px;height:36px;background:rgba(245,200,66,.12);border:1px solid rgba(245,200,66,.35);border-radius:7px;color:var(--gold);font-size:10px;font-weight:700;letter-spacing:.5px;cursor:pointer;white-space:nowrap;transition:.15s;font-family:'Exo 2',sans-serif;align-self:flex-end;margin-bottom:0}
+.cali-max-btn:active,.cali-max-btn:hover{background:rgba(245,200,66,.22)}
+.cali-max-sep{width:1px;height:28px;background:rgba(255,255,255,.07);margin:0 2px;align-self:center}
+.cali-timer-btn{display:flex;align-items:center;gap:5px;padding:4px 10px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);border-radius:6px;color:var(--green);font-size:10px;font-weight:700;cursor:pointer;font-family:'Exo 2',sans-serif;margin-top:8px;width:fit-content}
+
+
+.day-card.today{border-color:rgba(245,200,66,.5);box-shadow:0 0 0 1px rgba(245,200,66,.2),0 2px 12px rgba(245,200,66,.08)}
+.day-card.today .day-header{background:rgba(245,200,66,.04)}
+.day-today-badge{display:inline-block;background:var(--gold);color:#000;font-size:8px;font-weight:800;letter-spacing:.8px;padding:2px 5px;border-radius:4px;margin-left:6px;vertical-align:middle;text-transform:uppercase}
+
+
+.today-jump-btn{padding:5px 12px;border-radius:8px;border:1px solid rgba(245,200,66,.4);background:rgba(245,200,66,.1);color:var(--gold);font-size:11px;font-weight:700;cursor:pointer;font-family:'Exo 2',sans-serif;white-space:nowrap;transition:.15s}
+.today-jump-btn:hover,.today-jump-btn:active{background:rgba(245,200,66,.22)}
+
+
+/* ── TROPHÉES PLAYSTATION ── */
+.trophy-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:4px}
+.trophy-card{border-radius:12px;padding:12px 13px;display:flex;align-items:center;gap:12px;border:1px solid;position:relative;overflow:hidden;transition:.2s}
+.trophy-card.locked{background:var(--bg3);border-color:rgba(255,255,255,.07);opacity:.55;filter:grayscale(.8)}
+.trophy-card.unlocked{background:var(--bg2);box-shadow:0 2px 14px rgba(0,0,0,.3)}
+.trophy-card.t-bronze.unlocked{border-color:rgba(205,127,50,.5);background:rgba(205,127,50,.06)}
+.trophy-card.t-silver.unlocked{border-color:rgba(192,192,192,.5);background:rgba(192,192,192,.06)}
+.trophy-card.t-gold.unlocked{border-color:rgba(245,200,66,.6);background:rgba(245,200,66,.08)}
+.trophy-card.t-plat.unlocked{border-color:rgba(100,180,255,.6);background:rgba(100,180,255,.07)}
+.trophy-icon{font-size:30px;flex-shrink:0;position:relative}
+.trophy-badge{position:absolute;bottom:-2px;right:-4px;font-size:13px}
+.trophy-info{flex:1;min-width:0}
+.trophy-name{font-size:12px;font-weight:700;color:var(--text);margin-bottom:2px}
+.trophy-desc{font-size:10px;color:var(--muted);line-height:1.4}
+.trophy-rank{font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-top:3px}
+.trophy-rank.t-bronze{color:#cd7f32}
+.trophy-rank.t-silver{color:#c0c0c0}
+.trophy-rank.t-gold{color:var(--gold)}
+.trophy-rank.t-plat{color:#64b4ff}
+.trophy-unlocked-date{font-size:9px;color:var(--muted2);margin-top:2px}
+.trophy-section-title{font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:700;color:var(--muted2);letter-spacing:1.2px;text-transform:uppercase;margin:14px 0 8px;display:flex;align-items:center;gap:6px}
+.trophy-section-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.trophy-mini-grid{display:flex;flex-wrap:wrap;gap:8px}
+.trophy-mini{display:flex;align-items:center;gap:6px;background:var(--bg2);border-radius:8px;padding:7px 10px;border:1px solid}
+.trophy-mini.t-bronze{border-color:rgba(205,127,50,.4)}
+.trophy-mini.t-silver{border-color:rgba(192,192,192,.35)}
+.trophy-mini.t-gold{border-color:rgba(245,200,66,.45)}
+.trophy-mini.t-plat{border-color:rgba(100,180,255,.45)}
+.trophy-mini-icon{font-size:18px}
+.trophy-mini-name{font-size:10px;font-weight:600;color:var(--text)}
+@media(max-width:500px){.trophy-grid{grid-template-columns:1fr}}
+
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Space+Mono:wght@400;700&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
@@ -324,10 +452,8 @@ tr:hover td{background:rgba(255,255,255,.015)}
     </div>
   </div>
   <div class="week-nav">
-    <button class="wnav-btn" onclick="changeWeek(-1)" aria-label="Semaine précédente">‹</button>
     <div class="week-label" id="weekLabel">—</div>
-    <button class="wnav-btn" onclick="changeWeek(1)" aria-label="Semaine suivante">›</button>
-    <button class="wnav-btn" onclick="goNow()" title="Aujourd'hui" style="font-size:11px;font-weight:700">●</button>
+    <button class="today-jump-btn" onclick="goToday()">📍 Aujourd'hui</button>
   </div>
 </header>
 
@@ -335,8 +461,8 @@ tr:hover td{background:rgba(255,255,255,.015)}
   <button class="tab active" onclick="showTab('dashboard')">📊 Dashboard</button>
   <button class="tab" onclick="showTab('sessions')">🗓️ Séances</button>
   <button class="tab" onclick="showTab('bilan')">📋 Bilan</button>
-  <button class="tab" onclick="showTab('progress')">📈 Progression</button>
-  <button class="tab" onclick="showTab('records')">🏆 Records</button>
+  <button class="tab" onclick="showTab('progress')">📊 Performances</button>
+  <button class="tab" onclick="showTab('records')">🎯 Objectifs</button>
   <button class="tab" onclick="showTab('mvw')">🆘 MVW</button>
 </div>
 
@@ -355,12 +481,13 @@ tr:hover td{background:rgba(255,255,255,.015)}
       <span class="bnav-label">Bilan</span>
     </button>
     <button class="bnav-btn" id="bn-progress" onclick="showTab('progress')">
-      <div class="bnav-icon">📈</div>
+      <div class="bnav-icon">📊</div>
+      <span class="bnav-label">Perf.</span>
       <span class="bnav-label">Prog.</span>
     </button>
     <button class="bnav-btn" id="bn-records" onclick="showTab('records')">
-      <div class="bnav-icon">🏆</div>
-      <span class="bnav-label">Records</span>
+      <div class="bnav-icon">🎯</div>
+      <span class="bnav-label">Objectifs</span>
     </button>
     <button class="bnav-btn" id="bn-mvw" onclick="showTab('mvw')">
       <div class="bnav-icon">🆘</div>
@@ -445,33 +572,115 @@ tr:hover td{background:rgba(255,255,255,.015)}
 
 <!-- PROGRESSION -->
 <div id="tab-progress" class="panel">
-  <div class="ccrd" style="margin-bottom:14px">
-    <div class="ccrd-title">Vue globale normalisée</div>
-    <div class="ccrd-sub" style="margin-bottom:8px">Poids | Pompes | Planche | Course — normalisés pic = 100%</div>
-    <div style="display:flex;flex-wrap:wrap;gap:9px;margin-bottom:10px;font-size:10px;color:var(--muted2)">
-      <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:2px;background:var(--gold);display:inline-block;border-radius:1px"></span>Poids</span>
-      <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:2px;background:var(--green);display:inline-block;border-radius:1px"></span>Pompes sol</span>
-      <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:2px;background:var(--blue);display:inline-block;border-radius:1px"></span>Planche</span>
-      <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:2px;background:var(--orange);display:inline-block;border-radius:1px"></span>Course</span>
-    </div>
-    <div class="cwrap" style="height:260px"><canvas id="cOv" role="img" aria-label="Overview">Progression normalisée.</canvas></div>
+
+  <!-- STATS RAPIDES -->
+  <div class="perf-stats-row" id="perfStatsRow">
+    <div class="perf-stat"><div class="perf-stat-val">93<small style="font-size:11px">kg</small></div><div class="perf-stat-label">Poids</div><div class="perf-stat-delta" style="color:var(--muted)">= CB-S2</div></div>
+    <div class="perf-stat"><div class="perf-stat-val">96<small style="font-size:11px">s</small></div><div class="perf-stat-label">Planche</div><div class="perf-stat-delta" style="color:var(--green)">↑ +28s</div></div>
+    <div class="perf-stat"><div class="perf-stat-val">56<small style="font-size:11px">min</small></div><div class="perf-stat-label">Course</div><div class="perf-stat-delta" style="color:var(--green)">↑ Record</div></div>
   </div>
-  <div class="sec">Historique complet</div>
-  <div class="sec" style="margin-top:16px">🎯 Objectifs Comeback</div>
-  <div class="obj-grid" id="objGrid"></div>
-  <div class="tbl-wrap"><table><thead><tr><th>Sem.</th><th>Phase</th><th>Poids</th><th>Δ Total</th><th>Pompes incl.</th><th>Pompes sol</th><th>Planche</th><th>Course</th><th>VO2max</th><th>Streak</th><th>Note</th></tr></thead><tbody id="histBody"></tbody></table></div>
+
+  <!-- ÉQUILIBRE MUSCULAIRE -->
+  <div class="muscle-section">
+    <div class="muscle-section-title">🧬 Équilibre Musculaire</div>
+    <div class="muscle-radar-card">
+      <div class="muscle-radar-header">
+        <div class="muscle-radar-title">Radar — Équilibre musculaire</div>
+        <div class="muscle-toggle">
+          <button class="active" id="btnSemaine" onclick="switchMuscleView('semaine')">Semaine</button>
+          <button id="btnCycle" onclick="switchMuscleView('cycle')">Cycle</button>
+        </div>
+      </div>
+      <div class="muscle-legend">
+        <div class="muscle-legend-item"><div class="muscle-legend-line" style="background:#3b82f6;border-top:2px dashed #3b82f6"></div>Cible</div>
+        <div class="muscle-legend-item"><div class="muscle-legend-line" style="background:#f5c842"></div>Accompli</div>
+      </div>
+      <div class="muscle-radar-wrap"><canvas id="cMuscleRadar"></canvas></div>
+    </div>
+    <!-- BARRES MUSCLES -->
+    <div class="muscle-bars" id="muscleBars"></div>
+  </div>
+
+  <!-- MUSCLES TRAVAILLÉS CETTE SEMAINE -->
+  <div class="muscle-section">
+    <div class="muscle-section-title">💪 Muscles travaillés cette semaine</div>
+    <div class="muscles-week-grid" id="musclesWeekGrid"></div>
+  </div>
+
+  <!-- PROGRESSION NORMALISÉE -->
+  <div class="muscle-section">
+    <div class="muscle-section-title">📈 Progression normalisée</div>
+    <div class="ccrd">
+      <div class="ccrd-sub" style="margin-bottom:8px;font-size:10px">Poids | Pompes | Planche | Course — normalisés sur pic</div>
+      <div style="display:flex;flex-wrap:wrap;gap:9px;margin-bottom:10px;font-size:10px;color:var(--muted2)">
+        <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:2px;background:var(--gold);display:inline-block;border-radius:1px"></span>Poids</span>
+        <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:2px;background:var(--green);display:inline-block;border-radius:1px"></span>Pompes</span>
+        <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:2px;background:var(--blue);display:inline-block;border-radius:1px"></span>Planche</span>
+        <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:2px;background:var(--orange);display:inline-block;border-radius:1px"></span>Course</span>
+      </div>
+      <div class="cwrap" style="height:220px"><canvas id="cOv" role="img" aria-label="Overview">Progression normalisée.</canvas></div>
+    </div>
+  </div>
+
+  <!-- OBJECTIFS -->
+  <div class="muscle-section">
+    <div class="muscle-section-title">🎯 Objectifs Comeback</div>
+    <div class="obj-grid" id="objGrid"></div>
+  </div>
+
+  <!-- HISTORIQUE -->
+  <div class="muscle-section">
+    <div class="muscle-section-title">📋 Historique complet</div>
+    <div class="tbl-wrap"><table><thead><tr><th>Sem.</th><th>Phase</th><th>Poids</th><th>Δ</th><th>Pompes</th><th>Planche</th><th>Course</th><th>VO2</th><th>Streak</th></tr></thead><tbody id="histBody"></tbody></table></div>
+  </div>
+
+  <!-- TROPHÉES DÉBLOQUÉS -->
+  <div class="muscle-section">
+    <div class="muscle-section-title">🎮 Trophées débloqués</div>
+    <div class="trophy-mini-grid" id="trophyMiniGrid"></div>
+  </div>
+
 </div>
 
-<!-- RECORDS -->
+<!-- OBJECTIFS -->
 <div id="tab-records" class="panel">
-  <div class="sec">Hall of Fame — Pics Octobre 2025</div>
-  <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px" id="achGrid"></div>
-  <div class="rec-grid" id="recGrid"></div>
-  <div class="ccrd">
-    <div class="ccrd-title">Radar — Départ / Pic / Comeback</div>
-    <div class="ccrd-sub">% d'atteinte des objectifs finaux · Streak → Dips 20</div>
-    <div class="cwrap" style="height:280px"><canvas id="cRd" role="img" aria-label="Radar">Radar comparaison.</canvas></div>
+
+  <!-- RADAR OBJECTIFS -->
+  <div class="muscle-section">
+    <div class="muscle-section-title">🎯 Radar objectifs finaux</div>
+    <div class="muscle-radar-card">
+      <div class="muscle-radar-header">
+        <div class="muscle-radar-title">Départ → Pic → Comeback → Objectif</div>
+      </div>
+      <div class="muscle-legend">
+        <div class="muscle-legend-item"><div class="muscle-legend-line" style="background:#64748b"></div>Départ</div>
+        <div class="muscle-legend-item"><div class="muscle-legend-line" style="background:#22c55e"></div>Pic Oct25</div>
+        <div class="muscle-legend-item"><div class="muscle-legend-line" style="background:#a855f7"></div>CB-S3</div>
+        <div class="muscle-legend-item"><div class="muscle-legend-line" style="border-top:2px dashed #f5c842;background:transparent;width:14px"></div>Objectif</div>
+      </div>
+      <div style="height:280px"><canvas id="cRd" role="img" aria-label="Radar">Radar comparaison.</canvas></div>
+    </div>
   </div>
+
+  <!-- OBJECTIFS TIMELINE -->
+  <div class="muscle-section">
+    <div class="muscle-section-title">📍 Progression vers les objectifs</div>
+    <div class="obj-timeline" id="objTimeline"></div>
+  </div>
+
+  <!-- TROPHÉES -->
+  <div class="muscle-section">
+    <div class="muscle-section-title">🎮 Trophées</div>
+    <div class="trophy-grid" id="trophyGrid"></div>
+  </div>
+
+  <!-- HALL OF FAME -->
+  <div class="muscle-section">
+    <div class="muscle-section-title">🏆 Hall of Fame — Pics Octobre 2025</div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px" id="achGrid"></div>
+    <div class="rec-grid" id="recGrid"></div>
+  </div>
+
 </div>
 
 <!-- MVW -->
@@ -659,7 +868,7 @@ const WORKOUTS={
 // CONSTANTS
 // ══════════════════════════════════════════
 const DAY_NAMES=['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
-const DEFAULT_TYPES=['push_pull','running_tempo','pull_push','running_frac','running_end','total_body','recup'];
+const DEFAULT_TYPES=['push_pull','running_tempo','pull_push','running_frac','total_body','running_end','recup'];
 const TYPE_LABELS={running_tempo:'🏃 Running Tempo',running_frac:'⚡ Fractionné',running_end:'🏃 Endurance',push_pull:'💪 Push/Pull (Pecs 70%)',pull_push:'💪 Pull/Push (Dorsaux 70%)',total_body:'🔥 Total Body + Tests',recup:'🧘 Récup Active',rest:'😴 Repos complet'};
 const IS_RUN=t=>['running_tempo','running_frac','running_end'].includes(t);
 const IS_CALI=t=>['push_pull','pull_push','total_body'].includes(t);
@@ -675,13 +884,31 @@ function getDates(off){const d=new Date();d.setDate(d.getDate()+off*7);const m=g
 function fmtD(d){return`${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}`;}
 function fmtDL(d){const ms=['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'];return`${d.getDate()} ${ms[d.getMonth()]} ${d.getFullYear()}`;}
 function goNow(){weekOff=0;renderAll();}
+function goToday(){
+  weekOff=0; renderAll();
+  // Trouver le jour d'aujourd'hui et l'ouvrir
+  const todayStr=new Date().toDateString();
+  const dates=getDates(0);
+  dates.forEach(function(d,i){
+    if(d.toDateString()===todayStr){
+      showTab('sessions');
+      setTimeout(function(){
+        const card=document.getElementById('dc-'+i);
+        if(card&&!card.classList.contains('open')){
+          toggleDay(i);
+          card.scrollIntoView({behavior:'smooth',block:'start'});
+        }
+      },80);
+    }
+  });
+}
 function changeWeek(d){weekOff+=d;renderAll();}
 
 function getStore(){
   const key='pw_'+getKey(weekOff);
   const raw=localStorage.getItem(key);
   if(raw)return JSON.parse(raw);
-  return{weekKey:getKey(weekOff),days:DEFAULT_TYPES.map(t=>({type:t,done:'planned',dr:{s1:7,s2:7,s3:7,s4:7,total:28},bb:'',note:'',courbatures:{intensite:'',zones:[]},notes:'',running:{duree:'',dist:'',allure:'',fcMoy:'',fcMax:'',zone:'Z2',genou:'ok'},cali:{pompesIncl:'',pompesSol:'',planche:'',dips:'',lsit:'',rowing:'',series:''}})),poids:'',note:'',motiv:'',sommeil:'',hydrat:'',ecarts:'',epaules:'',equil:'',hrv:'',hrvDays:'',tStatus:'',vo2:'',bb:'',p1:'',p2:'',p3:'',diff:'',quest:''};
+  return{weekKey:getKey(weekOff),days:DEFAULT_TYPES.map(t=>({type:t,done:'planned',dr:{s1:7,s2:7,s3:7,s4:7,total:28},bb:'',note:'',courbatures:{intensite:'',zones:[]},notes:'',running:{duree:'',dist:'',allure:'',fcMoy:'',fcMax:'',zone:'Z2',genou:'ok'},cali:{pompesIncl:'',pompesSol:'',planche:'',dips:'',lsit:'',rowing:'',series:'',sets:{}}})),poids:'',note:'',motiv:'',sommeil:'',hydrat:'',ecarts:'',epaules:'',equil:'',hrv:'',hrvDays:'',tStatus:'',vo2:'',bb:'',p1:'',p2:'',p3:'',diff:'',quest:''};
 }
 function saveStore(s){localStorage.setItem('pw_'+s.weekKey,JSON.stringify(s));}
 
@@ -700,6 +927,13 @@ function showTab(id){
   if(bn)bn.classList.add('active');
   // Scroll to top on mobile
   if(window.innerWidth<=700)window.scrollTo({top:0,behavior:'smooth'});
+  // Re-render canvas-based sections APRÈS que l'onglet soit visible
+  if(id==='progress'){
+    setTimeout(function(){ renderMuscleBalance(); renderMusclesWeek(); renderTrophiesMini(); }, 30);
+  }
+  if(id==='records'){
+    setTimeout(function(){ renderObjTimeline(); initChartsRecords(); renderTrophies(); }, 30);
+  }
 }
 
 function showInnerTab(dayIdx,tabId){
@@ -919,15 +1153,153 @@ function buildWorkout(type,drScore){
 // ══════════════════════════════════════════
 // SESSION FORM
 // ══════════════════════════════════════════
+
+// ══════════════════════════════════════════
+// CALISTHENICS RESULTS — PAR EXERCICE/SÉRIE
+// ══════════════════════════════════════════
+const PLANCHE_EXO_NAMES = ['Planche ⏱️','Planche'];
+const TIMER_EXO_NAMES   = ['Planche ⏱️','Planche','L-sit'];
+
+function isTimerExo(name){ return TIMER_EXO_NAMES.some(t=>name.includes(t)); }
+function isPlancheExo(name){ return name.includes('Planche'); }
+
+function saveCaliSet(dayIdx, exoKeyRaw, setIdx, val){
+  const exoKey = typeof exoKeyRaw === 'string' && exoKeyRaw.indexOf('%') >= 0 ? decodeURIComponent(exoKeyRaw) : exoKeyRaw;
+  const s = getStore();
+  if(!s.days[dayIdx].cali.sets) s.days[dayIdx].cali.sets = {};
+  if(!s.days[dayIdx].cali.sets[exoKey]) s.days[dayIdx].cali.sets[exoKey] = [];
+  s.days[dayIdx].cali.sets[exoKey][setIdx] = val === '' ? '' : +val;
+  // Compat: mettre à jour aussi les anciennes clés pour le radar
+  const sets = s.days[dayIdx].cali.sets;
+  const avg = function(key){ const a=sets[key]||[]; const v=a.filter(x=>x!==''&&x!=null); return v.length?Math.round(v.reduce((a,b)=>a+b,0)/v.length):0; };
+  if(sets['Pompes inclinées']||sets['Pompes inclinées modérées']) s.days[dayIdx].cali.pompesIncl = avg('Pompes inclinées')||avg('Pompes inclinées modérées');
+  if(sets['Pompes au sol']) s.days[dayIdx].cali.pompesSol = avg('Pompes au sol');
+  if(sets['Planche ⏱️']||sets['Planche']) s.days[dayIdx].cali.planche = avg('Planche ⏱️')||avg('Planche');
+  if(sets['Rowing élastique']||sets['Rowing élastique lourd']) s.days[dayIdx].cali.rowing = avg('Rowing élastique')||avg('Rowing élastique lourd');
+  if(sets['Dips assistés']) s.days[dayIdx].cali.dips = avg('Dips assistés');
+  saveStore(s);
+  // Highlight input si valeur saisie
+  const inp = document.getElementById('cs-'+dayIdx+'-'+exoKey.replace(/[^a-zA-Z0-9]/g,'')+'-'+setIdx);
+  if(inp){ inp.classList.toggle('has-val', val!=='' && val!=null); }
+}
+
+
+
+// ── CALI RESULTS EVENTS (délégation, évite les quotes inline) ──
+document.addEventListener('change', function(e){
+  const inp = e.target;
+  // Saisie d'une série
+  if(inp.classList.contains('cali-set-input')){
+    const dayIdx = +inp.dataset.day;
+    const exoKey = inp.dataset.exo;
+    const setIdx = +inp.dataset.set;
+    saveCaliSet(dayIdx, exoKey, setIdx, inp.value);
+    inp.classList.toggle('has-val', inp.value !== '');
+  }
+
+});
+
+document.addEventListener('click', function(e){
+  // Toggle chrono planche
+  const timerBtn = e.target.closest('.cali-timer-toggle');
+  if(timerBtn){
+    const wrap = document.getElementById('timer-wrap-'+timerBtn.dataset.sw);
+    if(wrap) wrap.style.display = wrap.style.display==='none' ? 'block' : 'none';
+  }
+  // Bouton MAX → remplit toutes les séries avec la cible
+  const maxBtn = e.target.closest('.cali-max-btn');
+  if(maxBtn){
+    const dayIdx = +maxBtn.dataset.day;
+    const exoKey = decodeURIComponent(maxBtn.dataset.exo);
+    const nbSets = +maxBtn.dataset.sets;
+    const safKey = maxBtn.dataset.saf;
+    const val    = +maxBtn.dataset.cible;
+    if(!val) return;
+    for(var s=0;s<nbSets;s++){
+      var el = document.getElementById('cs-'+dayIdx+'-'+safKey+'-'+s);
+      if(el){ el.value=val; el.classList.add('has-val'); }
+      saveCaliSet(dayIdx, exoKey, s, val);
+    }
+    maxBtn.textContent = '✅ Fait';
+    maxBtn.style.opacity = '0.6';
+  }
+});
+
+function buildCaliResults(day, i){
+  const wo = WORKOUTS[day.type];
+  if(!wo) return '';
+  const sets = (day.cali && day.cali.sets) || {};
+  let html = '<div class="form-divider"></div><div class="form-subtitle">💪 Résultats Calisthenics</div>';
+
+  wo.circuits.forEach(function(circ){
+    if(circ.color === 'cool' || circ.color === 'run') return;
+    html += '<div class="cali-section-label">' + circ.label + '</div>';
+
+    circ.exos.forEach(function(exo){
+      const nbSets  = circ.toursN || 1;
+      const cible   = exo.repsN || '';
+      const exoKey  = exo.n;
+      const safKey  = exoKey.replace(/\W/g, '');
+      const isTimer = TIMER_EXO_NAMES.some(function(t){ return exo.n.indexOf(t) >= 0; });
+      const unit    = isTimer ? 's' : 'reps';
+      const maxLim  = isTimer ? 600 : 200;
+      const vals    = sets[exoKey] || [];
+      const exoEnc  = encodeURIComponent(exoKey); // pour data-attr safe
+
+      // Inputs S1 S2 S3...
+      var setsHtml = '';
+      for(var s=0;s<nbSets;s++){
+        var v = (vals[s] != null && vals[s] !== '') ? vals[s] : '';
+        var hasV = v !== '';
+        setsHtml += '<div class="cali-set-group">'
+          + '<div class="cali-set-label">S'+(s+1)+'</div>'
+          + '<input type="number" class="cali-set-input'+(hasV?' has-val':'')+'"'
+          + ' id="cs-'+i+'-'+safKey+'-'+s+'"'
+          + ' data-day="'+i+'" data-exo="'+exoEnc+'" data-set="'+s+'"'
+          + ' value="'+v+'" placeholder="-" min="0" max="'+maxLim+'">'
+          + '</div>';
+      }
+
+      // Bouton MAX = remplir toutes les séries avec la cible
+      var maxHtml = '<div class="cali-max-sep"></div>'
+        + '<button class="cali-max-btn"'
+        + ' data-day="'+i+'" data-exo="'+exoEnc+'" data-sets="'+nbSets+'" data-saf="'+safKey+'" data-cible="'+(cible||0)+'">'
+        + '✓ MAX ('+cible+' '+unit+')'
+        + '</button>';
+
+      // Moyenne
+      var done = vals.filter(function(x){ return x !== '' && x != null; });
+      var avg  = done.length ? Math.round(done.reduce(function(a,b){return a+b;},0)/done.length) : null;
+
+      // Chrono planche : bouton toggle
+      var swId = 'sw-'+safKey+'-'+i;
+      var timerHtml = isTimer
+        ? '<button class="cali-timer-btn cali-timer-toggle" data-sw="'+swId+'">⏱️ Chrono</button>'
+          + '<div id="timer-wrap-'+swId+'" style="display:none;margin-top:6px">'+buildStopwatch(swId,i,'planche','⏱️ '+exo.n)+'</div>'
+        : '';
+
+      html += '<div class="cali-exo-block">'
+        + '<div class="cali-exo-header">'
+        + '<div class="cali-exo-name">' + exo.n + '</div>'
+        + (cible ? '<div class="cali-exo-cible">Cible&nbsp;: '+cible+'&nbsp;'+unit+'</div>' : '')
+        + '</div>'
+        + '<div class="cali-sets-row">' + setsHtml + maxHtml
+        + (avg!=null ? '<div class="cali-exo-avg">moy.&nbsp;'+avg+'&nbsp;'+unit+'</div>' : '')
+        + '</div>'
+        + timerHtml
+        + '</div>';
+    });
+  });
+  return html;
+}
+
 function buildLogForm(day,i,date){
   const drTotal=(+day.dr.s1||0)+(+day.dr.s2||0)+(+day.dr.s3||0)+(+day.dr.s4||0);
   const drC=drTotal>=28?'var(--green)':drTotal>=20?'var(--gold)':drTotal>=12?'var(--orange)':'var(--red)';
-  const typeOpts=Object.entries(TYPE_LABELS).map(([v,l])=>`<option value="${v}"${day.type===v?' selected':''}>${l}</option>`).join('');
   const zoneOpts=ZONES.map(z=>`<span class="zone-tag${day.courbatures.zones.includes(z)?' selected':''}" onclick="toggleZone(${i},'${z}',this)">${z}</span>`).join('');
 
   return`<div style="padding:14px 15px">
-    <div class="form-subtitle">Type de séance</div>
-    <select style="background:var(--bg3);border:1px solid rgba(255,255,255,.1);border-radius:7px;padding:6px 9px;color:var(--text);font-size:12px;font-family:'Exo 2',sans-serif;width:100%;max-width:300px;margin-bottom:12px" onchange="saveDayType(${i},this.value)">${typeOpts}</select>
+
     <div class="form-subtitle">Statut séance</div>
     <div class="status-btns">
       <button class="sbtn${day.done==='yes'?' a-yes':''}" onclick="saveDone(${i},'yes')">✓ Réalisée</button>
@@ -964,24 +1336,7 @@ function buildLogForm(day,i,date){
     </div>
 
     `:''}
-    ${IS_CALI(day.type)?`
-    <div class="form-divider"></div>
-    <div class="form-subtitle">💪 Résultats Calisthenics</div>
-    <div class="form-row">
-      <div class="fg"><label>Pompes inclinées</label><input type="number" value="${day.cali.pompesIncl}" onchange="saveDay(${i},'cali','pompesIncl',this.value)" placeholder="max série 1"></div>
-      <div class="fg"><label>Pompes au sol</label><input type="number" value="${day.cali.pompesSol}" onchange="saveDay(${i},'cali','pompesSol',this.value)" placeholder="max série 1"></div>
-      <div class="fg"><label>Planche (sec) <button class="exo-timer-btn" style="margin-left:4px;font-size:10px;padding:2px 7px" onclick="openChronoLinked(${i},'planche','Planche')">⏱️</button></label><input type="number" value="${day.cali.planche}" onchange="saveDay(${i},'cali','planche',this.value)" placeholder="série 1"></div>
-      <div class="fg"><label>Dips assistés</label><input type="number" value="${day.cali.dips}" onchange="saveDay(${i},'cali','dips',this.value)" placeholder="max"></div>
-      <div class="fg"><label>L-sit (sec) <button class="exo-timer-btn" style="margin-left:4px;font-size:10px;padding:2px 7px" onclick="openChronoLinked(${i},'lsit','L-sit')">⏱️</button></label><input type="number" value="${day.cali.lsit}" onchange="saveDay(${i},'cali','lsit',this.value)" placeholder="sec"></div>
-      <div class="fg"><label>Rowing (reps)</label><input type="number" value="${day.cali.rowing}" onchange="saveDay(${i},'cali','rowing',this.value)" placeholder="max"></div>
-      <div class="fg"><label>Séries complètes</label><input type="number" value="${day.cali.series}" onchange="saveDay(${i},'cali','series',this.value)" placeholder="ex: 3"></div>
-    </div>
-    ${IS_CALI(day.type)?`
-    <div style="margin-bottom:10px">
-      ${buildStopwatch('sw-pl-'+i, i, 'planche', '⏱️ Planche')}
-      ${buildStopwatch('sw-ls-'+i, i, 'lsit', '⏱️ L-sit')}
-    </div>`:''}
-    `:''}
+    ${IS_CALI(day.type)?buildCaliResults(day,i):''}
     <div class="fg" style="margin-top:8px"><label>Ressenti / notes libres</label><textarea onchange="saveDay(${i},null,'notes',this.value)" placeholder="Comment tu t'es senti, ce qui a été dur ou facile, observations particulières...">${day.notes}</textarea></div>
   </div>`;
 }
@@ -1005,16 +1360,19 @@ function renderSessions(){
   const stL={planned:'Planifiée',yes:'✓ Réalisée',mvw:'🆘 MVW',no:'✗ Skippée',rest:'😴 Repos'};
   const stC={planned:'st-planned',yes:'st-yes',mvw:'st-mvw',no:'st-no',rest:'st-rest'};
 
+  const todayStr = new Date().toDateString();
   store.days.forEach((day,i)=>{
     const date=dates[i];
+    const isToday = weekOff===0 && date.toDateString()===todayStr;
     const card=document.createElement('div');
-    card.className=`day-card done-${day.done}`;
+    card.className=`day-card done-${day.done}${isToday?' today':''}`;
     card.id=`dc-${i}`;
     const noteDisp=day.note?`${day.note}/10`:'—';
     const wo=WORKOUTS[day.type];
+    const todayBadge=isToday?'<span class="day-today-badge">Aujourd\'hui</span>':'';
     card.innerHTML=`
       <div class="day-header" onclick="toggleDay(${i})">
-        <div class="day-name">${DAY_NAMES[i]} <span style="font-size:10px;color:var(--muted);font-weight:400">${fmtD(date)}</span></div>
+        <div class="day-name">${DAY_NAMES[i]}${todayBadge} <span style="font-size:10px;color:var(--muted);font-weight:400">${fmtD(date)}</span></div>
         <div class="day-type-txt">${wo?wo.label:(TYPE_LABELS[day.type]||day.type)}</div>
         <span class="day-status ${stC[day.done]||'st-planned'}">${stL[day.done]||'Planifiée'}</span>
         <div class="day-note" id="dn-${i}">${noteDisp}</div>
@@ -1272,17 +1630,15 @@ function renderHistory(){
     if(r.hi)tr.style.background='rgba(245,200,66,.04)';
     const v=(val,u='',big=false)=>val!=null?`<span class="vmono${big?' vg':''}">${val}${u}</span>`:`<span class="vm">—</span>`;
     const dc=r.dt!=null?(r.dt<=0?'var(--green)':'var(--red)'):'';
-    tr.innerHTML=`<td><strong style="font-size:12px">${r.s}</strong></td>
+    tr.innerHTML=`<td><strong style="font-size:11px">${r.s}</strong></td>
       <td>${r.pc?`<span class="ptag ${PC[r.pc]}">${PL[r.pc]}</span>`:''}</td>
-      <td>${r.po!=null?`<span class="vmono">${r.po} kg</span>`:'<span class="vm">—</span>'}</td>
-      <td>${r.dt!=null?`<span class="vmono" style="color:${dc}">${r.dt>0?'+':''}${r.dt} kg</span>`:'<span class="vm">—</span>'}</td>
-      <td>${v(r.pi,' reps')}</td>
-      <td>${r.ps!=null?`<span class="vmono${r.ps>=10?' vg':''}">${r.ps} reps</span>`:'<span class="vm">—</span>'}</td>
+      <td>${r.po!=null?`<span class="vmono">${r.po}</span>`:'<span class="vm">—</span>'}</td>
+      <td>${r.dt!=null?`<span class="vmono" style="color:${dc}">${r.dt>0?'+':''}${r.dt}</span>`:'<span class="vm">—</span>'}</td>
+      <td>${r.ps!=null?`<span class="vmono${r.ps>=10?' vg':''}">${r.ps}</span>`:'<span class="vm">—</span>'}</td>
       <td>${r.pl!=null?`<span class="vmono${r.pl>=100?' vg':''}">${r.pl}s</span>`:'<span class="vm">—</span>'}</td>
-      <td>${v(r.cr,' min')}</td>
+      <td>${r.cr!=null?`<span class="vmono">${r.cr}m</span>`:'<span class="vm">—</span>'}</td>
       <td>${r.v2?`<span class="vmono vg">${r.v2}</span>`:'<span class="vm">—</span>'}</td>
-      <td>${v(r.j,' j')}</td>
-      <td>${r.nt?`<span style="font-size:11px;font-weight:700;color:${r.nt>=9?'var(--green)':'var(--gold)'}">${r.nt}/10</span>`:'<span class="vm">—</span>'}</td>`;
+      <td>${r.j!=null?`<span class="vmono">${r.j}j</span>`:'<span class="vm">—</span>'}</td>`;
     tb.appendChild(tr);
   });
 }
@@ -1309,14 +1665,22 @@ function initCharts(){
     {data:DPL.map(v=>v!=null?Math.round(v/105*100):null),borderColor:'#3b82f6',pointRadius:2,tension:.4,spanGaps:false,borderWidth:2},
     {data:DC.map(v=>v!=null?Math.round(v/60*100):null),borderColor:'#f97316',pointRadius:2,tension:.4,spanGaps:true,borderWidth:1.5,borderDash:[3,2]},
   ]},options:{...CO,scales:{...CO.scales,y:{...CO.scales.y,min:0,max:110,ticks:{color:'#64748b',font:{size:9},callback:v=>v+'%'}}}}});
-  new Chart(document.getElementById('cRd'),{type:'radar',data:{labels:['Poids','Pompes sol','Planche (5min)','Course (21km)','VO2max (60)','Dips (20)'],datasets:[
+  // radar records : initialisé dans initChartsRecords()
+}
+
+
+let cRdInstance = null;
+function initChartsRecords(){
+  const canvas = document.getElementById('cRd');
+  if(!canvas) return;
+  if(cRdInstance){ cRdInstance.destroy(); cRdInstance=null; }
+  cRdInstance = new Chart(canvas,{type:'radar',data:{labels:['Poids','Pompes sol','Planche (5min)','Course (21km)','VO2max (60)','Dips (20)'],datasets:[
     {label:'Départ',data:[0,0,8,10,0,0],borderColor:'#64748b',backgroundColor:'rgba(100,116,139,.04)',pointBackgroundColor:'#64748b',borderWidth:1.5,borderDash:[4,2]},
     {label:'Pic Oct25',data:[50,75,35,43,35,0],borderColor:'#22c55e',backgroundColor:'rgba(34,197,94,.06)',pointBackgroundColor:'#22c55e',borderWidth:2},
     {label:'CB-S3',data:[8,40,32,36,18,0],borderColor:'#a855f7',backgroundColor:'rgba(168,85,247,.05)',pointBackgroundColor:'#a855f7',borderWidth:1.5,borderDash:[3,3]},
     {label:'Objectif',data:[100,100,100,100,100,100],borderColor:'#f5c842',backgroundColor:'rgba(245,200,66,.04)',pointBackgroundColor:'#f5c842',borderWidth:1,borderDash:[6,3]},
   ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,labels:{color:'#94a3b8',font:{size:10},boxWidth:9}}},scales:{r:{ticks:{color:'#64748b',font:{size:8},backdropColor:'transparent'},grid:{color:'rgba(255,255,255,.05)'},pointLabels:{color:'#94a3b8',font:{size:10}},suggestedMin:0,suggestedMax:100}}}});
 }
-
 // ══════════════════════════════════════════
 // DASHBOARD & RECORDS
 // ══════════════════════════════════════════
@@ -1434,6 +1798,273 @@ function toast(msg,c='#22c55e'){const t=document.createElement('div');t.classNam
 // ══════════════════════════════════════════
 // MAIN RENDER
 // ══════════════════════════════════════════
+
+// ══════════════════════════════════════════
+// MUSCLE BALANCE
+// ══════════════════════════════════════════
+const MUSCLE_LABELS = ['Push horiz.','Push vert.','Pull horiz.','Pull vert.','Core fléch.','Core prof.','Scapulaires'];
+const MUSCLE_COLORS = ['#f97316','#f5c842','#3b82f6','#06b6d4','#22c55e','#a855f7','#ec4899'];
+// Cibles hebdo (reps/sets normalisés 0-100)
+const MUSCLE_TARGET_WEEK = [80, 40, 70, 20, 90, 70, 60];
+// Mapping exercices → groupe musculaire (indices)
+const EXO_MUSCLE_MAP = {
+  pompesIncl: [0],          // push horiz
+  pompesSol:  [0, 1],       // push horiz + vert
+  pompesDiamant: [0],
+  dips: [0, 1],
+  rowing: [2, 6],           // pull horiz + scap
+  latPulls: [3, 6],         // pull vert
+  facePulls: [6, 2],
+  planche: [4, 5],          // core fléch + prof
+  lsit: [3, 4],
+  squats: [5],              // core prof
+};
+const MUSCLE_NAMES_FR = ['Push horizontal','Push vertical','Pull horizontal','Pull vertical','Core fléchisseurs','Core profond','Scapulaires'];
+const MUSCLE_EMOJIS = ['🏋️','⬆️','🤸','⬇️','🔥','🧱','🦴'];
+let muscleChartInstance = null;
+let muscleViewMode = 'semaine';
+
+function switchMuscleView(mode) {
+  muscleViewMode = mode;
+  document.getElementById('btnSemaine').classList.toggle('active', mode==='semaine');
+  document.getElementById('btnCycle').classList.toggle('active', mode==='cycle');
+  renderMuscleBalance();
+}
+
+// Poids musculaires par type de séance (indices: 0=PushH, 1=PushV, 2=PullH, 3=PullV, 4=CoreF, 5=CoreP, 6=Scap)
+const SESSION_MUSCLE_WEIGHTS = {
+  push_pull:  [90, 50, 30, 0,  20, 40, 30],
+  pull_push:  [30, 20, 90, 50, 20, 30, 80],
+  total_body: [70, 40, 70, 30, 60, 70, 50],
+};
+
+function calcMuscleScores(mode) {
+  const s = getStore();
+  // 1. Base structurelle : toutes les séances cali prévues cette semaine
+  const base = new Array(7).fill(0);
+  s.days.forEach(day => {
+    if (!IS_CALI(day.type)) return;
+    const weights = SESSION_MUSCLE_WEIGHTS[day.type] || [];
+    const factor = day.done === 'yes' ? 1.0 : day.done === 'mvw' ? 0.5 : day.done === 'no' ? 0 : 0.7; // planned = 70%
+    weights.forEach((w, i) => { base[i] += w * factor; });
+  });
+
+  // 2. Bonus si reps saisies (amplifie le signal)
+  s.days.forEach(day => {
+    if (!IS_CALI(day.type) || !['yes','mvw'].includes(day.done)) return;
+    const cali = day.cali;
+    const boost = 0.3;
+    if (+cali.pompesIncl > 0) { EXO_MUSCLE_MAP.pompesIncl.forEach(i => base[i] += +cali.pompesIncl * boost); }
+    if (+cali.pompesSol > 0)  { EXO_MUSCLE_MAP.pompesSol.forEach(i => base[i] += +cali.pompesSol * boost * 1.5); }
+    if (+cali.dips > 0)       { EXO_MUSCLE_MAP.dips.forEach(i => base[i] += +cali.dips * boost); }
+    if (+cali.rowing > 0)     { EXO_MUSCLE_MAP.rowing.forEach(i => base[i] += +cali.rowing * boost); }
+    if (+cali.planche > 0)    { EXO_MUSCLE_MAP.planche.forEach(i => base[i] += (+cali.planche/3) * boost); }
+  });
+
+  // 3. Normaliser sur 100
+  const max = Math.max(...base, 1);
+  return base.map(v => Math.min(100, Math.round(v / max * 100)));
+}
+
+function renderMuscleBalance() {
+  const scores = calcMuscleScores(muscleViewMode);
+  const canvas = document.getElementById('cMuscleRadar');
+  if (!canvas) return;
+  if (muscleChartInstance) { muscleChartInstance.destroy(); muscleChartInstance = null; }
+  muscleChartInstance = new Chart(canvas, {
+    type: 'radar',
+    data: {
+      labels: MUSCLE_LABELS,
+      datasets: [
+        { label: 'Cible', data: MUSCLE_TARGET_WEEK, borderColor: '#3b82f6', backgroundColor: 'rgba(59,130,246,.04)', borderWidth: 1.5, borderDash: [5,3], pointRadius: 2, pointBackgroundColor: '#3b82f6' },
+        { label: 'Accompli', data: scores, borderColor: '#f5c842', backgroundColor: 'rgba(245,200,66,.08)', borderWidth: 2, pointRadius: 3, pointBackgroundColor: '#f5c842' }
+      ]
+    },
+    options: { responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { backgroundColor: '#0d1627', titleColor: '#f5c842', bodyColor: '#94a3b8', borderColor: 'rgba(245,200,66,.2)', borderWidth: 1, padding: 8 } },
+      scales: { r: { ticks: { color: '#64748b', font: { size: 8 }, backdropColor: 'transparent', stepSize: 25 }, grid: { color: 'rgba(255,255,255,.05)' }, pointLabels: { color: '#94a3b8', font: { size: 9 } }, suggestedMin: 0, suggestedMax: 100 } }
+    }
+  });
+  // Barres
+  const bars = document.getElementById('muscleBars');
+  if (bars) {
+    bars.innerHTML = scores.map((sc, i) => {
+      const pct = sc;
+      const tgt = MUSCLE_TARGET_WEEK[i];
+      const ok = pct >= tgt * 0.7;
+      const color = ok ? 'var(--green)' : pct > 0 ? 'var(--gold)' : 'var(--muted)';
+      return `<div class="muscle-bar-row">
+        <div class="muscle-bar-label">${MUSCLE_LABELS[i]}</div>
+        <div class="muscle-bar-track" title="Cible: ${tgt}%">
+          <div class="muscle-bar-fill" style="width:${pct}%;background:${color}"></div>
+        </div>
+        <div class="muscle-bar-pct" style="color:${color}">${pct}%</div>
+        <div class="muscle-bar-dot" style="background:${ok?'var(--green)':'var(--red)'}"></div>
+      </div>`;
+    }).join('');
+  }
+}
+
+function renderMusclesWeek() {
+  const s = getStore();
+  const grid = document.getElementById('musclesWeekGrid');
+  if (!grid) return;
+  const done = new Array(7).fill(0);
+  const planned = new Array(7).fill(0);
+  s.days.forEach(function(day) {
+    if (!IS_CALI(day.type)) return;
+    const weights = SESSION_MUSCLE_WEIGHTS[day.type] || [];
+    const isDone = day.done === 'yes' || day.done === 'mvw';
+    const isPlanned = day.done === 'planned';
+    weights.forEach(function(w, i) {
+      if (w > 50) {
+        if (isDone) done[i]++;
+        else if (isPlanned) planned[i]++;
+      }
+    });
+  });
+  let html = '';
+  MUSCLE_NAMES_FR.forEach(function(name, i) {
+    const d = done[i], p = planned[i];
+    let cls = 'muscle-chip';
+    let st = '';
+    let col = 'var(--muted)';
+    let lbl = 'Non au programme';
+    if (d > 0) {
+      cls += ' active';
+      col = 'var(--green)';
+      lbl = d + ' s\u00e9ance' + (d > 1 ? 's' : '') + ' faite' + (d > 1 ? 's' : '');
+    } else if (p > 0) {
+      st = 'border-color:rgba(245,200,66,.25);background:rgba(245,200,66,.03)';
+      col = 'var(--gold)';
+      lbl = p + ' pr\u00e9vue' + (p > 1 ? 's' : '');
+    }
+    html += '<div class="' + cls + '" style="' + st + '">'
+          + '<div class="muscle-chip-icon">' + MUSCLE_EMOJIS[i] + '</div>'
+          + '<div><div class="muscle-chip-name">' + name + '</div>'
+          + '<div class="muscle-chip-count" style="color:' + col + '">' + lbl + '</div>'
+          + '</div></div>';
+  });
+  grid.innerHTML = html;
+}
+// ── OBJECTIFS TIMELINE (onglet Objectifs) ──
+function renderObjTimeline() {
+  const el = document.getElementById('objTimeline');
+  if (!el) return;
+  const OBJS = [
+    {icon:'⏱️', name:'Planche 5 min', unit:'s', cur:96, target:300, color:'var(--blue)', deadline:'Long terme'},
+    {icon:'🏃', name:'Course 21 km', unit:'min', cur:56, target:135, color:'var(--cyan)', deadline:'Long terme'},
+    {icon:'💪', name:'Pompes sol 20', unit:'reps', cur:8, target:20, color:'var(--green)', deadline:'S4 Comeback'},
+    {icon:'🏋️', name:'Dips 20', unit:'reps', cur:0, target:20, color:'var(--orange)', deadline:'Module 2'},
+    {icon:'🎯', name:'Poids 82 kg', unit:'kg', cur:93, target:82, color:'var(--gold)', deadline:'Long terme', inverse:true},
+    {icon:'❤️', name:'VO2max 60', unit:'', cur:46, target:60, color:'var(--red)', deadline:'Long terme'},
+  ];
+  el.innerHTML = OBJS.map((o, idx) => {
+    const pct = o.inverse
+      ? Math.min(100, Math.round((94 - o.cur) / (94 - o.target) * 100))
+      : Math.min(100, Math.round(o.cur / o.target * 100));
+    const done = pct >= 100;
+    const isLast = idx === OBJS.length - 1;
+    return `<div class="obj-tl-item">
+      <div class="obj-tl-left">
+        <div class="obj-tl-icon" style="background:${done?'rgba(34,197,94,.15)':'rgba(255,255,255,.04)'};border:1px solid ${done?'var(--green)':o.color+'44'}">${o.icon}</div>
+        ${!isLast ? '<div class="obj-tl-line"></div>' : ''}
+      </div>
+      <div class="obj-tl-content">
+        <div class="obj-tl-name">${o.name} ${done ? '✅' : ''}</div>
+        <div class="obj-tl-track">
+          <div class="obj-tl-fill" style="width:${pct}%;background:${done?'var(--green)':o.color}"></div>
+        </div>
+        <div class="obj-tl-meta">
+          <span>${o.cur}${o.unit} / ${o.target}${o.unit}</span>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="font-size:9px;color:var(--muted)">${o.deadline}</span>
+            <span class="obj-tl-pct" style="color:${done?'var(--green)':o.color}">${pct}%</span>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+
+// ══════════════════════════════════════════
+// TROPHÉES PLAYSTATION
+// ══════════════════════════════════════════
+const TROPHIES = [
+  // ── BRONZE ──
+  {id:'first_sweat',   rank:'t-bronze', icon:'🏋️', badge:'🥉', name:'Premier Effort',        desc:'Réaliser 1 séance calisthenics',         check: function(s,h){ return s.days.some(function(d){return d.done==='yes'&&IS_CALI(d.type);}); }},
+  {id:'first_run',     rank:'t-bronze', icon:'🏃', badge:'🥉', name:'Premiers Kilomètres',    desc:'Réaliser 1 séance running',              check: function(s,h){ return s.days.some(function(d){return d.done==='yes'&&IS_RUN(d.type);}); }},
+  {id:'planche_60',    rank:'t-bronze', icon:'⏱️', badge:'🥉', name:'Planche 60s',            desc:'Tenir la planche 60 secondes',           check: function(s,h){ return h.some(function(r){return r.pl>=60;})||s.days.some(function(d){return +d.cali.planche>=60;}); }},
+  {id:'pompes_5',      rank:'t-bronze', icon:'💪', badge:'🥉', name:'Cinq Pompes',            desc:'5 pompes au sol en une série',           check: function(s,h){ return h.some(function(r){return r.ps>=5;})||s.days.some(function(d){return +d.cali.pompesSol>=5;}); }},
+  {id:'course_30',     rank:'t-bronze', icon:'🎽', badge:'🥉', name:'30 Minutes',             desc:'Courir 30 min non-stop',           check: function(s,h){ return h.some(function(r){return r.cr>=30;})||s.days.some(function(d){return +d.running.dist>=4;}); }},
+  {id:'streak_7',      rank:'t-bronze', icon:'🔥', badge:'🥉', name:'Semaine Complète',       desc:'7 jours consécutifs sans arrêt',         check: function(s,h){ return h.some(function(r){return r.j>=7;}); }},
+  // ── SILVER ──
+  {id:'planche_90',    rank:'t-silver', icon:'🧱', badge:'🥈', name:'Planche 90s',            desc:'Tenir la planche 90 secondes',           check: function(s,h){ return h.some(function(r){return r.pl>=90;})||s.days.some(function(d){return +d.cali.planche>=90;}); }},
+  {id:'pompes_10',     rank:'t-silver', icon:'💪', badge:'🥈', name:'10 Pompes',              desc:'10 pompes au sol en une série',          check: function(s,h){ return h.some(function(r){return r.ps>=10;})||s.days.some(function(d){return +d.cali.pompesSol>=10;}); }},
+  {id:'course_45',     rank:'t-silver', icon:'🏃', badge:'🥈', name:'45 Minutes',             desc:'Courir 45 min non-stop',           check: function(s,h){ return h.some(function(r){return r.cr>=45;})||s.days.some(function(d){return +d.running.dist>=6;}); }},
+  {id:'comeback',      rank:'t-silver', icon:'🔄', badge:'🥈', name:'Comeback',               desc:'Terminer le Module 1 Comeback (4 sem.)', check: function(s,h){ return h.some(function(r){return r.pc>=6&&r.j>=28;}); }},
+  {id:'poids_90',      rank:'t-silver', icon:'⚖️', badge:'🥈', name:'Sous les 90 kg',         desc:'Atteindre 90 kg ou moins',               check: function(s,h){ return h.some(function(r){return r.po&&r.po<=90;})||+s.poids<=90; }},
+  {id:'vo2_47',        rank:'t-silver', icon:'❤️', badge:'🥈', name:'VO2max 47',              desc:'VO2max Garmin ≥ 47',                     check: function(s,h){ return h.some(function(r){return r.v2&&r.v2>=47;})||+s.vo2>=47; }},
+  // ── GOLD ──
+  {id:'planche_120',   rank:'t-gold',   icon:'⚡', badge:'🏅', name:'Planche 2 min',          desc:'Tenir la planche 120 secondes',          check: function(s,h){ return h.some(function(r){return r.pl>=120;})||s.days.some(function(d){return +d.cali.planche>=120;}); }},
+  {id:'pompes_15',     rank:'t-gold',   icon:'🦾', badge:'🏅', name:'15 Pompes',              desc:'15 pompes au sol en une série',          check: function(s,h){ return h.some(function(r){return r.ps>=15;})||s.days.some(function(d){return +d.cali.pompesSol>=15;}); }},
+  {id:'course_60',     rank:'t-gold',   icon:'🏆', badge:'🏅', name:'60 Minutes',             desc:'Courir 1 heure non-stop',          check: function(s,h){ return h.some(function(r){return r.cr>=60;})||s.days.some(function(d){return +d.running.dist>=8;}); }},
+  {id:'poids_88',      rank:'t-gold',   icon:'🎯', badge:'🏅', name:'Pic de Forme',           desc:'Retrouver les 88 kg (pic Oct 2025)',      check: function(s,h){ return h.some(function(r){return r.po&&r.po<=88;})||+s.poids<=88; }},
+  {id:'vo2_49',        rank:'t-gold',   icon:'💨', badge:'🏅', name:'VO2max 49',              desc:'VO2max Garmin ≥ 49 (pic Oct 2025)',      check: function(s,h){ return h.some(function(r){return r.v2&&r.v2>=49;})||+s.vo2>=49; }},
+  {id:'streak_28',     rank:'t-gold',   icon:'🌟', badge:'🏅', name:'Mois Sans Relâche',      desc:'28 jours consécutifs de pratique',       check: function(s,h){ return h.some(function(r){return r.j>=28;}); }},
+  // ── PLATINE ──
+  {id:'plat_all',      rank:'t-plat',   icon:'💎', badge:'💎', name:'Padawan Accompli',       desc:'Tous les objectifs finaux atteints',     check: function(s,h){
+    var poids = h.some(function(r){return r.po&&r.po<=82;})||+s.poids<=82;
+    var pompes = h.some(function(r){return r.ps>=20;})||s.days.some(function(d){return +d.cali.pompesSol>=20;});
+    var planche = h.some(function(r){return r.pl>=300;})||s.days.some(function(d){return +d.cali.planche>=300;});
+    var course = h.some(function(r){return r.cr>=120;});
+    var vo2 = h.some(function(r){return r.v2&&r.v2>=60;})||+s.vo2>=60;
+    return poids&&pompes&&planche&&course&&vo2;
+  }},
+];
+
+function checkTrophies(){
+  const s  = getStore();
+  const h  = HIST;
+  return TROPHIES.map(function(t){
+    var unlocked = false;
+    try { unlocked = !!t.check(s, h); } catch(e){}
+    return Object.assign({}, t, {unlocked: unlocked});
+  });
+}
+
+function renderTrophies(){
+  const results = checkTrophies();
+  const el = document.getElementById('trophyGrid');
+  if(!el) return;
+  const rankLabel = {bronze:'Bronze','t-bronze':'Bronze','t-silver':'Argent','t-gold':'Or','t-plat':'Platine'};
+  el.innerHTML = results.map(function(t){
+    var cls = 'trophy-card ' + t.rank + ' ' + (t.unlocked ? 'unlocked' : 'locked');
+    return '<div class="' + cls + '">'
+      + '<div class="trophy-icon">' + t.icon + '<span class="trophy-badge">' + t.badge + '</span></div>'
+      + '<div class="trophy-info">'
+      + '<div class="trophy-name">' + t.name + '</div>'
+      + '<div class="trophy-desc">' + t.desc + '</div>'
+      + '<div class="trophy-rank ' + t.rank + '">' + (t.rank==='t-bronze'?'Bronze':t.rank==='t-silver'?'Argent':t.rank==='t-gold'?'Or':'Platine') + '</div>'
+      + (t.unlocked ? '<div class="trophy-unlocked-date">✓ Débloqué</div>' : '')
+      + '</div></div>';
+  }).join('');
+}
+
+function renderTrophiesMini(){
+  const results = checkTrophies().filter(function(t){ return t.unlocked; });
+  const el = document.getElementById('trophyMiniGrid');
+  if(!el) return;
+  if(!results.length){ el.innerHTML='<div style="font-size:11px;color:var(--muted)">Aucun trophée encore débloqué</div>'; return; }
+  el.innerHTML = results.map(function(t){
+    return '<div class="trophy-mini ' + t.rank + '">'
+      + '<div class="trophy-mini-icon">' + t.icon + '</div>'
+      + '<div class="trophy-mini-name">' + t.name + '</div>'
+      + '</div>';
+  }).join('');
+}
+
 function renderAll(){
   renderWeekLabel();
   renderSessions();
@@ -1448,6 +2079,8 @@ document.addEventListener('DOMContentLoaded',()=>{
   renderRecords();
   checkGrid();
   renderAll();
+  // L'onglet actif au démarrage est Dashboard → pas besoin d'init progress/records ici
+  // Ils seront initialisés via showTab() au premier clic
 });
 
 // ══════════════════════════════════════════
