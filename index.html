@@ -807,146 +807,134 @@ tr:hover td{background:rgba(255,255,255,.015)}
 // ══════════════════════════════════════════
 const WORKOUTS={
   running_tempo:{
-    label:'🏃 Running Tempo S4',dur:'55 min / ~7.5 km',horaire:'Avant 9h ou après 19h',
+    label:'\ud83d\udeb6 Marche Active \u2014 R\u00e9activation',dur:'30 min',horaire:'Quand tu veux \u2014 z\u00e9ro impact',
     warm:[
-      {t:'5 min marche dynamique'},
-      {t:'7 min footing très lent — Z1, ~7:30/km, conversation totale'},
-      {t:'3 min éducatifs : 30s montées genoux / 30s talons-fesses / 30s pas chassés'},
+      {t:'Test genou \u00e0 froid : 5 flexions lentes sans charge'},
+      {t:'Test pieds : marcher pieds nus 1 min \u2014 douleur ?'},
     ],
     circuits:[
-      {label:'Corps de séance — 30 min — 5 INTERVALS S4',tours:'',color:'run',intervalsN:5,exos:[
-        {n:'5 × 5 min en Zone 2',g:'Courir',d:'Allure ~6:20-6:35/km • FC 145-155 bpm',tip:'⚠️ Si FC dépasse 155 bpm → ralentir immédiatement. 5 min par interval — tenir l\'allure cible, pas seulement la FC.',h:'Récup : 1 min marche entre chaque interval'},
-      ]},
+      {label:'Marche surveillance genou/pieds',tours:'',color:'run',exos:[
+        {n:'Marche active 30 min',g:'Marche',d:'Terrain plat uniquement \u2022 Allure confortable \u2022 Brooks aux pieds',tip:'PAS de course cette semaine. Douleur genou ou vo\u00fbte plantaire = demi-tour imm\u00e9diat.',h:'Douleur > 2/10 \u2192 stop et repos. C\u2019est un test, pas un entra\u00eenement.'}
+      ]}
     ],
-    cool:['3 min marche','Mollets 30s/jambe → "Étirement des jambes"','Quadriceps 30s/jambe → "Étirement du quadriceps"','Ischios 30s/jambe → "Étirement des ischio-jambiers"'],
-    mvw:['3 min marche échauffement','10 min course très facile (8:00/km)','2 min marche retour calme'],
-    yoda:'Même volume que la semaine passée. Consolider, pas accélérer. 7 séances sous pression professionnelle tu as tenu — maintenant ancrer dans la durée tu dois.'
+    cool:['\u00c9tirements mollets : 60s/jambe','Vo\u00fbte plantaire : balle de tennis 60s/pied','Quadriceps : 30s/jambe'],
+    mvw:['15 min marche tr\u00e8s lente terrain plat'],
+    yoda:'Le genou bless\u00e9, ta priorit\u00e9 absolue il est. Tester sans forcer, la sagesse c\u2019est. La course reviendra \u2014 quand pr\u00eat tu seras.'
   },
   push_pull:{
-    label:'💪 Push/Pull — Pecs 70% / Dorsaux 30% S4',dur:'45 min',horaire:'Matin idéal — FC repos check avant séance',
+    label:'\ud83d\udcaa Push/Pull R\u00e9activation 60%',dur:'35 min',horaire:'Matin id\u00e9al \u2014 DR check avant',
     warm:[
-      {t:'50 tours corde à sauter',g:'Saut à la corde'},
-      {t:'20 cercles d\'épaules avant/arrière',g:'Rotations des bras'},
-      {t:'20 band pull-apart élastique léger',g:'Pull-Apart avec élastique'},
-      {t:'10 pompes murales TRÈS lentes — tempo 3-1-3'},
-      {t:'30s hollow body hold léger'},
+      {t:'20 rotations \u00e9paules + 15 band pull-apart l\u00e9ger',g:'Pull-Apart avec \u00e9lastique'},
+      {t:'10 pompes murales lentes',g:'Pompes inclin\u00e9es'},
+      {t:'Mobilit\u00e9 poignets et coudes : 2 min'},
     ],
     circuits:[
-      {label:'Circuit A — PECS FOCUS 70%',tours:'3 tours • Repos 90s',toursN:3,color:'circuit',exos:[
-        {n:'Pompes inclinées',g:'Pompes inclinées',d:'10 reps • Tempo 2-1-2',repsN:10,tip:'Banc niveau cuisses • Coudes ~45° du corps • Omoplates serrées'},
-        {n:'Pompes diamant',g:'Pompes resserrées',d:'5 reps • ⚠️ Triceps gauche surveillé',repsN:5,tip:'Mains en diamant sous poitrine • Moindre signal douleur triceps G → STOP immédiat'},
-        {n:'Chest fly élastique',g:'Écarté avec élastique',d:'12 reps • SmartWorkout LÉGER (10-15 kg)',repsN:12,tip:'Bras légèrement fléchis • Contraction 1s en bas'},
+      {label:'Circuit A \u2014 PECS 70% (volume r\u00e9duit)',tours:'2 tours \u2022 Repos 90s',toursN:2,color:'circuit',exos:[
+        {n:'Pompes inclin\u00e9es',g:'Pompes inclin\u00e9es',d:'8 reps \u2022 Tempo 2-1-2',repsN:8,tip:'Reprise apr\u00e8s 2 sem d\u2019arr\u00eat \u2014 en r\u00e9serve sur chaque s\u00e9rie'},
+        {n:'Pompes diamant',g:'Pompes resserr\u00e9es',d:'4 reps \u2022 Vigilance triceps gauche',repsN:4,tip:'Moindre douleur triceps = arr\u00eat imm\u00e9diat'},
+        {n:'Chest fly \u00e9lastique',g:'\u00c9cart\u00e9 avec \u00e9lastique',d:'10 reps \u2022 SW L\u00c9GER (Vert 10kg)',repsN:10,tip:'Amplitude contr\u00f4l\u00e9e \u2014 reconnecter le muscle'},
       ]},
-      {label:'Circuit B — DORSAUX/CORE ÉQUILIBRAGE 30%',tours:'3 tours • Repos 60s',toursN:3,color:'circuit',exos:[
-        {n:'Rowing élastique',g:'Rowing avec élastique',d:'15 reps • SmartWorkout MOYEN (20-25 kg)',repsN:15,tip:'Penché 45° • Dos droit • Serrer omoplates 1s en fin de mouvement'},
-        {n:'Face pulls',g:'Traction de face avec élastique',d:'15 reps • SmartWorkout LÉGER',repsN:15,tip:'Tirer vers le visage • Coudes hauts → anti-épaules enroulées — tensions légères signalées en S3'},
-        {n:'Planche ⏱️',g:'Planche',d:'50s contrôlée — pas de test max',repsN:50,tip:'Ventre rentré • Fessiers serrés • Respiration 4s inspir / 4s expir — <strong style="color:var(--gold)">Utilise le chrono dans Saisie résultats</strong>'},
+      {label:'Circuit B \u2014 DORSAUX/CORE 30%',tours:'2 tours \u2022 Repos 60s',toursN:2,color:'circuit',exos:[
+        {n:'Rowing \u00e9lastique',g:'Rowing avec \u00e9lastique',d:'12 reps \u2022 SW Bleu fonc\u00e9 15kg',repsN:12,tip:'Redescendre en charge \u2014 15kg au lieu de 25kg'},
+        {n:'Face pulls',g:'Traction de face avec \u00e9lastique',d:'12 reps \u2022 SW L\u00c9GER',repsN:12,tip:'Anti-\u00e9paules enroul\u00e9es \u2014 coudes hauts'},
+        {n:'Planche \u23f1\ufe0f',g:'Planche',d:'40s \u2022 2 tours',repsN:40,tip:'Reprendre en douceur \u2014 96s viendront plus tard'},
       ]},
     ],
-    cool:['Chest doorway stretch → "Étirement pectoral" : 60s/côté','Étirement dorsal : 60s','Triceps stretch → "Étirement des triceps" : 30s/bras (DOUX côté gauche !)'],
-    mvw:['3 min (rotations + 20 jumping jacks)','2 tours / 60s repos : 8 pompes inclinées + 12 rowing + 30s planche','2 min étirements pec + dos'],
-    yoda:'Pas de test aujourd\'hui — consolider tu dois. Les dips difficiles la semaine passée ? Normal : la base d\'abord, la hauteur ensuite. Patience, jeune Padawan.'
+    cool:['Pec stretch cadre de porte : 60s','Triceps : 30s/bras','Pike stretch : 60s'],
+    mvw:['2 tours : 6 pompes incl + 10 rowing + 30s planche'],
+    yoda:'60% du volume, 100% de la qualit\u00e9. Apr\u00e8s la pause, reconstruire les fondations tu dois \u2014 pas battre des records !'
   },
   running_frac:{
-    label:'⚡ Running Fractionné S4',dur:'45 min / ~5.5 km',horaire:'Matin idéal — Si DR < 28 → 30 min Z2 sans intervals',
+    label:'\ud83d\udeb4 V\u00e9lo ou Marche \u2014 Z\u00e9ro Impact',dur:'30-40 min',horaire:'Selon dispo',
     warm:[
-      {t:'5 min marche'},
-      {t:'8 min footing progressif Z1 → Z2 doux'},
-      {t:'2 min éducatifs légers'},
+      {t:'Test genou : 5 flexions \u00e0 vide'},
+      {t:'5 min \u00e9chauffement tr\u00e8s progressif'},
     ],
     circuits:[
-      {label:'Corps de séance — 8 INTERVALS S4 × 1 min 30s',tours:'',color:'run',intervalsN:8,exos:[
-        {n:'8 × 1 min 30s allure tempo',g:'Courir',d:'~5:30-5:45/km • FC ~155-165 bpm',tip:'FC max 169 bpm atteinte en S3 — gérer l\'effort dès le 4e interval pour tenir la qualité sur les 8. Récup 1 min 30s marche/trot léger.',h:'Récup : 1 min 30s marche/trot léger entre chaque'},
-      ]},
+      {label:'Cardio sans impact',tours:'',color:'run',exos:[
+        {n:'V\u00e9lo ou marche rapide',g:'Marche',d:'30-40 min \u2022 FC max 140 bpm \u2022 Z\u00e9ro douleur tol\u00e9r\u00e9e',tip:'Le v\u00e9lo : cardio sans impact genou/pieds. Sinon marche rapide terrain plat.',h:'Objectif : maintenir la base a\u00e9robie sans aggraver'}
+      ]}
     ],
-    cool:['3 min marche','Étirements ischios : 45s/jambe','Mollets : 30s/jambe','Voûte plantaire : 30s/pied'],
-    mvw:['3 min marche échauffement','10 min footing très facile (7:30/km)','2 min retour au calme'],
-    yoda:'8 intervals × 1 min 30s. Même nombre qu\'en S3 — plus longs. La progression se cache dans la durée de l\'effort aujourd\'hui, pas dans la vitesse.'
+    cool:['\u00c9tirements bas du corps : 10 min','Glace genou si sensation de chaleur'],
+    mvw:['15 min marche'],
+    yoda:'Z\u00e9ro impact, z\u00e9ro risque. La base a\u00e9robie, autrement tu la maintiens. Patience, jeune Padawan !'
   },
   pull_push:{
-    label:'💪 Pull/Push — Dorsaux 70% / Pecs 30% S4',dur:'40 min',horaire:'Matin ou soir — DR check si FC repos > 65 bpm',
+    label:'\ud83d\udcaa Pull/Push R\u00e9activation 60%',dur:'35 min',horaire:'Matin id\u00e9al \u2014 DR check avant',
     warm:[
-      {t:'30 band pull-apart',g:'Pull-Apart avec élastique'},
-      {t:'20 rotations externes épaules avec élastique',g:'Rotation externe avec élastique'},
-      {t:'15 dislocations épaules avec corde à sauter'},
-      {t:'10 scapular push-ups (omoplates uniquement)'},
+      {t:'20 rotations externes \u00e9lastique l\u00e9ger',g:'Rotations des bras'},
+      {t:'10 scapular push-ups',g:'Pompes inclin\u00e9es'},
+      {t:'15 band pull-apart',g:'Pull-Apart avec \u00e9lastique'},
     ],
     circuits:[
-      {label:'Circuit A — DORSAUX FOCUS 70%',tours:'3 tours • Repos 90s',toursN:3,color:'circuit',exos:[
-        {n:'Rowing élastique lourd',g:'Rowing avec élastique',d:'15 reps • SmartWorkout MOYEN (20-30 kg)',repsN:15,tip:'Tempo 2-1-2-1 • Penché 45° • Dos absolument droit'},
-        {n:'Lat pulls élastique',g:'Pull-down avec élastique',d:'12 reps • Élastique attaché en hauteur',repsN:12,tip:'Tirer coudes le long du corps • Sentir les grands dorsaux'},
-        {n:'Reverse fly élastique',g:'Écarté avec élastique inversé',d:'12 reps • SmartWorkout LÉGER',repsN:12,tip:'Bras légèrement fléchis (10-15°) • Ouvrir comme un papillon inversé'},
+      {label:'Circuit A \u2014 DORSAUX 70%',tours:'2 tours \u2022 Repos 90s',toursN:2,color:'circuit',exos:[
+        {n:'Rowing \u00e9lastique',g:'Rowing avec \u00e9lastique',d:'12 reps \u2022 SW 15kg',repsN:12,tip:'Omoplates serr\u00e9es en fin de mouvement'},
+        {n:'Lat pulls \u00e9lastique',g:'Pull-down avec \u00e9lastique',d:'10 reps \u2022 SW L\u00c9GER-MOYEN',repsN:10,tip:'Sentir les grands dorsaux'},
+        {n:'Reverse fly \u00e9lastique',g:'\u00c9cart\u00e9 avec \u00e9lastique invers\u00e9',d:'12 reps \u2022 SW L\u00c9GER',repsN:12,tip:'Posture \u2014 \u00e9paules basses'},
       ]},
-      {label:'Circuit B — PECS/ÉPAULES ÉQUILIBRAGE 30%',tours:'2 tours • Repos 60s',toursN:2,color:'circuit',exos:[
-        {n:'Pompes inclinées modérées',g:'Pompes inclinées',d:'8 reps • Tempo lent 3-0-3',repsN:8,tip:'Volume réduit intentionnel vs lundi — qualité avant quantité. Anti-épaules enroulées.'},
-        {n:'Pike push-ups',g:'Pompes en V',d:'6 reps',repsN:6,tip:'Position en V inversé • Focus épaules antérieures'},
-        {n:'Curls biceps élastique',g:'Curl avec élastique',d:'12 reps • SmartWorkout LÉGER',repsN:12,tip:'Coudes fixes contre le corps • Contraction au sommet 1s'},
+      {label:'Circuit B \u2014 PECS/CORE 30%',tours:'2 tours \u2022 Repos 60s',toursN:2,color:'circuit',exos:[
+        {n:'Pompes inclin\u00e9es',g:'Pompes inclin\u00e9es',d:'8 reps \u2022 Tempo lent',repsN:8,tip:'Qualit\u00e9 \u2014 pas de volume'},
+        {n:'Planche \u23f1\ufe0f',g:'Planche',d:'40s',repsN:40,tip:'Gainage strict'},
+        {n:'Dead bug',g:'Dead Bug',d:'8 reps/c\u00f4t\u00e9',repsN:8,tip:'Core profond \u2014 dos coll\u00e9 au sol'},
       ]},
     ],
-    cool:['Hang passif barres dips : 3 × 20s → décompression colonne','Étirement de l\'épaule : 45s/bras','Étirement des biceps : 30s/bras'],
-    mvw:['3 min échauffement','2 tours : 12 rowing élastique + 10 face pulls + 8 pompes inclinées','2 min étirements'],
-    yoda:'Tes dorsaux, armure de ta posture ils sont. Pull fort, push patient — équilibré dans la Force tu dois être. Les épaules se souviendront de ce travail.'
+    cool:['Pike stretch : 90s','Child pose : 60s','\u00c9tirement dorsaux : 45s/c\u00f4t\u00e9'],
+    mvw:['2 tours : 10 rowing + 8 pompes incl + 30s planche'],
+    yoda:'Les dorsaux, le socle de tout ils sont. Reconstruire apr\u00e8s les 25km/jour de Tenerife, sage d\u00e9cision c\u2019est !'
   },
   running_end:{
-    label:'🏃 Running Endurance S4',dur:'55 min / ~7.5 km',horaire:'Quand tu veux — idéalement matin',
+    label:'\ud83d\udeb6 Marche Longue \u2014 Test Progressif',dur:'45 min',horaire:'Matin frais id\u00e9al',
     warm:[
-      {t:'5 min marche dynamique'},
-      {t:'5 min footing très léger Z1'},
+      {t:'Test genou et pieds \u00e0 froid'},
+      {t:'5 min marche tr\u00e8s lente'},
     ],
     circuits:[
-      {label:'Corps de séance — 45 min ENDURANCE S4',tours:'',color:'run',runDurN:45,exos:[
-        {n:'Course continue 45 min',g:'Courir',d:'Allure conversation ~6:30-6:45/km • FC cible 135-150 bpm',tip:'Objectif Comeback 45 min atteint dès S3 (56 min total). Aujourd\'hui on consolide à allure vraiment conversation. Si genou ou voûte plantaire signal → réduire à 40 min.',h:'Test : tu peux tenir une phrase complète à cette allure ? Si non → ralentir.'},
-      ]},
+      {label:'Marche test 45 min',tours:'',color:'run',exos:[
+        {n:'Marche 45 min terrain plat',g:'Marche',d:'Allure confortable \u2022 Brooks obligatoires \u2022 Terrain plat',tip:'LE test de la semaine : 45 min sans douleur = feu vert pour reprendre la course progressivement la semaine prochaine.',h:'Douleur pendant ou apr\u00e8s (m\u00eame le soir) \u2192 noter dans le ressenti'}
+      ]}
     ],
-    cool:['3 min marche','Mollets : 30s/jambe','Voûte plantaire : 30s/pied (important !)','Quadriceps : 30s/jambe','Ischios : 30s/jambe'],
-    mvw:['3 min marche','10 min course très facile (8:00/km)','2 min étirements'],
-    yoda:'45 minutes à allure conversation — l\'objectif Comeback, déjà dépassé il a été. Maintenant ancrer dans la régularité tu dois. La Force, dans la constance elle réside.'
+    cool:['\u00c9tirements complets : 15 min','Balle de tennis vo\u00fbte plantaire : 90s/pied','Glace genou si besoin : 10 min'],
+    mvw:['20 min marche lente'],
+    yoda:'45 minutes de marche sans douleur \u2014 le passeport pour courir \u00e0 nouveau c\u2019est. Honn\u00eatement le test fais, les signaux \u00e9coute !'
   },
   total_body:{
-    label:'🔥 Total Body S4 — Harmonie',dur:'50 min',horaire:'Matin idéal — DR check avant séance',
+    label:'\ud83d\udd25 Total Body \u2014 Haut du corps only',dur:'35 min',horaire:'Matin \u2014 DR check avant',
     warm:[
-      {t:'100 tours corde à sauter',g:'Saut à la corde'},
-      {t:'20 squats lents',g:'Squat'},
-      {t:'20 band pull-apart',g:'Pull-Apart avec élastique'},
-      {t:'15 pompes inclinées légères'},
-      {t:'Mobilité articulaire complète épaules/hanches'},
+      {t:'20 rotations \u00e9paules + mobilit\u00e9',g:'Rotations des bras'},
+      {t:'10 pompes murales',g:'Pompes inclin\u00e9es'},
+      {t:'15 band pull-apart l\u00e9ger',g:'Pull-Apart avec \u00e9lastique'},
     ],
     circuits:[
-      {label:'Circuit A — PUSH 35%',tours:'3 tours • Repos 90s',toursN:3,color:'circuit',exos:[
-        {n:'Pompes inclinées',g:'Pompes inclinées',d:'10 reps • Tempo 2-1-2',repsN:10,tip:'Même qualité qu\'en début de semaine — forme avant performance'},
-        {n:'Pompes diamant',g:'Pompes resserrées',d:'5 reps • ⚠️ Triceps gauche',repsN:5,tip:'Vigilance triceps G — moindre douleur = arrêt immédiat, aucune négociation'},
+      {label:'Circuit A \u2014 PUSH 35%',tours:'2 tours \u2022 Repos 90s',toursN:2,color:'circuit',exos:[
+        {n:'Pompes inclin\u00e9es',g:'Pompes inclin\u00e9es',d:'8 reps \u2022 Tempo 2-1-2',repsN:8,tip:'Forme parfaite'},
+        {n:'Chest fly \u00e9lastique',g:'\u00c9cart\u00e9 avec \u00e9lastique',d:'10 reps \u2022 SW L\u00c9GER',repsN:10,tip:'Reconnexion musculaire'},
       ]},
-      {label:'Circuit B — PULL 35%',tours:'3 tours • Repos 90s',toursN:3,color:'circuit',exos:[
-        {n:'Rowing élastique',g:'Rowing avec élastique',d:'15 reps • SmartWorkout MOYEN',repsN:15,tip:'Qualité max — omoplates serrées en fin de mouvement'},
-        {n:'Lat pulls élastique',g:'Pull-down avec élastique',d:'12 reps',repsN:12,tip:'Sentir les grands dorsaux travailler'},
+      {label:'Circuit B \u2014 PULL 35%',tours:'2 tours \u2022 Repos 90s',toursN:2,color:'circuit',exos:[
+        {n:'Rowing \u00e9lastique',g:'Rowing avec \u00e9lastique',d:'12 reps \u2022 SW MOYEN',repsN:12,tip:'Charge mod\u00e9r\u00e9e cette semaine'},
+        {n:'Face pulls',g:'Traction de face avec \u00e9lastique',d:'12 reps \u2022 SW L\u00c9GER',repsN:12,tip:'Posture'},
       ]},
-      {label:'Circuit C — CORE + JAMBES 30%',tours:'3 tours • Repos 60s',toursN:3,color:'circuit',exos:[
-        {n:'Planche ⏱️',g:'Planche',d:'50s tenue — pas de test max',repsN:50,tip:'Régulière et maîtrisée — <strong style="color:var(--gold)">Utilise le chrono dans Saisie résultats</strong>'},
-        {n:'Squats',g:'Squat',d:'15 reps • Descente 3s • Genoux dans l\'axe',repsN:15,tip:'Fessiers en bas de la descente • Tronc droit'},
-        {n:'Fentes marchées',g:'Fente',d:'10 reps/jambe',repsN:10,tip:'Genou gauche dans l\'axe • Tronc droit'},
+      {label:'Circuit C \u2014 CORE (z\u00e9ro jambes)',tours:'2 tours \u2022 Repos 60s',toursN:2,color:'circuit',exos:[
+        {n:'Planche \u23f1\ufe0f',g:'Planche',d:'40s contr\u00f4l\u00e9e',repsN:40,tip:'Pas de test max \u2014 juste reprendre'},
+        {n:'Dead bug',g:'Dead Bug',d:'8 reps/c\u00f4t\u00e9',repsN:8,tip:'Core profond'},
+        {n:'Hollow body',g:'Maintien en position creuse',d:'20s tenue',repsN:20,tip:'Gainage l\u00e9ger'},
       ]},
     ],
-    cool:['Chest doorway stretch → "Étirement pectoral" : 90s','Pike stretch → "Inclinaison en avant" : 90s','Hip flexor → "Étirement fléchisseur de la hanche" : 60s/côté','Posture du pigeon → "Posture du pigeon" : 90s/côté'],
-    mvw:['3 min échauffement','EMOM 10 min : Min 1-8 pompes incl / Min 2-12 squats / Min 3-10 rowing / Min 4-30s planche / Min 5-10 fentes (×2)','2 min étirements'],
-    yoda:'Quatre semaines de Comeback derrière toi. Pas de test — de la solidité. La semaine prochaine, bilan Comeback officiel et décision S5. Ce soir, repos mérité tu as, jeune Padawan.'
+    cool:['\u00c9tirements haut du corps : 10 min','PAS de squats/fentes \u2014 genou au repos total'],
+    mvw:['EMOM 8 min : 6 pompes incl / 10 rowing / 30s planche / 8 dead bug (x2)'],
+    yoda:'Z\u00e9ro jambes cette semaine \u2014 le genou, sa semaine de gr\u00e2ce il a. Le haut du corps, lui, reprendre il peut !'
   },
   recup:{
-    label:'🧘 Récup Active & Mobilité',dur:'30-45 min',horaire:'Quand tu veux • Pas de course',
+    label:'\ud83e\uddd8 R\u00e9cup + Soins genou/pieds',dur:'30-45 min',horaire:'Selon les envies',
     warm:[],
     circuits:[
-      {label:'Programme récupération',tours:'',color:'cool',exos:[
-        {n:'Marche active',g:'Marche',d:'30 min en nature ou parc • Pas de course',tip:'Laisser ton esprit vagabonder • Plein air si possible'},
-        {n:'Cat-cow',g:'Chat / vache',d:'15 reps — mobilité colonne vertébrale'},
-        {n:'Pike stretch (inclinaison avant)',g:'Inclinaison en avant',d:'90s • Focus ischio-jambiers pour L-sit futur'},
-        {n:'Hip flexor stretch',g:'Étirement fléchisseur de la hanche',d:'60s/côté'},
-        {n:'Chest doorway stretch',g:'Étirement pectoral',d:'90s/côté'},
-        {n:'Étirement de l\'épaule 360°',g:'Étirement de l\'épaule',d:'60s/bras'},
-        {n:'Posture du pigeon',g:'Posture du pigeon',d:'90s/côté'},
-      ]},
+      {label:'R\u00e9cup\u00e9ration et soins',tours:'',color:'cool',exos:[
+        {n:'Mobilit\u00e9 douce compl\u00e8te',g:'\u00c9tirement des jambes',d:'Focus hanches, chevilles, genoux SANS charge',tip:'Mobilisations circulaires genou \u00e0 vide \u2014 aucune douleur tol\u00e9r\u00e9e'},
+        {n:'Soins pieds',g:'Marche',d:'Balle de tennis vo\u00fbte plantaire 2 min/pied + bain frais',tip:'Les pieds ont encaiss\u00e9 375km \u00e0 Tenerife \u2014 des soins ils m\u00e9ritent'},
+      ]}
     ],
-    cool:['Hydratation ++ ce soir','Prépare mentalement ta semaine suivante'],
-    mvw:['Marche 20 min','5 min étirements essentiels'],
-    yoda:'Récupérer, s\'entraîner aussi c\'est. Le corps se renforce au repos. Demain, plus fort tu seras — si bien récupéré tu as.'
+    cool:['Pes\u00e9e officielle \u00e0 jeun','Bilan de la semaine \u00e0 g\u00e9n\u00e9rer'],
+    mvw:['\u00c9tirements 15 min'],
+    yoda:'La semaine de R\u00e9activation termin\u00e9e elle est. Le bilan g\u00e9n\u00e8re \u2014 selon le genou, la course en semaine 2 d\u00e9cidera. Patience r\u00e9compens\u00e9e toujours elle est !'
   }
 };
 
